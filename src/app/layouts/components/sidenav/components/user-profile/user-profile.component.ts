@@ -1,6 +1,6 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core'
 import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap'
-import { userDropdownItems } from '@layouts/components/data'
+import { userDropdownItems } from '../../../data'
 
 @Component({
   selector: 'app-user-profile',

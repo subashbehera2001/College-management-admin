@@ -37,32 +37,6 @@
         <ng-icon name="lucideMenu" class="fs-22"></ng-icon>
       </button>
 
-      <div class="topbar-item d-none d-md-flex">
-        <div ngbDropdown>
-          <a
-            ngbDropdownToggle
-            class="topbar-link btn shadow-none btn-link dropdown-toggle drop-arrow-none px-2"
-          >
-            Dropdown
-            <ng-icon name="tablerChevronDown" class="ms-1" />
-          </a>
-          <div ngbDropdownMenu>
-            <a ngbDropdownItem>
-              <ng-icon name="tablerUserPlus" class="fs-15 me-1" />
-              Add Project Member
-            </a>
-            <a ngbDropdownItem>
-              <ng-icon name="tablerActivity" class="fs-15 me-1" />
-              View Activity
-            </a>
-            <a ngbDropdownItem>
-              <ng-icon name="tablerSettings" class="fs-15 me-1" />
-              Settings
-            </a>
-          </div>
-        </div>
-      </div>
-      <app-mega-menu />
     </div>
 
     <div class="d-flex align-items-center gap-2">
@@ -76,26 +50,11 @@
         <ng-icon name="lucideSearch" class="app-search-icon text-muted" />
       </div>
 
-      <app-theme-dropdown />
+      <app-theme-toggler class="d-none d-sm-flex" />
 
       <app-language-dropdown class="d-none d-md-flex" />
 
       <app-notification-dropdown />
-
-      <app-customizer-toggler class="d-none d-sm-flex" />
-
-      <app-theme-toggler class="d-none d-sm-flex" />
-
-      <div class="topbar-item d-none d-sm-flex">
-        <button
-          class="topbar-link"
-          id="monochrome-mode"
-          type="button"
-          (click)="layout.toggleMonochrome()"
-        >
-          <ng-icon name="lucidePalette" class="fs-xxl mode-light-moon" />
-        </button>
-      </div>
 
       <app-user-profile-topbar />
     </div>
