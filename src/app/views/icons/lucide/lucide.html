@@ -1,0 +1,117 @@
+<div class="container-fluid">
+  <app-page-title
+    title="Lucide Icons Library"
+    subTitle="A consistent and open-source icon set built for modern interfaces — explore and integrate Lucide Icons easily."
+    [badge]="{icon: 'lucideTrees', text: 'Modern Icons'}"
+  />
+
+  <div class="row justify-content-center">
+    <div class="col-xxl-12">
+      <div class="card">
+        <div class="card-header d-block">
+          <h4 class="card-title mb-1 d-flex align-items-center gap-2">
+            <ng-icon name="lucideLayoutDashboard" class="fs-xl" />
+            Overview
+          </h4>
+          <p class="mb-0 text-muted">
+            Lucide is an open-source library of clean, scalable SVG icons for
+            web and app development, offering easy integration and
+            customization.
+          </p>
+        </div>
+
+        <div class="card-body rounded-bottom-0">
+          <h4 class="mt-0 fs-base mb-1">Usage</h4>
+          <code>&lt;ng-icon name="lucideIconname" /&gt;</code>
+
+          <div class="d-flex align-items-center gap-2 mt-3">
+            <ng-icon name="lucideCamera" class="fs-3" />
+            <ng-icon name="lucideHeart" class="fs-3" />
+            <ng-icon name="lucideStar" class="fs-3" />
+            <ng-icon name="lucideCheck" class="fs-3" />
+            <ng-icon name="lucideBell" class="fs-3" />
+            <ng-icon name="lucideCloud" class="fs-3" />
+            <ng-icon name="lucideUser" class="fs-3" />
+          </div>
+        </div>
+        <div class="card-body border-top-0 rounded-0">
+          <h4 class="mt-0 fs-base mb-1">Colors</h4>
+          <code
+            >&lt;ng-icon name="lucideIconname" class=&quot;text-xxxx&quot;
+            /&gt;</code
+          >
+
+          <div class="d-flex align-items-center gap-2 mt-3">
+            <ng-icon name="lucideHouse" class="fs-3 text-primary" />
+            <ng-icon name="lucideSettings" class="fs-3 text-secondary" />
+            <ng-icon name="lucideCalendar" class="fs-3 text-success" />
+            <ng-icon name="lucideMessageCircle" class="fs-3 text-info" />
+            <ng-icon name="lucideFlag" class="fs-3 text-warning" />
+            <ng-icon name="lucideFolder" class="fs-3 text-danger" />
+            <ng-icon name="lucideGlobe" class="fs-3 text-light" />
+            <ng-icon name="lucideKey" class="fs-3 text-dark" />
+            <ng-icon name="lucideLayers" class="fs-3 text-purple" />
+          </div>
+        </div>
+
+        <div class="card-body border-top-0 rounded-0">
+          <h4 class="mt-0 fs-base mb-1">Sizes</h4>
+          <code
+            >&lt;ng-icon name="tablerIconname" class=&quot;fs-xx&quot;
+            /&gt;</code
+          >
+
+          <div class="d-flex align-items-center gap-2 mt-3">
+            <ng-icon name="lucidePhone" class="fs-1" />
+            <ng-icon name="lucideBadgeDollarSign" class="fs-2" />
+            <ng-icon name="lucideMonitor" class="fs-3" />
+            <ng-icon name="lucideTablet" class="fs-4" />
+            <ng-icon name="lucideGamepad2" class="fs-5" />
+            <ng-icon name="lucideWatch" class="fs-6" />
+          </div>
+
+          <div class="d-flex align-items-center gap-2 mt-3">
+            <ng-icon name="lucideWatch" />
+            <ng-icon name="lucideWatch" class="fs-sm" />
+            <ng-icon name="lucideWatch" class="fs-lg" />
+            <ng-icon name="lucideWatch" class="fs-xl" />
+            <ng-icon name="lucideWatch" class="fs-xxl" />
+            <ng-icon name="lucideWatch" class="fs-24" />
+            <ng-icon name="lucideWatch" class="fs-32" />
+            <ng-icon name="lucideWatch" class="fs-36" />
+            <ng-icon name="lucideWatch" class="fs-42" />
+            <ng-icon name="lucideWatch" class="fs-60" />
+          </div>
+        </div>
+
+        <div class="card-body border-top-0 rounded-top-0">
+          <h4 class="mt-0 mb-3">Icons</h4>
+
+          <div class="d-flex flex-wrap align-items-center text-center gap-2">
+            @for (item of lucideIcons; track $index) {
+            <div class="avatar-xxl">
+              <span
+                class="avatar-title flex-column gap-1 border border-dashed rounded-3 overflow-hidden text-truncate text-center p-1"
+              >
+                <ng-icon [name]="item.icon" class="fs-xxl" />
+                <span class="fw-semibold d-block w-100 text-truncate"
+                  >{{ item.name }}</span
+                >
+              </span>
+            </div>
+            }
+          </div>
+
+          <div class="text-center mt-3">
+            <a
+              href="https://lucide.dev/icons/"
+              target="_blank"
+              class="btn btn-danger"
+              >View All Icons</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

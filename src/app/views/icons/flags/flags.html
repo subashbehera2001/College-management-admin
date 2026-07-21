@@ -1,0 +1,61 @@
+<div class="container-fluid">
+  <app-page-title
+    title="SVG Flags Library"
+    subTitle="Browse a complete collection of scalable vector flags for countries and regions — perfect for language switchers and geo features."
+    [badge]="{icon: 'lucideFlag', text: 'Country Flags'}"
+  />
+
+  <div class="row justify-content-center">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header justify-content-between">
+          <div>
+            <h5 class="card-title mb-0 d-flex align-items-center gap-2">
+              Flags Listing (SVG)
+            </h5>
+          </div>
+          <div class="app-search">
+            <input
+              type="search"
+              [(ngModel)]="search"
+              class="form-control"
+              placeholder="Search country..."
+              id="countrySearch"
+            />
+            <ng-icon name="lucideSearch" class="app-search-icon text-muted" />
+          </div>
+        </div>
+
+        <div class="card-body">
+          <div class="table-responsive">
+            <table
+              id="flagTable"
+              class="table table-bordered align-middle text-center w-100"
+            >
+              <thead>
+                <tr class="fs-xxs">
+                  <th>Flag</th>
+                  <th>Country Name</th>
+                  <th>Path</th>
+                  <th>Code</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (country of filteredCountries; track $index) {
+                <tr>
+                  <td>
+                    <img [src]="country.flag" height="18" class="rounded" />
+                  </td>
+                  <td>{{ country.name }}</td>
+                  <td><code>{{ country.flag }}</code></td>
+                  <td>{{ country.code.toUpperCase() }}</td>
+                </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

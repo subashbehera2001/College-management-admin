@@ -1,0 +1,35 @@
+<div class="container-fluid">
+  <app-page-title
+    title="File Upload with Dropzone"
+    subTitle="Drag and drop files easily with Dropzone.js — a lightweight library for file previews, validations, and async uploads."
+    [badge]="{icon:'lucideCloudUpload',text:'Drag & Drop Uploads'}"
+  />
+
+  <div class="row">
+    <div class="col-12">
+      <app-ui-card title="Dropzone">
+        <ng-container card-body>
+          <div class="pb-3">
+            <p class="text-muted mb-2">
+              DropzoneJS is an open source library that provides drag’n’drop
+              file uploads with image previews.
+            </p>
+
+            <a
+              class="btn btn-link shadow-none p-0 fw-medium"
+              href="https://www.dropzone.dev/"
+              target="_blank"
+            >
+              View Official Website
+              <ng-icon name="tablerChevronRight" class="ms-1" />
+            </a>
+          </div>
+
+          <div class="pt-0">
+            <FileUploader />
+          </div>
+        </ng-container>
+      </app-ui-card>
+    </div>
+  </div>
+</div>

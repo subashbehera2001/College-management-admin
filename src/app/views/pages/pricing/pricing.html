@@ -1,0 +1,15 @@
+<div class="container-fluid">
+  <app-page-title
+    title="Simple, Transparent Pricing"
+    subTitle="Choose a plan that fits your needs. Scalable options for individuals, teams, and enterprises with no hidden fees."
+    [badge]="{icon:'lucideCreditCard',text:'Flexible Plans'}"
+  />
+
+  <div class="row mb-4">
+    @for (plan of pricingPlans; track $index) {
+    <div class="col-xl-3 col-md-6">
+      <app-pricing-card [plan]="plan" />
+    </div>
+    }
+  </div>
+</div>

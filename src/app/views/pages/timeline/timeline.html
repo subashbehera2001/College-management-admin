@@ -1,0 +1,27 @@
+<div class="container-fluid">
+  <app-page-title
+    title="Activity Timeline"
+    subTitle="Visualize chronological events, project milestones, or user actions in a streamlined, scrollable view."
+    [badge]="{icon: 'lucideHistory', text: 'Chronological View'}"
+  />
+
+  <div class="row">
+    <div class="col-xxl-6">
+      <app-basic-timeline />
+    </div>
+
+    <div class="col-xxl-6">
+      <app-icon-timeline />
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xxl-6">
+      <app-border-timeline />
+    </div>
+
+    <div class="col-xxl-6">
+      <app-user-timeline />
+    </div>
+  </div>
+</div>

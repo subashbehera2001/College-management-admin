@@ -1,0 +1,55 @@
+import { Component } from '@angular/core'
+import { PageTitle } from '@app/components/page-title/page-title'
+import { NgIcon } from '@ng-icons/core'
+
+@Component({
+  selector: 'app-lucide',
+  imports: [PageTitle, NgIcon],
+  templateUrl: './lucide.html',
+  styles: ``,
+})
+export class Lucide {
+  lucideIcons = [
+    { icon: 'lucidePhone', name: 'Phone' },
+    { icon: 'lucideBadgePercent', name: 'Ad 2' },
+    { icon: 'lucideHeadphones', name: 'Headphones' },
+    { icon: 'lucideCamera', name: 'Camera' },
+    { icon: 'lucideWatch', name: 'Watch' },
+    { icon: 'lucideMic', name: 'Microphone' },
+    { icon: 'lucideHeadset', name: 'Headset' },
+    { icon: 'lucideTablet', name: 'Tablet' },
+    { icon: 'lucideGamepad2', name: 'Gamepad' },
+    { icon: 'lucidePrinter', name: 'Printer' },
+    { icon: 'lucideSpeaker', name: 'Speaker' },
+    { icon: 'lucideDatabase', name: 'Database' },
+    { icon: 'lucideCloud', name: 'Cloud' },
+    { icon: 'lucideWifi', name: 'Wi-Fi' },
+    { icon: 'lucideBluetooth', name: 'Bluetooth' },
+    { icon: 'lucideUsb', name: 'USB' },
+    { icon: 'lucideFolder', name: 'Folder' },
+    { icon: 'lucideLock', name: 'Lock' },
+    { icon: 'lucideKey', name: 'Key' },
+    { icon: 'lucideShield', name: 'Shield' },
+    { icon: 'lucidePaperclip', name: 'Paperclip' },
+    { icon: 'lucideBell', name: 'Bell' },
+    { icon: 'lucideSearch', name: 'Search' },
+    { icon: 'lucideBriefcase', name: 'Briefcase' },
+    { icon: 'lucideShoppingCart', name: 'Cart' },
+    { icon: 'lucideFile', name: 'File' },
+    { icon: 'lucideBook', name: 'Book' },
+    { icon: 'lucideMail', name: 'Mail' },
+    { icon: 'lucideUser', name: 'User' },
+    { icon: 'lucideCircleUser', name: 'User Circle' },
+    { icon: 'lucideMusic', name: 'Music' },
+    { icon: 'lucideFilm', name: 'Movie' },
+    { icon: 'lucideUpload', name: 'Upload' },
+    { icon: 'lucideCloudUpload', name: 'Cloud Upload' },
+    { icon: 'lucideShare', name: 'Share' },
+    { icon: 'lucideArrowRight', name: 'Arrow Right' },
+    { icon: 'lucideArrowLeft', name: 'Arrow Left' },
+    { icon: 'lucideArrowUp', name: 'Arrow Up' },
+    { icon: 'lucideArrowDown', name: 'Arrow Down' },
+    { icon: 'lucideSearch', name: 'Arrow Down' },
+    { icon: 'lucideRefreshCcw', name: 'Refresh' },
+  ]
+}

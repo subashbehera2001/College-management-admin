@@ -1,0 +1,116 @@
+<div class="container-fluid">
+  <app-page-title
+    title="Smart Calendar & Event Management"
+    subTitle="A beautifully designed, feature-rich calendar component for scheduling, task planning, and event tracking. Fully customizable, responsive, and built to integrate with modern frameworks."
+    [badge]="{icon: 'lucideCalendar', text: 'Events & Scheduling'}"
+  />
+
+  <div class="outlook-box">
+    <div class="card mb-0 d-none d-lg-flex rounded-end-0">
+      <div class="card-body">
+        <button
+          class="btn btn-primary w-100 btn-new-event"
+          (click)="openModal()"
+        >
+          <ng-icon name="tablerPlus" class="me-2 align-middle" />
+          Create New Event
+        </button>
+
+        <div id="external-events">
+          <p class="text-muted mt-2 fst-italic fs-xs mb-3">
+            Drag and drop your event or click in the calendar
+          </p>
+
+          @for (event of externalEvents; track $index) {
+          <div
+            class="external-event fc-event bg-transparent text-body border rounded border-light fw-medium"
+            data-class="bg-transparent text-body border rounded border-light fw-medium"
+          >
+            <ng-icon name="tablerCircleFill" class="me-2"></ng-icon>
+            {{ event }}
+          </div>
+          }
+        </div>
+      </div>
+    </div>
+
+    <div class="card h-100 mb-0 rounded-start-0 flex-grow-1 border-start-0">
+      <div class="d-lg-none d-inline-flex card-header">
+        <button class="btn btn-primary btn-new-event" (click)="openModal()">
+          <span class="d-flex align-items-center">
+            <ng-icon name="tablerPlus" class="me-2" />
+            Create New Event
+          </span>
+        </button>
+      </div>
+
+      <div class="card-body">
+        <div id="calendar">
+          <full-calendar #calendar [options]="calendarOptions" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #eventModal>
+    <div class="modal-content">
+      <form
+        class="needs-validation"
+        name="event-form"
+        id="forms-event"
+        novalidate
+      >
+        <div class="modal-header">
+          <h4 class="modal-title" id="modal-title">Create Event</h4>
+          <button
+            type="button"
+            class="btn-close"
+            (click)="modalRef.close()"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-12">
+              <div class="mb-3">
+                <label class="control-label form-label" for="event-title"
+                  >Event Name</label
+                >
+                <input
+                  class="form-control"
+                  placeholder="Insert Event Name"
+                  type="text"
+                  name="title"
+                  [(ngModel)]="currentEventTitle"
+                  required
+                />
+                <div class="invalid-feedback">
+                  Please provide a valid event name
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="d-flex flex-wrap align-items-center gap-2">
+            @if (currentEditingEvent) {
+            <button class="btn btn-danger" (click)="deleteEvent()">
+              Delete
+            </button>
+            }
+
+            <button
+              type="button"
+              class="btn btn-light ms-auto"
+              (click)="modalRef.close()"
+            >
+              Close
+            </button>
+
+            <button type="submit" class="btn btn-primary" (click)="saveEvent()">
+              Save
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </ng-template>
+</div>
