@@ -72,19 +72,5 @@ export class NotificationDropdown {
       description: 'Security policy update required for your account',
       time: '22 minutes ago',
     },
-    {
-      id: 'notification-6',
-      type: 'notification',
-      icon: 'lucideMail',
-      title: "You've received a new support ticket",
-      time: '18 minutes ago',
-    },
-    {
-      id: 'notification-7',
-      type: 'notification',
-      icon: 'lucideCalendarClock',
-      title: 'System maintenance starts at 12 AM',
-      time: '1 hour ago',
-    },
   ]
 }
