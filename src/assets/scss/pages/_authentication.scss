@@ -16,6 +16,12 @@
 // Auth Brand Logo (Light & Dark Mode)
 .auth-brand {
     margin-bottom: 2rem;
+    .logo-image {
+        display: block;
+        height: 40px;
+        width: auto;
+        object-fit: contain;
+    }
 
     .logo-dark {
         display: block;

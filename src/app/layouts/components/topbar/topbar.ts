@@ -2,6 +2,7 @@ import { Component } from '@angular/core'
 import { RouterLink } from '@angular/router'
 import { NgIcon } from '@ng-icons/core'
 import { LayoutStoreService } from '@core/services/layout-store.service'
+import { AppLogo } from '@app/components/app-logo'
 
 import { LanguageDropdown } from '@layouts/components/topbar/components/language-dropdown/language-dropdown'
 import { ThemeToggler } from '@layouts/components/topbar/components/theme-toggler/theme-toggler'
@@ -13,6 +14,7 @@ import { NotificationDropdown } from '@layouts/components/topbar/components/noti
   imports: [
     NgIcon,
     RouterLink,
+    AppLogo,
     ThemeToggler,
     LanguageDropdown,
     UserProfile,

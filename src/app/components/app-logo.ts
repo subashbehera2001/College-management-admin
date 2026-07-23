@@ -1,32 +1,43 @@
 import { Component } from '@angular/core'
 import { RouterLink } from '@angular/router'
-import { NgIcon } from '@ng-icons/core'
 
 @Component({
   selector: 'app-app-logo',
-  imports: [RouterLink, NgIcon],
+  imports: [RouterLink],
   template: `
     <a routerLink="/" class="logo-dark">
-      <span class="d-flex align-items-center gap-1">
-        <span class="avatar avatar-xs rounded-circle text-bg-dark">
-          <span class="avatar-title">
-            <ng-icon name="lucideSparkles" class="fs-md"></ng-icon>
-          </span>
-        </span>
-        <span class="logo-text text-body fw-bold fs-xl">Simple</span>
+      <span class="d-flex align-items-center gap-2 logo-wrap">
+        <img
+          src="assets/images/logo.png"
+          class="logo-image"
+          alt="Simple"
+        />
       </span>
     </a>
     <a routerLink="/" class="logo-light">
-      <span class="d-flex align-items-center gap-1">
-        <span class="avatar avatar-xs rounded-circle text-bg-dark">
-          <span class="avatar-title">
-            <ng-icon name="lucideSparkles" class="fs-md"></ng-icon>
-          </span>
-        </span>
-        <span class="logo-text text-white fw-bold fs-xl">Simple</span>
+      <span class="d-flex align-items-center gap-2 logo-wrap">
+        <img
+          src="assets/images/logo.png"
+          class="logo-image"
+          alt="Simple"
+        />
       </span>
     </a>
   `,
-  styles: ``,
+  styles: `
+    :host {
+      display: inline-flex;
+    }
+
+    .logo-wrap {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo-image {
+      display: block;
+      width: auto;
+    }
+  `,
 })
 export class AppLogo {}

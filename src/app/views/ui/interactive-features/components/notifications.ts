@@ -17,9 +17,9 @@ import { NgbToastModule } from '@ng-bootstrap/ng-bootstrap'
               <ngb-toast class="fade" role="alert">
                 <ng-template ngbToastHeader>
                   <img
-                    src="assets/images/logo-sm.png"
+                    src="assets/images/logo.png"
                     alt="brand-logo"
-                    height="16"
+                    height="25"
                     class="me-1"
                   />
                   <strong class="me-auto text-body">SIMPLE</strong>
@@ -41,7 +41,7 @@ import { NgbToastModule } from '@ng-bootstrap/ng-bootstrap'
                 <ngb-toast class="fade" role="alert" [autohide]="false">
                   <ng-template ngbToastHeader>
                     <img
-                      src="assets/images/logo-sm.png"
+                      src="assets/images/logo.png"
                       alt="brand-logo"
                       height="16"
                       class="me-1"
@@ -103,7 +103,7 @@ import { NgbToastModule } from '@ng-bootstrap/ng-bootstrap'
               >
                 <ng-template ngbToastHeader>
                   <img
-                    src="assets/images/logo-sm.png"
+                    src="assets/images/logo.png"
                     alt="brand-logo"
                     height="16"
                     class="me-1"
@@ -135,7 +135,7 @@ import { NgbToastModule } from '@ng-bootstrap/ng-bootstrap'
                 <ngb-toast class="fade" role="alert">
                   <ng-template ngbToastHeader class="toast-header">
                     <img
-                      src="assets/images/logo-sm.png"
+                      src="assets/images/logo.png"
                       alt="brand-logo"
                       height="16"
                       class="me-1"
@@ -156,7 +156,7 @@ import { NgbToastModule } from '@ng-bootstrap/ng-bootstrap'
               <ngb-toast class="fade" role="alert" [autohide]="false">
                 <ng-template ngbToastHeader>
                   <img
-                    src="assets/images/logo-sm.png"
+                    src="assets/images/logo.png"
                     alt="brand-logo"
                     height="16"
                     class="me-1"
@@ -185,7 +185,7 @@ import { NgbToastModule } from '@ng-bootstrap/ng-bootstrap'
                   <ngb-toast class="fade" role="alert">
                     <ng-template ngbToastHeader>
                       <img
-                        src="assets/images/logo-sm.png"
+                        src="assets/images/logo.png"
                         alt="brand-logo"
                         height="16"
                         class="me-1"
@@ -199,7 +199,7 @@ import { NgbToastModule } from '@ng-bootstrap/ng-bootstrap'
                   <ngb-toast class="fade" role="alert">
                     <ng-template ngbToastHeader>
                       <img
-                        src="assets/images/logo-sm.png"
+                        src="assets/images/logo.png"
                         alt="brand-logo"
                         height="16"
                         class="me-1"
