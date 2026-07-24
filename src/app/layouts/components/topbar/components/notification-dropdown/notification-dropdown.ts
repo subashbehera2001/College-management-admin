@@ -7,9 +7,6 @@ import {
 import { SimplebarAngularModule } from 'simplebar-angular'
 import { NgIcon } from '@ng-icons/core'
 
-const user3 = 'assets/images/users/user-3.jpg'
-const user4 = 'assets/images/users/user-4.jpg'
-
 type NotificationType = {
   id: string
   type: 'notification' | 'message'
@@ -51,7 +48,6 @@ export class NotificationDropdown {
     {
       id: 'message-1',
       type: 'message',
-      avatar: user3,
       title: 'Olivia Bennett',
       description: 'shared a new report in Weekly Planning',
       time: '2 minutes ago',
@@ -60,7 +56,6 @@ export class NotificationDropdown {
     {
       id: 'message-2',
       type: 'message',
-      avatar: user4,
       title: 'Lucas Gray',
       description: 'mentioned you in Sprint Standup',
       time: '14 minutes ago',

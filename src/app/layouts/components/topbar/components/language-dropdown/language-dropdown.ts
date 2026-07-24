@@ -1,32 +1,30 @@
-import { Component, OnInit } from '@angular/core'
+import { Component } from '@angular/core'
 import {
   NgbDropdown,
   NgbDropdownMenu,
   NgbDropdownToggle,
 } from '@ng-bootstrap/ng-bootstrap'
-import { LanguageOptionType } from '@/app/types/layout'
-import { LanguageService } from '@core/services/language.service'
 
 @Component({
   selector: 'app-language-dropdown',
   imports: [NgbDropdown, NgbDropdownMenu, NgbDropdownToggle],
-  templateUrl: './language-dropdown.html',
+  template: `
+    <div class="topbar-item">
+      <div ngbDropdown placement="bottom-right" class="dropdown">
+        <button
+          class="topbar-link fw-semibold drop-arrow-none"
+          ngbDropdownToggle
+          type="button"
+        >
+          <span class="fw-bold">EN</span>
+        </button>
+        <div ngbDropdownMenu class="dropdown-menu dropdown-menu-end">
+          <a class="dropdown-item" role="button">
+            <span class="align-middle">English</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  `,
 })
-export class LanguageDropdown implements OnInit {
-  languages: LanguageOptionType[] = []
-  selectedLang: LanguageOptionType = this.languages[0]
-
-  constructor(private langService: LanguageService) {}
-
-  ngOnInit(): void {
-    this.languages = this.langService.getLanguages()
-    this.langService.currentLang$.subscribe(
-      (lang) => (this.selectedLang = lang)
-    )
-    this.langService.initLanguage()
-  }
-
-  changeLanguage(code: string) {
-    this.langService.setLanguage(code)
-  }
-}
+export class LanguageDropdown {}

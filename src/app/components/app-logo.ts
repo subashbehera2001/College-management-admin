@@ -7,20 +7,12 @@ import { RouterLink } from '@angular/router'
   template: `
     <a routerLink="/" class="logo-dark">
       <span class="d-flex align-items-center gap-2 logo-wrap">
-        <img
-          src="assets/images/logo.png"
-          class="logo-image"
-          alt="Simple"
-        />
+        <span class="logo-text fw-bold fs-5 text-primary">CollegeMS</span>
       </span>
     </a>
     <a routerLink="/" class="logo-light">
       <span class="d-flex align-items-center gap-2 logo-wrap">
-        <img
-          src="assets/images/logo.png"
-          class="logo-image"
-          alt="Simple"
-        />
+        <span class="logo-text fw-bold fs-5 text-white">CollegeMS</span>
       </span>
     </a>
   `,
@@ -32,11 +24,6 @@ import { RouterLink } from '@angular/router'
     .logo-wrap {
       display: flex;
       align-items: center;
-    }
-
-    .logo-image {
-      display: block;
-      width: auto;
     }
   `,
 })

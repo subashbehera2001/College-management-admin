@@ -1,1 +1,1 @@
-declare module 'jsvectormap'
+// Global type declarations

@@ -1,18 +1,4 @@
-export type LayoutSkinType =
-  | 'shadcn'
-  | 'corporate'
-  | 'spotify'
-  | 'saas'
-  | 'nature'
-  | 'vintage'
-  | 'leafline'
-  | 'ghibli'
-  | 'slack'
-  | 'material'
-  | 'flat'
-  | 'pastel'
-  | 'caffieine'
-  | 'redshift'
+export type LayoutSkinType = 'shadcn'
 
 export type LayoutThemeType = 'light' | 'dark' | 'system'
 

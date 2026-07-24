@@ -1,4 +1,6 @@
 
+
+
 // Core files
 @import "bootstrap/scss/functions";
 @import "bootstrap/scss/variables";
@@ -9,21 +11,6 @@
 @import "bootstrap/scss/bootstrap";
 
 @import "config/root";
-@import "config/theme-shadcn";         // Default Theme // Please do not remove
-@import "config/theme-ghibli";         // Ghibli Theme
-@import "config/theme-corporate";      // Corporate Theme
-@import "config/theme-slack";          // Slack Theme
-@import "config/theme-material";       // Material Theme
-@import "config/theme-spotify";        // Spotify Theme
-@import "config/theme-saas";           // Saas Theme
-@import "config/theme-flat";           // Flat Theme
-@import "config/theme-nature";         // Nature Theme
-@import "config/theme-pastel";         // Pastel Theme
-@import "config/theme-vintage";        // Vintage Theme
-@import "config/theme-caffieine";      // Caffieine Theme
-@import "config/theme-leafline";       // Leafline Theme
-@import "config/theme-redshift";       // Redshift Theme
-
 
 // Structure
 @import "structure/topbar";
@@ -55,31 +42,5 @@
 @import "components/widgets";
 @import "components/list-group";
 
-
-// Pages
-@import "pages/authentication";
-@import "pages/chat";
-@import "pages/error";
-@import "pages/landing";
-@import "pages/outlook";
-@import "pages/pin-board";
-@import "pages/timeline";
-
-
-// Plugins
-@import "plugins/calendar";
-@import "plugins/choice";
-@import "plugins/datatables";
-@import "plugins/dropzone";
-@import "plugins/flatpickr";
-@import "plugins/jvectormap";
-@import "plugins/pass-bar";
-@import "plugins/prismjs";
-@import "plugins/quill-editor";
+// Required Plugins
 @import "plugins/simplebar";
-@import "plugins/sortablejs";
-@import "plugins/sweetalert2";
-@import "plugins/touchpin";
-@import "plugins/tour";
-@import "plugins/typehead";
-@import "plugins/wizard";
