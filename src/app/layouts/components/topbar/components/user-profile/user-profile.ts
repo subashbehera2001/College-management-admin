@@ -4,9 +4,9 @@ import {
   NgbDropdownMenu,
   NgbDropdownToggle,
 } from '@ng-bootstrap/ng-bootstrap'
+import { userDropdownItems } from '@layouts/components/data'
 import { RouterLink } from '@angular/router'
 import { NgIcon } from '@ng-icons/core'
-import { userDropdownItems } from '../../../data'
 
 @Component({
   selector: 'app-user-profile-topbar',

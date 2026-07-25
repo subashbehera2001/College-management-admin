@@ -1,3 +1,6 @@
+//
+// _topbar.scss
+//
 
 .app-topbar {
     position: sticky;
@@ -61,8 +64,6 @@
     line-height: $topbar-height;
     padding: 0 $spacer;
     // min-width: $sidenav-width;
-    display: flex;
-    align-items: center;
 
     .logo-sm {
         display: none;
@@ -74,12 +75,6 @@
 
     .logo-dark {
         display: block;
-    }
-
-    .logo-image {
-        display: block;
-        height: 65px;
-        width: auto;
     }
 }
 
@@ -107,7 +102,6 @@ html[data-bs-theme="dark"] {
         .logo-dark {
             display: none;
         }
-
     }
 }
 
@@ -214,13 +208,6 @@ html[data-bs-theme="dark"] {
             display: block;
         }
     }
-}
-
-.topbar-logo-mobile {
-    display: block;
-    height: 36px;
-    width: auto;
-    object-fit: contain;
 }
 
 //

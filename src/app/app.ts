@@ -43,7 +43,7 @@ export class App implements OnInit {
         if (data['title']) {
           this.titleService.setTitle(
             data['title'] +
-              ' | College Management System'
+              ' | Simple - Angular Responsive Bootstrap 5 Admin Dashboard'
           )
         }
       })

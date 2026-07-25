@@ -12,8 +12,8 @@ import { NgbCollapse } from '@ng-bootstrap/ng-bootstrap'
 import { NavigationEnd, Router, RouterLink } from '@angular/router'
 import { filter } from 'rxjs'
 import { scrollToElement } from '@/app/utils/layout-utils'
+import { menuItems } from '@layouts/components/data'
 import { LayoutStoreService } from '@core/services/layout-store.service'
-import { menuItems } from '../../../data'
 
 @Component({
   selector: 'app-menu',

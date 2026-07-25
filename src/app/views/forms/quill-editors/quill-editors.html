@@ -1,0 +1,40 @@
+<div class="container-fluid">
+  <app-page-title
+    title="Rich Text Editor"
+    subTitle="Create and edit beautifully formatted content with Quill.js — a modern WYSIWYG editor with extensible features."
+    [badge]="{icon:'tablerEdit',text:'Quill.js Editor'}"
+  />
+
+  <div class="row mt-3">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-1">Snow Editor</h5>
+          <p class="text-muted">Snow is a clean, flat toolbar theme.</p>
+
+          <quill-editor
+            [(ngModel)]="content"
+            theme="snow"
+            [modules]="snowEditorConfig"
+            style="height: 300px"
+            class="w-100"
+          ></quill-editor>
+        </div>
+
+        <div class="card-body mt-3">
+          <h5 class="card-title mb-1">Bubble Editor</h5>
+
+          <p class="text-muted">Bubble is a simple tooltip based theme.</p>
+
+          <quill-editor
+            [(ngModel)]="content1"
+            theme="bubble"
+            [modules]="bubbleEditorConfig"
+            style="height: 300px"
+            class="w-100"
+          ></quill-editor>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

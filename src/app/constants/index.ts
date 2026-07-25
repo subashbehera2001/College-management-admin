@@ -1,12 +1,29 @@
+type CurrencyType = '₹' | '$' | '€'
+
+export const colorVariants = [
+  'primary',
+  'secondary',
+  'success',
+  'danger',
+  'warning',
+  'info',
+  'light',
+  'dark',
+]
+
+export const currency: CurrencyType = '$'
+
 export const currentYear = new Date().getFullYear()
 
 export const credits = {
-  name: 'College Management System',
+  website: 'https://coderthemes.com/',
+  name: 'Coderthemes',
+  buyLink: '',
 }
 
-export const appName = 'CollegeMS'
-export const appTitle = 'College Management System'
+export const appName = 'Simple'
+export const appTitle = 'Simple - Responsive Bootstrap 5 Admin Dashboard'
 export const appDescription: string =
-  'A comprehensive college management system for managing students, faculty, courses, and institutional operations.'
+  'Simple is best admin dashboard template. Perfect for building CRM, CMS, project management tools, and custom web apps with clean UI, responsive design, and powerful features.'
 
 export const basePath: string = ''
