@@ -11,30 +11,7 @@ const availableLanguages: LanguageOptionType[] = [
     nativeName: 'English',
     flag: 'assets/images/flags/us.svg',
   },
-  {
-    code: 'de',
-    name: 'German',
-    nativeName: 'Deutsch',
-    flag: 'assets/images/flags/de.svg',
-  },
-  {
-    code: 'it',
-    name: 'Italian',
-    nativeName: 'Italiano',
-    flag: 'assets/images/flags/it.svg',
-  },
-  {
-    code: 'es',
-    name: 'Spanish',
-    nativeName: 'Español',
-    flag: 'assets/images/flags/es.svg',
-  },
-  {
-    code: 'ru',
-    name: 'Russian',
-    nativeName: 'Русский',
-    flag: 'assets/images/flags/ru.svg',
-  },
+  
   {
     code: 'hi',
     name: 'Hindi',

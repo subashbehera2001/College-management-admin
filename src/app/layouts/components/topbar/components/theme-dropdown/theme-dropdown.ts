@@ -1,11 +1,10 @@
 import { Component, inject } from '@angular/core'
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap'
-import { LanguageOptionType, LayoutSkinType } from '@/app/types/layout'
+import {  LayoutSkinType } from '@/app/types/layout'
 import { LayoutStoreService } from '@core/services/layout-store.service'
 import { TitleCasePipe } from '@angular/common'
 import { SimplebarAngularModule } from 'simplebar-angular'
 
-const shadcn = 'assets/images/themes/shadcn.svg'
 const corporate = 'assets/images/themes/corporate.svg'
 const spotify = 'assets/images/themes/spotify.svg'
 const saas = 'assets/images/themes/saas.svg'
@@ -34,7 +33,6 @@ type SkinOptionType = {
 export class ThemeDropdown {
   private layoutStore = inject(LayoutStoreService)
   skinOptions: SkinOptionType[] = [
-    { name: 'shadcn', img: shadcn },
     { name: 'corporate', img: corporate },
     { name: 'spotify', img: spotify },
     { name: 'saas', img: saas },
