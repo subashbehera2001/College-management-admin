@@ -3,6 +3,7 @@ import { RouterLink } from '@angular/router'
 import { NgIcon } from '@ng-icons/core'
 import { LayoutStoreService } from '@core/services/layout-store.service'
 
+import { AppLogo } from '@app/components/app-logo'
 import { LanguageDropdown } from '@layouts/components/topbar/components/language-dropdown/language-dropdown'
 import { ThemeToggler } from '@layouts/components/topbar/components/theme-toggler/theme-toggler'
 import { CustomizerToggler } from '@layouts/components/topbar/components/customizer-toggler/customizer-toggler'
@@ -14,6 +15,7 @@ import { ThemeDropdown } from '@layouts/components/topbar/components/theme-dropd
   imports: [
     NgIcon,
     RouterLink,
+    AppLogo,
     LanguageDropdown,
     CustomizerToggler,
     ThemeToggler,

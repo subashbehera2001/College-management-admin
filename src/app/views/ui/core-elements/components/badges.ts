@@ -135,9 +135,6 @@ import { UiCard } from '@app/components/ui-card'
               </span>
             </button>
 
-            <button type="button" class="btn btn-primary">
-              Notifications <span class="badge text-bg-light ms-1">4</span>
-            </button>
           </div>
         </div>
 
