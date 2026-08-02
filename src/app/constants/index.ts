@@ -17,7 +17,6 @@ export const currentYear = new Date().getFullYear()
 
 export const credits = {
   website: 'https://coderthemes.com/',
-  name: 'Coderthemes',
   buyLink: '',
 }
 
