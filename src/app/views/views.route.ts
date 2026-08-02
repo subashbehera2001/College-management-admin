@@ -1,16 +1,10 @@
 import { Routes } from '@angular/router'
-import { Dashboard } from './dashboard/dashboard'
 import { TonAi } from '@/app/views/ton-ai/ton-ai'
 import { Calendar } from '@/app/views/calendar/calendar'
 import { Directory } from '@/app/views/directory/directory'
 import { Charts } from '@/app/views/charts/charts'
 
 export const VIEWS_ROUTES: Routes = [
-  {
-    path: 'dashboard',
-    component: Dashboard,
-    data: { title: 'Dashboard' },
-  },
   {
     path: 'ton-ai',
     component: TonAi,

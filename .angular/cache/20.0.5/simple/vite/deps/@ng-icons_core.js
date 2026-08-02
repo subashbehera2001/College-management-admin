@@ -1,6 +1,6 @@
 import {
   isPlatformServer
-} from "./chunk-MUGNYWIQ.js";
+} from "./chunk-7ULMXDHY.js";
 import {
   ChangeDetectionStrategy,
   Component,
@@ -29,13 +29,13 @@ import {
   ɵɵprojection,
   ɵɵprojectionDef,
   ɵɵstyleProp
-} from "./chunk-U6VRZ2TG.js";
+} from "./chunk-QCAQ3WVL.js";
 import {
   isObservable
 } from "./chunk-3KKC7HMJ.js";
 import {
   __spreadValues
-} from "./chunk-GOMI4DH3.js";
+} from "./chunk-KWSTWQNB.js";
 
 // node_modules/@ng-icons/core/fesm2022/ng-icons-core.mjs
 var _c0 = ["*"];
