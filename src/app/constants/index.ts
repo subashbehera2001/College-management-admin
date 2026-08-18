@@ -16,6 +16,7 @@ export const currency: CurrencyType = '$'
 export const currentYear = new Date().getFullYear()
 
 export const credits = {
+  name: 'Coderthemes',
   website: 'https://coderthemes.com/',
   buyLink: '',
 }
