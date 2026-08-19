@@ -253,6 +253,22 @@
   color: #16a34a;
 }
 
+.student-table {
+  thead th,
+  tbody td {
+    border-right: 1px solid #e2e8f0;
+  }
+
+  thead th:last-child,
+  tbody td:last-child {
+    border-right: none;
+  }
+
+  thead th {
+    vertical-align: middle;
+  }
+}
+
 :host-context([data-bs-theme='dark']) {
   .dashboard-content {
     background-color: #0f172a;
@@ -323,6 +339,13 @@
   .event-date {
     background-color: rgba(148, 163, 184, 0.12) !important;
     color: #e2e8f0 !important;
+  }
+
+  .student-table {
+    thead th,
+    tbody td {
+      border-right-color: #334155;
+    }
   }
 
   .attendance-card {
