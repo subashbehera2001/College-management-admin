@@ -24,4 +24,11 @@ export const userDropdownItems: UserDropdownItemType[] = [
   },
 ]
 
-export const menuItems: MenuItemType[] = []
+export const menuItems: MenuItemType[] = [
+  
+  {
+    label: 'Dashboard',
+    icon: 'tablerGauge',
+    url: '/dashboard',
+  },
+]

@@ -271,23 +271,25 @@
 
 :host-context([data-bs-theme='dark']) {
   .dashboard-content {
-    background-color: #0f172a;
+    background-color: #0b1220;
     color: #e2e8f0;
 
     .card {
-      background: #1e293b;
+      background: #172033;
       color: #e2e8f0;
+      border: 1px solid rgba(148, 163, 184, 0.16);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28);
     }
   }
 
   .card-header-custom {
-    background-color: #1e293b;
-    border-bottom-color: #334155;
+    background-color: #172033;
+    border-bottom-color: rgba(148, 163, 184, 0.16);
     color: #f1f5f9;
   }
 
   .thead-custom {
-    background-color: #334155;
+    background-color: #1f2a40;
     color: #e2e8f0;
   }
 
@@ -296,8 +298,8 @@
   }
 
   .stat-card {
-    background-color: #1e293b !important;
-    border: 1px solid #334155;
+    background: linear-gradient(180deg, #1b2740 0%, #172033 100%) !important;
+    border: 1px solid rgba(148, 163, 184, 0.18);
   }
 
   .stat-title,
@@ -310,7 +312,7 @@
   }
 
   .stat-card .stat-icon {
-    background-color: rgba(148, 163, 184, 0.12) !important;
+    background-color: rgba(255, 255, 255, 0.08) !important;
   }
 
   .legend-color {
@@ -328,31 +330,53 @@
 
   .notice-list .notice-item,
   .event-list .event-item {
-    border-bottom-color: #334155;
+    border-bottom-color: rgba(148, 163, 184, 0.16);
   }
 
   .notice-icon {
-    background: rgba(59, 130, 246, 0.12);
-    color: #60a5fa;
+    background: rgba(96, 165, 250, 0.16);
+    color: #93c5fd;
   }
 
   .event-date {
-    background-color: rgba(148, 163, 184, 0.12) !important;
+    background-color: rgba(148, 163, 184, 0.16) !important;
     color: #e2e8f0 !important;
   }
 
   .student-table {
     thead th,
     tbody td {
-      border-right-color: #334155;
+      border-right-color: rgba(148, 163, 184, 0.16);
     }
   }
 
   .attendance-card {
     .card-body {
       color: #e2e8f0 !important;
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(15, 23, 42, 0.02)) !important;
+      background: linear-gradient(180deg, rgba(96, 165, 250, 0.12), rgba(15, 23, 42, 0.18)) !important;
     }
+  }
+
+  .chart-card,
+  .fee-card,
+  .notices-card,
+  .events-card,
+  .students-card {
+    background: #172033 !important;
+    border-color: rgba(148, 163, 184, 0.16) !important;
+  }
+
+  .fee-card .card-body,
+  .notices-card .card-body,
+  .events-card .card-body,
+  .students-card .card-body {
+    background: #172033;
+  }
+
+  .student-insight-panel,
+  .student-summary-box {
+    background: linear-gradient(180deg, #1b2740 0%, #172033 100%);
+    border-color: rgba(148, 163, 184, 0.16);
   }
 
   .card,
