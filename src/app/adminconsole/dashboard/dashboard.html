@@ -1,1 +1,208 @@
-<p>dashboard works!</p>
+<div class="container-fluid dashboard-content">
+  <div class="row mb-4">
+    <div class="col-12 col-sm-6 col-lg-3 mb-3 mb-lg-0" *ngFor="let stat of stats">
+      <div class="stat-card" [style.background-color]="stat.bgColor">
+        <div class="stat-icon" [style.background-color]="stat.bgColor">
+          <ng-icon [name]="stat.icon" [style.color]="stat.iconColor" />
+        </div>
+        <div class="stat-info">
+          <span class="stat-title">{{ stat.title }}</span>
+          <h3 class="stat-value">{{ stat.value }}</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4">
+    <div class="col-lg-6 mb-3 mb-lg-0">
+      <div class="card border-0 shadow-sm h-100">
+        <div class="card-header card-header-custom py-3">
+          <div class="d-flex justify-content-between align-items-center">
+            <h5 class="card-title mb-0 fw-semibold">Student Overview</h5>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row align-items-center">
+            <div class="col-12">
+              <div class="chart-container">
+                <app-chartjs [getOptions]="studentChartOptions"></app-chartjs>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-6">
+      <div class="card border-0 shadow-sm h-100 attendance-card">
+        <div class="card-header card-header-custom py-3">
+          <div class="d-flex justify-content-between align-items-center">
+            <h5 class="card-title mb-0 fw-semibold">Attendance Overview</h5>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-8">
+              <div class="chart-container">
+                <app-chartjs [getOptions]="attendanceChartOptions"></app-chartjs>
+              </div>
+            </div>
+            <div class="col-md-4 d-flex flex-column justify-content-center">
+              <div class="text-center mb-4">
+                <span class="text-muted fs-sm d-block mb-1">Average Attendance</span>
+                <span class="fw-bold fs-3">{{ attendance.average }}</span>
+              </div>
+              <div class="d-flex flex-column gap-2">
+                <div class="d-flex align-items-center">
+                  <span class="legend-color me-2" style="background-color: #22c55e;"></span>
+                  <span class="me-auto">Present</span>
+                  <span class="fw-semibold">{{ attendance.present }}</span>
+                </div>
+                <div class="d-flex align-items-center">
+                  <span class="legend-color me-2" style="background-color: #fca5a5;"></span>
+                  <span class="me-auto">Absent</span>
+                  <span class="fw-semibold">{{ attendance.absent }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4">
+    <div class="col-lg-3 mb-3 mb-lg-0">
+      <div class="card border-0 shadow-sm h-100 fee-card">
+        <div class="card-header card-header-custom py-3">
+          <div class="d-flex justify-content-between align-items-center">
+            <h5 class="card-title mb-0 fw-semibold">Fee Collection</h5>
+          </div>
+        </div>
+        <div class="card-body text-center">
+          <div class="fee-circle mx-auto mb-3">
+            <svg viewBox="0 0 100 100">
+              <circle cx="50" cy="50" r="40" fill="none" stroke="#e5e7eb" stroke-width="8" />
+              <circle
+                cx="50"
+                cy="50"
+                r="40"
+                fill="none"
+                stroke="#22c55e"
+                stroke-width="8"
+                stroke-dasharray="251.2"
+                [attr.stroke-dashoffset]="251.2 * (1 - feeCollection.percent / 100)"
+                stroke-linecap="round"
+                transform="rotate(-90 50 50)"
+              />
+              <text x="50" y="50" text-anchor="middle" dy=".3em" class="fee-text">{{ feeCollection.percent }}%</text>
+            </svg>
+          </div>
+          <div class="fee-details text-start mt-3">
+            <div class="d-flex justify-content-between mb-2">
+              <span class="text-muted">Total Fees</span>
+              <span class="fw-semibold">{{ feeCollection.total }}</span>
+            </div>
+            <div class="d-flex justify-content-between mb-2">
+              <span class="text-muted">Collected Fees</span>
+              <span class="fw-semibold text-success">{{ feeCollection.collected }}</span>
+            </div>
+            <div class="d-flex justify-content-between">
+              <span class="text-muted">Pending Fees</span>
+              <span class="fw-semibold text-warning">{{ feeCollection.pending }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4 mb-3 mb-lg-0">
+      <div class="card border-0 shadow-sm h-100 notices-card">
+        <div class="card-header card-header-custom py-3">
+          <div class="d-flex justify-content-between align-items-center">
+            <h5 class="card-title mb-0 fw-semibold">Recent Notices</h5>
+            <a routerLink="/pages/timeline" class="text-primary fs-sm fw-semibold text-decoration-none">View All</a>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="notice-list">
+            <div class="notice-item d-flex align-items-center mb-3" *ngFor="let notice of notices">
+              <div class="notice-icon me-3">
+                <ng-icon name="tablerCalendar" class="text-primary" />
+              </div>
+              <div class="flex-grow-1">
+                <div class="fw-semibold text-truncate">{{ notice.title }}</div>
+                <span class="text-muted fs-sm">{{ notice.date }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-5">
+      <div class="card border-0 shadow-sm h-100 events-card">
+        <div class="card-header card-header-custom py-3">
+          <div class="d-flex justify-content-between align-items-center">
+            <h5 class="card-title mb-0 fw-semibold">Upcoming Events</h5>
+            <a routerLink="/calendar" class="text-primary fs-sm fw-semibold text-decoration-none">View All</a>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="event-list">
+            <div class="event-item d-flex align-items-center mb-3" *ngFor="let event of events">
+              <div class="event-date me-3 text-center rounded" [style.background-color]="event.color + '20'" [style.color]="event.color">
+                <div class="fw-bold">{{ event.day }}</div>
+                <div class="fs-xxs">{{ event.month }}</div>
+              </div>
+              <div class="flex-grow-1">
+                <div class="fw-semibold">{{ event.title }}</div>
+                <div class="text-muted fs-sm">{{ event.time }} - {{ event.location }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="card border-0 shadow-sm">
+        <div class="card-header card-header-custom py-3">
+          <h5 class="card-title mb-0 fw-semibold">Recent Students</h5>
+        </div>
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            <table class="table align-middle mb-0">
+              <thead class="thead-custom">
+                <tr>
+                  <th class="ps-4">Student ID</th>
+                  <th>Name</th>
+                  <th>Course</th>
+                  <th>Year</th>
+                  <th>Email</th>
+                  <th>Contact</th>
+                  <th class="pe-4">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let student of recentStudents">
+                  <td class="ps-4">{{ student.id }}</td>
+                  <td>{{ student.name }}</td>
+                  <td>{{ student.course }}</td>
+                  <td>{{ student.year }}</td>
+                  <td>{{ student.email }}</td>
+                  <td>{{ student.contact }}</td>
+                  <td class="pe-4">
+                    <span class="badge badge-label badge-soft-success">{{ student.status }}</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

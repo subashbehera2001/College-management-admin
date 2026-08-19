@@ -6,6 +6,19 @@ import { Charts } from '@/app/views/charts/charts'
 
 export const VIEWS_ROUTES: Routes = [
   {
+    path: '',
+    redirectTo: '/dashboard',
+    pathMatch: 'full',
+  },
+  {
+    path: 'dashboard',
+    loadComponent: () =>
+      import('@/app/adminconsole/dashboard/dashboard').then(
+        (mod) => mod.Dashboard
+      ),
+    data: { title: 'Admin Dashboard' },
+  },
+  {
     path: 'ton-ai',
     component: TonAi,
     data: { title: 'Ton AI' },

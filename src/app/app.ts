@@ -5,10 +5,6 @@ import {
   Router,
   RouterOutlet,
 } from '@angular/router'
-import * as tablerIcons from '@ng-icons/tabler-icons'
-import * as tablerIconsFill from '@ng-icons/tabler-icons/fill'
-import * as lucideIcons from '@ng-icons/lucide'
-import { provideIcons } from '@ng-icons/core'
 import { Title } from '@angular/platform-browser'
 import { filter, map, mergeMap } from 'rxjs'
 
@@ -16,10 +12,7 @@ import { filter, map, mergeMap } from 'rxjs'
   selector: 'app-root',
   imports: [RouterOutlet],
   templateUrl: './app.html',
-  styleUrl: './app.scss',
-  viewProviders: [
-    provideIcons({ ...tablerIcons, ...tablerIconsFill, ...lucideIcons }),
-  ],
+  styleUrls: ['./app.scss'],
 })
 export class App implements OnInit {
   private titleService = inject(Title)

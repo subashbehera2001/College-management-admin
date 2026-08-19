@@ -1,0 +1,340 @@
+.dashboard-content {
+  margin-top: 0.5rem;
+  padding: 1.5rem;
+  background-color: #f5f7fa;
+  border-radius: var(--ins-border-radius-lg);
+  color: #111827;
+
+  .card {
+    background: #ffffff;
+    border: 0;
+    box-shadow: none;
+  }
+}
+
+.text-muted {
+  color: var(--ins-secondary-text-emphasis) !important;
+}
+
+.card-header-custom {
+  background-color: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  color: #111827;
+}
+
+.thead-custom {
+  background-color: #f8f9fa;
+  color: #111827;
+}
+
+.stat-card {
+  display: flex;
+  align-items: center;
+  border-radius: var(--ins-border-radius-lg);
+  padding: 1.25rem;
+  border: none;
+  box-shadow: none;
+}
+
+.stat-card,
+.card,
+.notice-item,
+.event-item,
+.text-primary {
+  transition: none;
+}
+
+.stat-card:hover,
+.card:hover,
+.notice-item:hover,
+.event-item:hover,
+.text-primary:hover {
+  box-shadow: none;
+  opacity: 1;
+}
+
+.stat-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--ins-border-radius-lg);
+  margin-right: 1rem;
+  flex-shrink: 0;
+
+  ng-icon {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.stat-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.stat-title {
+  display: block;
+  font-size: 0.875rem;
+  color: #111315;
+  margin-bottom: 0.25rem;
+}
+
+.stat-value {
+  font-size: 21px;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+  line-height: 1.2;
+  color: #111827;
+}
+
+.legend-color {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.legend-label,
+.legend-value {
+  font-size: 0.875rem;
+  color: var(--ins-body-color);
+}
+
+.fee-circle {
+  width: 110px;
+  height: 110px;
+  position: relative;
+
+  svg {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+  }
+
+  svg circle {
+    stroke-width: 6px;
+  }
+}
+
+.fee-text {
+  font-size: 16px;
+  font-weight: 700;
+  fill: var(--ins-body-color);
+  transform: rotate(90deg);
+  transform-origin: center;
+}
+
+.fee-details {
+  font-size: 0.825rem;
+  line-height: 1.15;
+  max-width: 220px;
+}
+
+.chart-container {
+  width: 100%;
+  height: 360px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+@media (max-width: 991.98px) {
+  .chart-container {
+    height: 260px;
+  }
+}
+
+.fee-card {
+  .card-body {
+    padding: 0.75rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 260px;
+  }
+
+  .fee-circle {
+    width: 110px;
+    height: 110px;
+  }
+
+  .fee-text {
+    font-size: 16px;
+  }
+
+  .fee-details {
+    max-width: 220px;
+    font-size: 0.9rem;
+  }
+}
+
+.notices-card,
+.events-card {
+  .card-body {
+    min-height: 340px;
+    overflow-y: visible;
+    padding: 0.75rem 1rem;
+  }
+
+  .notice-icon {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--ins-primary-bg-subtle);
+    border-radius: var(--ins-border-radius);
+    flex-shrink: 0;
+  }
+}
+
+.notice-list,
+.event-list {
+  .notice-item,
+  .event-item {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--ins-border-color);
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+}
+
+.event-list {
+  .event-date {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--ins-border-radius);
+    flex-shrink: 0;
+    font-size: 0.75rem;
+    line-height: 1.2;
+  }
+}
+
+.fw-semibold,
+.fw-bold,
+.me-auto {
+  color: #111827;
+}
+
+.attendance-card {
+  .card-header-custom {
+    color: #0f172a;
+    border-bottom: none;
+  }
+
+  .card-body {
+    color: #e5e7eb;
+    background: linear-gradient(180deg, rgba(37, 99, 235, 0.04), rgba(6, 182, 212, 0.02));
+    padding: 1rem 1rem 1.25rem;
+    border-radius: 0 0 var(--ins-border-radius-lg) var(--ins-border-radius-lg);
+  }
+
+  app-chartjs {
+    display: block;
+    padding: 0.75rem;
+    background: transparent;
+    border-radius: 8px;
+  }
+}
+
+.badge-soft-success {
+  background-color: rgba(34, 197, 94, 0.15);
+  color: #16a34a;
+}
+
+:host-context([data-bs-theme='dark']) {
+  .dashboard-content {
+    background-color: #0f172a;
+    color: #e2e8f0;
+
+    .card {
+      background: #1e293b;
+      color: #e2e8f0;
+    }
+  }
+
+  .card-header-custom {
+    background-color: #1e293b;
+    border-bottom-color: #334155;
+    color: #f1f5f9;
+  }
+
+  .thead-custom {
+    background-color: #334155;
+    color: #e2e8f0;
+  }
+
+  .text-muted {
+    color: #94a3b8 !important;
+  }
+
+  .stat-card {
+    background-color: #1e293b !important;
+    border: 1px solid #334155;
+  }
+
+  .stat-title,
+  .stat-label,
+  .stat-value,
+  .fw-semibold,
+  .fw-bold,
+  .me-auto {
+    color: #e2e8f0 !important;
+  }
+
+  .stat-card .stat-icon {
+    background-color: rgba(148, 163, 184, 0.12) !important;
+  }
+
+  .legend-color {
+    background-clip: padding-box;
+    box-shadow: none;
+  }
+
+  .fee-text {
+    fill: #f1f5f9;
+  }
+
+  .fee-circle circle:first-child {
+    stroke: #475569;
+  }
+
+  .notice-list .notice-item,
+  .event-list .event-item {
+    border-bottom-color: #334155;
+  }
+
+  .notice-icon {
+    background: rgba(59, 130, 246, 0.12);
+    color: #60a5fa;
+  }
+
+  .event-date {
+    background-color: rgba(148, 163, 184, 0.12) !important;
+    color: #e2e8f0 !important;
+  }
+
+  .attendance-card {
+    .card-body {
+      color: #e2e8f0 !important;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(15, 23, 42, 0.02)) !important;
+    }
+  }
+
+  .card,
+  .stat-card,
+  .text-primary {
+    box-shadow: none !important;
+  }
+}
