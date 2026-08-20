@@ -39,8 +39,9 @@ export type LayoutState = {
 }
 
 export type MenuItemType = {
-  label: string
+  label?: string
   isTitle?: boolean
+  isDivider?: boolean
   icon?: string
   url?: string
   badge?: {

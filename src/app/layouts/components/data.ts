@@ -31,4 +31,26 @@ export const menuItems: MenuItemType[] = [
     icon: 'tablerGauge',
     url: '/dashboard',
   },
+
+  {
+    isDivider: true,
+  },
+
+  {
+  label: 'Students',
+  children: [
+    
+    {
+      label: 'Add Student',
+      icon: 'tablerUserPlus',
+      url: '/students/add',
+    },
+    {
+      label: 'Student List',
+      icon: 'tablerUsers',
+      url: '/students',
+    },
+    
+  ],
+},
 ]

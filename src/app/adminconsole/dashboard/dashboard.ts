@@ -83,6 +83,8 @@ export class Dashboard {
     { id: 'STU002', name: 'Priya Verma', course: 'BBA', year: '1st Year', email: 'priya@gmail.com', contact: '9876543211', status: 'Active' },
     { id: 'STU003', name: 'Aman Kumar', course: 'B.Tech Electrical', year: '3rd Year', email: 'aman@gmail.com', contact: '9876543212', status: 'Active' },
     { id: 'STU004', name: 'Sneha Patel', course: 'BCA', year: '2nd Year', email: 'sneha@gmail.com', contact: '9876543213', status: 'Active' },
+    { id: 'STU005', name: 'Adarsh Pradhan', course: 'MCA', year: '1st Year', email: 'aradsh@gmail.com', contact: '7895546676', status: 'Active' },
+    { id: 'STU006', name: 'Nandini Satpathy', course: 'BBA', year: '2nd Year', email: 'nandini@gmail.com', contact: '9876543214', status: 'Active' },
   ]
 
   studentChartOptions = (): ChartConfiguration<'doughnut'> => ({

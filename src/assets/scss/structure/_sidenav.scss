@@ -82,6 +82,10 @@
         opacity: 0.5;
       }
     }
+
+    &:nth-child(3) {
+      margin-top: 5px;
+    }
   }
 
   // Multi Level Menu
@@ -94,6 +98,11 @@
 
     .side-nav-item {
       border-top: 0;
+      margin-bottom: 4px;
+
+      &:first-child {
+        margin-top: 5px;
+      }
 
       .side-nav-link {
         text-transform: none;
@@ -158,10 +167,10 @@
     transition: transform .1s ease-in-out;
   }
 
-  &:before {
-    content: "\ea5f";
-    font-family: "tabler-icons";
-  }
+  // &:before {
+  //   content: "\ea5f";
+  //   font-family: "tabler-icons";
+  // }
 }
 
 [aria-expanded="true"] {

@@ -4,7 +4,11 @@
       <li class="side-nav-title mt-2">{{ item.label }}</li>
     }
 
-    @if (!item.isTitle) {
+    @if (item.isDivider) {
+      <li class="side-nav-divider"></li>
+    }
+
+    @if (!item.isTitle && !item.isDivider) {
       <!-- menu item without any child -->
       @if (!hasSubMenu(item)) {
         <ng-container *ngTemplateOutlet="MenuItem; context: { item }" />
