@@ -19,6 +19,12 @@ export const VIEWS_ROUTES: Routes = [
     data: { title: 'Admin Dashboard' },
   },
   {
+    path: 'student-list',
+    loadComponent: () =>
+      import('@/app/adminconsole/student-list/student-list').then((mod) => mod.StudentList),
+    data: { title: 'Student List' },
+  },
+  {
     path: 'ton-ai',
     component: TonAi,
     data: { title: 'Ton AI' },

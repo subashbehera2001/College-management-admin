@@ -39,16 +39,11 @@ export const menuItems: MenuItemType[] = [
   {
   label: 'Students',
   children: [
-    
-    {
-      label: 'Add Student',
-      icon: 'tablerUserPlus',
-      url: '/students/add',
-    },
+
     {
       label: 'Student List',
       icon: 'tablerUsers',
-      url: '/students',
+      url: '/student-list',
     },
     
   ],
