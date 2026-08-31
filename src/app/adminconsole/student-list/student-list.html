@@ -88,7 +88,7 @@
             <div class="th-content">
               <span class="th-label">ID</span>
               <div class="th-actions">
-                <span class="sort-icon" *ngIf="sortField === 'id'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
+                <span class="sort-icon" *ngIf="sortField === 'id'">{{ sortDirection === 'asc' ? 'â–²' : 'â–¼' }}</span>
                 <button type="button" class="filter-icon" [class.active]="hasActiveFilter('id')" (click)="toggleFilter('id'); $event.stopPropagation()" aria-label="Filter ID">
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
@@ -111,7 +111,7 @@
             <div class="th-content">
               <span class="th-label">Name</span>
               <div class="th-actions">
-                <!-- <span class="sort-icon" *ngIf="sortField === 'name'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span> -->
+                <!-- <span class="sort-icon" *ngIf="sortField === 'name'">{{ sortDirection === 'asc' ? 'â–²' : 'â–¼' }}</span> -->
                 <button type="button" class="filter-icon" [class.active]="hasActiveFilter('name')" (click)="toggleFilter('name'); $event.stopPropagation()" aria-label="Filter Name">
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
@@ -134,7 +134,7 @@
             <div class="th-content">
               <span class="th-label">Email</span>
               <div class="th-actions">
-                <span class="sort-icon" *ngIf="sortField === 'email'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
+                <span class="sort-icon" *ngIf="sortField === 'email'">{{ sortDirection === 'asc' ? 'â–²' : 'â–¼' }}</span>
                 <button type="button" class="filter-icon" [class.active]="hasActiveFilter('email')" (click)="toggleFilter('email'); $event.stopPropagation()" aria-label="Filter Email">
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
@@ -157,7 +157,7 @@
             <div class="th-content">
               <span class="th-label">Course</span>
               <div class="th-actions">
-                <span class="sort-icon" *ngIf="sortField === 'course'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
+                <span class="sort-icon" *ngIf="sortField === 'course'">{{ sortDirection === 'asc' ? 'â–²' : 'â–¼' }}</span>
                 <button type="button" class="filter-icon" [class.active]="hasActiveFilter('course')" (click)="toggleFilter('course'); $event.stopPropagation()" aria-label="Filter Course">
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
@@ -180,7 +180,7 @@
             <div class="th-content">
               <span class="th-label">Year</span>
               <div class="th-actions">
-                <span class="sort-icon" *ngIf="sortField === 'year'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
+                <span class="sort-icon" *ngIf="sortField === 'year'">{{ sortDirection === 'asc' ? 'â–²' : 'â–¼' }}</span>
                 <button type="button" class="filter-icon" [class.active]="hasActiveFilter('year')" (click)="toggleFilter('year'); $event.stopPropagation()" aria-label="Filter Year">
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
@@ -350,20 +350,8 @@
 </div>
 
 <div class="modal-overlay" *ngIf="showDeleteModal" (click)="closeDeleteModal()">
-  <div class="modal-content delete-alert" (click)="$event.stopPropagation()">
-    <div class="delete-alert-icon">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-        <path d="M12 9v4"></path>
-        <path d="M12 17h.01"></path>
-        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
-      </svg>
-    </div>
-    <h2>Delete student?</h2>
-    <p>This record will be removed permanently.</p>
-    <div class="delete-summary" *ngIf="selectedStudentId">
-      <span class="summary-label">Student ID</span>
-      <span class="summary-value">{{ selectedStudentId }}</span>
-    </div>
+  <div class="modal-content simple-delete" (click)="$event.stopPropagation()">
+    <div class="delete-message">Are you sure you want to delete this student record?</div>
     <div class="modal-footer simple-actions">
       <button class="btn btn-secondary" (click)="closeDeleteModal()">Cancel</button>
       <button class="btn btn-danger" (click)="deleteStudent()">OK</button>
