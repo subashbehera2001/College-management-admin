@@ -21,7 +21,7 @@ export const VIEWS_ROUTES: Routes = [
   {
     path: 'student-list',
     loadComponent: () =>
-      import('@/app/adminconsole/student-list/student-list').then((mod) => mod.StudentList),
+      import('@/app/adminconsole/student-list-master/student-list/student-list').then((mod) => mod.StudentList),
     data: { title: 'Student List' },
   },
   {
