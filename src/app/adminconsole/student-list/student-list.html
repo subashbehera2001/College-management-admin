@@ -1,5 +1,4 @@
-<div class="student-list-container">
-  <!-- Breadcrumb Section -->
+﻿<div class="student-list-container">
   <div class="breadcrumb-section">
     <nav class="breadcrumb">
       <a href="#" class="breadcrumb-item">
@@ -12,31 +11,21 @@
       <span class="breadcrumb-separator">/</span>
       <span class="breadcrumb-item">Students</span>
       <span class="breadcrumb-separator">/</span>
-      <span class="breadcrumb-item active">{{ activeTab === 'active' ? 'Student List' : 'Student List' }}</span>
+      <span class="breadcrumb-item active">Student List</span>
     </nav>
   </div>
 
-  <!-- Tabs Section -->
   <div class="tabs-section">
     <div class="tabs-nav">
-      <button 
-        class="tab-btn" 
-        [class.active]="activeTab === 'active'"
-        (click)="setActiveTab('active')"
-      >
+      <button class="tab-btn" [class.active]="activeTab === 'active'" (click)="setActiveTab('active')">
         Active Students
       </button>
-      <button 
-        class="tab-btn" 
-        [class.active]="activeTab === 'archived'"
-        (click)="setActiveTab('archived')"
-      >
-        Archive Students
+      <button class="tab-btn" [class.active]="activeTab === 'archived'" (click)="setActiveTab('archived')">
+        Archived Students
       </button>
     </div>
   </div>
 
-  <!-- Toolbar Section -->
   <div class="toolbar-section">
     <div class="toolbar-left">
       <button class="toolbar-btn" (click)="exportToCSV()" title="Export CSV">
@@ -91,108 +80,142 @@
     </div>
   </div>
 
-  <!-- Table Section -->
-  <div class="table-section" *ngIf="displayedStudents.length > 0">
+  <div class="table-section" *ngIf="filteredStudents.length > 0">
     <table class="students-table">
       <thead>
         <tr class="table-header">
           <th (click)="onSort('id')" class="sortable">
             <div class="th-content">
-              <span>ID</span>
-              <span class="sort-icon" *ngIf="sortField === 'id'">
-                {{ sortDirection === "asc" ? "▲" : "▼" }}
-              </span>
+              <span class="th-label">ID</span>
+              <div class="th-actions">
+                <span class="sort-icon" *ngIf="sortField === 'id'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
+                <button type="button" class="filter-icon" [class.active]="hasActiveFilter('id')" (click)="toggleFilter('id'); $event.stopPropagation()" aria-label="Filter ID">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div class="filter-dropdown" *ngIf="activeFilter === 'id'" (click)="$event.stopPropagation()">
+              <div class="filter-panel">
+                <div class="filter-title">Filter by ID</div>
+                <input #idFilterInput type="text" class="filter-input" placeholder="Type student ID" [value]="getFilterValue('id')" (input)="setColumnFilter('id', idFilterInput.value)" />
+                <div class="filter-actions-row">
+                  <button type="button" class="filter-action secondary" (click)="clearColumnFilter('id')">Clear</button>
+                  <button type="button" class="filter-action primary" (click)="closeFilter()">Done</button>
+                </div>
+              </div>
             </div>
           </th>
           <th (click)="onSort('name')" class="sortable">
             <div class="th-content">
-              <span>Name</span>
-              <span class="sort-icon" *ngIf="sortField === 'name'">
-                {{ sortDirection === "asc" ? "▲" : "▼" }}
-              </span>
+              <span class="th-label">Name</span>
+              <div class="th-actions">
+                <!-- <span class="sort-icon" *ngIf="sortField === 'name'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span> -->
+                <button type="button" class="filter-icon" [class.active]="hasActiveFilter('name')" (click)="toggleFilter('name'); $event.stopPropagation()" aria-label="Filter Name">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div class="filter-dropdown" *ngIf="activeFilter === 'name'" (click)="$event.stopPropagation()">
+              <div class="filter-panel">
+                <div class="filter-title">Filter by Name</div>
+                <input #nameFilterInput type="text" class="filter-input" placeholder="Type student name" [value]="getFilterValue('name')" (input)="setColumnFilter('name', nameFilterInput.value)" />
+                <div class="filter-actions-row">
+                  <button type="button" class="filter-action secondary" (click)="clearColumnFilter('name')">Clear</button>
+                  <button type="button" class="filter-action primary" (click)="closeFilter()">Done</button>
+                </div>
+              </div>
             </div>
           </th>
           <th (click)="onSort('email')" class="sortable">
             <div class="th-content">
-              <span>Email</span>
-              <span class="sort-icon" *ngIf="sortField === 'email'">
-                {{ sortDirection === "asc" ? "▲" : "▼" }}
-              </span>
+              <span class="th-label">Email</span>
+              <div class="th-actions">
+                <span class="sort-icon" *ngIf="sortField === 'email'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
+                <button type="button" class="filter-icon" [class.active]="hasActiveFilter('email')" (click)="toggleFilter('email'); $event.stopPropagation()" aria-label="Filter Email">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div class="filter-dropdown" *ngIf="activeFilter === 'email'" (click)="$event.stopPropagation()">
+              <div class="filter-panel">
+                <div class="filter-title">Filter by Email</div>
+                <input #emailFilterInput type="text" class="filter-input" placeholder="Type email address" [value]="getFilterValue('email')" (input)="setColumnFilter('email', emailFilterInput.value)" />
+                <div class="filter-actions-row">
+                  <button type="button" class="filter-action secondary" (click)="clearColumnFilter('email')">Clear</button>
+                  <button type="button" class="filter-action primary" (click)="closeFilter()">Done</button>
+                </div>
+              </div>
             </div>
           </th>
           <th (click)="onSort('course')" class="sortable">
             <div class="th-content">
-              <span>Course</span>
-              <span class="sort-icon" *ngIf="sortField === 'course'">
-                {{ sortDirection === "asc" ? "▲" : "▼" }}
-              </span>
+              <span class="th-label">Course</span>
+              <div class="th-actions">
+                <span class="sort-icon" *ngIf="sortField === 'course'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
+                <button type="button" class="filter-icon" [class.active]="hasActiveFilter('course')" (click)="toggleFilter('course'); $event.stopPropagation()" aria-label="Filter Course">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div class="filter-dropdown" *ngIf="activeFilter === 'course'" (click)="$event.stopPropagation()">
+              <div class="filter-panel">
+                <div class="filter-title">Filter by Course</div>
+                <input #courseFilterInput type="text" class="filter-input" placeholder="Type course name" [value]="getFilterValue('course')" (input)="setColumnFilter('course', courseFilterInput.value)" />
+                <div class="filter-actions-row">
+                  <button type="button" class="filter-action secondary" (click)="clearColumnFilter('course')">Clear</button>
+                  <button type="button" class="filter-action primary" (click)="closeFilter()">Done</button>
+                </div>
+              </div>
             </div>
           </th>
           <th (click)="onSort('year')" class="sortable">
             <div class="th-content">
-              <span>Year</span>
-              <span class="sort-icon" *ngIf="sortField === 'year'">
-                {{ sortDirection === "asc" ? "▲" : "▼" }}
-              </span>
-            </div>
-          </th>
-          <th>
-            <div class="th-content">
-              <span>Status</span>
-              <span class="filter-icon" (click)="toggleFilter('status'); $event.stopPropagation()">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
-                </svg>
-              </span>
-            </div>
-            <div class="filter-dropdown" *ngIf="activeFilter === 'status'">
-              <div class="filter-option" (click)="setStatusFilter(''); closeFilter()">
-                <input type="radio" name="status" [checked]="selectedStatus === ''" />
-                <span>All Status</span>
+              <span class="th-label">Year</span>
+              <div class="th-actions">
+                <span class="sort-icon" *ngIf="sortField === 'year'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
+                <button type="button" class="filter-icon" [class.active]="hasActiveFilter('year')" (click)="toggleFilter('year'); $event.stopPropagation()" aria-label="Filter Year">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+                  </svg>
+                </button>
               </div>
-              <div class="filter-option" *ngFor="let status of statusOptions" (click)="setStatusFilter(status); closeFilter()">
-                <input type="radio" name="status" [checked]="selectedStatus === status" />
-                <span>{{ status }}</span>
+            </div>
+            <div class="filter-dropdown" *ngIf="activeFilter === 'year'" (click)="$event.stopPropagation()">
+              <div class="filter-panel">
+                <div class="filter-title">Filter by Year</div>
+                <div class="filter-option-list">
+                  <button type="button" class="filter-option" [class.selected]="getFilterValue('year') === ''" (click)="setColumnFilter('year', '', true)">All Years</button>
+                  <button type="button" class="filter-option" *ngFor="let year of yearOptions" [class.selected]="getFilterValue('year') === year" (click)="setColumnFilter('year', year, true)">{{ year }}</button>
+                </div>
               </div>
             </div>
           </th>
           <th>
             <div class="th-content">
-              <span>Gender</span>
-              <span class="filter-icon" (click)="toggleFilter('gender'); $event.stopPropagation()">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
-                </svg>
-              </span>
-            </div>
-            <div class="filter-dropdown" *ngIf="activeFilter === 'gender'">
-              <div class="filter-option" (click)="setGenderFilter(''); closeFilter()">
-                <input type="radio" name="gender" [checked]="selectedGender === ''" />
-                <span>All Gender</span>
-              </div>
-              <div class="filter-option" *ngFor="let gender of genderOptions" (click)="setGenderFilter(gender); closeFilter()">
-                <input type="radio" name="gender" [checked]="selectedGender === gender" />
-                <span>{{ gender }}</span>
+              <span class="th-label">Status</span>
+              <div class="th-actions">
+                <button type="button" class="filter-icon" [class.active]="hasActiveFilter('status')" (click)="toggleFilter('status'); $event.stopPropagation()" aria-label="Filter Status">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+                  </svg>
+                </button>
               </div>
             </div>
-          </th>
-          <th>
-            <div class="th-content">
-              <span>Year</span>
-              <span class="filter-icon" (click)="toggleFilter('year'); $event.stopPropagation()">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
-                </svg>
-              </span>
-            </div>
-            <div class="filter-dropdown" *ngIf="activeFilter === 'year'">
-              <div class="filter-option" (click)="setYearFilter(''); closeFilter()">
-                <input type="radio" name="year" [checked]="selectedYear === ''" />
-                <span>All Years</span>
-              </div>
-              <div class="filter-option" *ngFor="let year of yearOptions" (click)="setYearFilter(year); closeFilter()">
-                <input type="radio" name="year" [checked]="selectedYear === year" />
-                <span>{{ year }}</span>
+            <div class="filter-dropdown" *ngIf="activeFilter === 'status'" (click)="$event.stopPropagation()">
+              <div class="filter-panel">
+                <div class="filter-title">Filter by Status</div>
+                <div class="filter-option-list">
+                  <button type="button" class="filter-option" [class.selected]="getFilterValue('status') === ''" (click)="setColumnFilter('status', '', true)">All Status</button>
+                  <button type="button" class="filter-option" *ngFor="let status of statusOptions" [class.selected]="getFilterValue('status') === status" (click)="setColumnFilter('status', status, true)">{{ status }}</button>
+                </div>
               </div>
             </div>
           </th>
@@ -200,56 +223,36 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let student of displayedStudents" class="table-row">
-          <td class="cell-id">
-            <span class="badge-id">{{ student.id }}</span>
-          </td>
+        <tr *ngFor="let student of displayedStudents; trackBy: trackByStudentId" class="table-row">
+          <td class="cell-id"><span class="badge-id">{{ student.id }}</span></td>
           <td class="cell-name">
             <div class="student-info">
               <div class="avatar">{{ student.name.charAt(0) }}</div>
               <div class="info-text">
                 <div class="name">{{ student.name }}</div>
-                <div class="gender">{{ student.gender }}</div>
               </div>
             </div>
           </td>
           <td class="cell-email">{{ student.email }}</td>
           <td class="cell-course">{{ student.course }}</td>
           <td class="cell-year">{{ student.year }}</td>
-          <td class="cell-status">
-            <span class="badge" [ngClass]="getStatusClass(student.status)">
-              {{ student.status }}
-            </span>
-          </td>
-          <td class="cell-contact">{{ student.contact }}</td>
+          <td class="cell-status"><span class="badge" [ngClass]="getStatusClass(student.status)">{{ student.status }}</span></td>
           <td class="cell-actions">
             <div class="action-buttons">
-              <button
-                class="action-btn view-btn"
-                title="View Details"
-                (click)="viewStudent(student)"
-              >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <button class="action-btn view-btn" title="View Details" (click)="viewStudent(student)">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
                   <circle cx="12" cy="12" r="3"></circle>
                 </svg>
               </button>
-              <button
-                class="action-btn edit-btn"
-                title="Edit Student"
-                (click)="editStudent(student)"
-              >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <button class="action-btn edit-btn" title="Edit Student" (click)="editStudent(student)">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
                   <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
                 </svg>
               </button>
-              <button
-                class="action-btn delete-btn"
-                title="Delete Student"
-                (click)="openDeleteModal(student.id)"
-              >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <button class="action-btn delete-btn" title="Delete Student" (click)="openDeleteModal(student.id)">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <polyline points="3 6 5 6 21 6"></polyline>
                   <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
                 </svg>
@@ -261,104 +264,109 @@
     </table>
   </div>
 
-  <!-- Empty State -->
-  <div class="empty-state" *ngIf="displayedStudents.length === 0 && !isLoading">
-    <div class="empty-icon">📋</div>
+  <div class="empty-state" *ngIf="filteredStudents.length === 0 && !isLoading">
+    <div class="empty-icon">No Data</div>
     <h3>No records to display</h3>
     <p>Try adjusting your search or filter criteria</p>
     <button class="btn btn-primary" (click)="clearFilters()">Clear Filters</button>
   </div>
 
-  <!-- Pagination Section -->
-  <div class="pagination-section" *ngIf="displayedStudents.length > 0">
+  <div class="pagination-section" *ngIf="totalPages > 1">
     <div class="pagination-info">
+      <div class="pagination-summary">Showing {{ startRecord }}-{{ endRecord }} of {{ resultCount }}</div>
       <label>
         Show
-        <select
-          class="page-size-select"
-          [(ngModel)]="pageSize"
-          (change)="changePageSize(pageSize)"
-        >
-          <option value="5">5</option>
-          <option value="10">10</option>
-          <option value="25">25</option>
-          <option value="50">50</option>
+        <select class="page-size-select" [(ngModel)]="pageSize" (change)="changePageSize(pageSize)">
+          <option [ngValue]="5">5</option>
+          <option [ngValue]="10">10</option>
+          <option [ngValue]="25">25</option>
+          <option [ngValue]="50">50</option>
         </select>
         entries per page
       </label>
     </div>
 
     <div class="pagination-controls">
-      <button
-        class="pagination-btn"
-        [disabled]="currentPage === 1"
-        (click)="previousPage()"
-      >
-        ← Previous
-      </button>
-
+      <button class="pagination-btn" [disabled]="currentPage === 1" (click)="previousPage()">Previous</button>
       <div class="page-numbers">
         <button
-          *ngIf="currentPage > 3"
+          *ngFor="let item of getPaginationItems(); trackBy: trackByPaginationItem"
           class="pagination-btn"
-          (click)="goToPage(1)"
+          [class.active]="item === currentPage"
+          [class.pagination-dots]="item === '...'"
+          [disabled]="item === '...'"
+          (click)="goToPaginationItem(item)"
         >
-          1
-        </button>
-        <span *ngIf="currentPage > 4" class="pagination-dots">...</span>
-        <button
-          *ngFor="let page of getPageNumbers()"
-          class="pagination-btn"
-          [class.active]="page === currentPage"
-          (click)="goToPage(page)"
-        >
-          {{ page }}
-        </button>
-        <span *ngIf="currentPage < totalPages - 3" class="pagination-dots">
-          ...
-        </span>
-        <button
-          *ngIf="currentPage < totalPages - 2"
-          class="pagination-btn"
-          (click)="goToPage(totalPages)"
-        >
-          {{ totalPages }}
+          {{ item }}
         </button>
       </div>
-
-      <button
-        class="pagination-btn"
-        [disabled]="currentPage === totalPages"
-        (click)="nextPage()"
-      >
-        Next →
-      </button>
+      <button class="pagination-btn" [disabled]="currentPage === totalPages" (click)="nextPage()">Next</button>
     </div>
   </div>
 </div>
 
-<!-- Delete Confirmation Modal -->
+<div class="modal-overlay" *ngIf="showViewModal" (click)="closeViewModal()">
+  <div class="modal-content view-modal" (click)="$event.stopPropagation()">
+    <div class="view-modal-header">
+      <div class="view-avatar">{{ selectedStudent?.name?.charAt(0) }}</div>
+      <div class="view-heading" *ngIf="selectedStudent as student">
+        <div class="view-kicker">Student Details</div>
+        <h2>{{ student.name }}</h2>
+        <p>{{ student.course }}</p>
+      </div>
+      <button class="close-btn" (click)="closeViewModal()">X</button>
+    </div>
+
+    <div class="view-meta" *ngIf="selectedStudent as student">
+      <span class="meta-chip">{{ student.id }}</span>
+      <span class="meta-chip status-chip" [ngClass]="getStatusClass(student.status)">{{ student.status }}</span>
+    </div>
+
+    <div class="view-modal-body" *ngIf="selectedStudent as student">
+      <div class="detail-grid">
+        <div class="detail-item detail-wide">
+          <span class="detail-label">Student ID</span>
+          <span class="detail-value">{{ student.id }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Email Address</span>
+          <span class="detail-value">{{ student.email }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Course</span>
+          <span class="detail-value">{{ student.course }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Academic Year</span>
+          <span class="detail-value">{{ student.year }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer view-footer">
+      <button class="btn btn-primary" (click)="closeViewModal()">Close</button>
+    </div>
+  </div>
+</div>
+
 <div class="modal-overlay" *ngIf="showDeleteModal" (click)="closeDeleteModal()">
-  <div class="modal-content" (click="$event.stopPropagation()">
-    <div class="modal-header">
-      <h2>Confirm Delete</h2>
-      <button class="close-btn" (click)="closeDeleteModal()">✕</button>
+  <div class="modal-content delete-alert" (click)="$event.stopPropagation()">
+    <div class="delete-alert-icon">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <path d="M12 9v4"></path>
+        <path d="M12 17h.01"></path>
+        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+      </svg>
     </div>
-    <div class="modal-body">
-      <p>Are you sure you want to delete this student?</p>
-      <p class="warning-text">This action cannot be undone.</p>
+    <h2>Delete student?</h2>
+    <p>This record will be removed permanently.</p>
+    <div class="delete-summary" *ngIf="selectedStudentId">
+      <span class="summary-label">Student ID</span>
+      <span class="summary-value">{{ selectedStudentId }}</span>
     </div>
-    <div class="modal-footer">
-      <button class="btn btn-secondary" (click)="closeDeleteModal()">
-        Cancel
-      </button>
-      <button
-        class="btn btn-danger"
-        (click)="deleteStudent()"
-        [disabled]="isLoading"
-      >
-        {{ isLoading ? "Deleting..." : "Delete" }}
-      </button>
+    <div class="modal-footer simple-actions">
+      <button class="btn btn-secondary" (click)="closeDeleteModal()">Cancel</button>
+      <button class="btn btn-danger" (click)="deleteStudent()">OK</button>
     </div>
   </div>
 </div>
