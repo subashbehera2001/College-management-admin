@@ -1,1 +1,78 @@
-<p>add-student-list works!</p>
+<div class="add-student-container">
+  <div class="breadcrumb-section">
+    <nav class="breadcrumb">
+      <a href="/" class="breadcrumb-item">Home</a>
+      <span class="breadcrumb-separator">/</span>
+      <span class="breadcrumb-item">Students</span>
+      <span class="breadcrumb-separator">/</span>
+      <span class="breadcrumb-item">Student List</span>
+      <span class="breadcrumb-separator">/</span>
+      <span class="breadcrumb-item active">Add Student</span>
+    </nav>
+  </div>
+
+  <div class="form-wrapper">
+    <div class="form-view-action">
+      <button type="button" class="btn btn-secondary" (click)="viewList()">View</button>
+    </div>
+    <form class="add-student-form" #addForm="ngForm" (ngSubmit)="onSubmit()">
+      <div class="form-card">
+        <h3 class="card-title">Student Information</h3>
+
+        <div class="form-grid">
+
+          <div class="form-group">
+            <label for="name">Full Name <span class="req">*</span></label>
+            <input id="name" type="text" name="name" [(ngModel)]="name" required placeholder="Enter student full name" class="form-control" />
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email Address <span class="req">*</span></label>
+            <input id="email" type="email" name="email" [(ngModel)]="email" required placeholder="student@example.com" class="form-control" />
+          </div>
+
+          <div class="form-group">
+            <label for="course">Course <span class="req">*</span></label>
+            <div class="select-wrapper">
+              <div class="select-inner">
+                <select id="course" name="course" [(ngModel)]="course" required class="form-control">
+                  <option value="" disabled>Select course</option>
+                  <option *ngFor="let option of courseOptions" [value]="option">{{ option }}</option>
+                </select>
+                <svg class="select-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="year">Academic Year <span class="req">*</span></label>
+            <div class="select-wrapper">
+              <div class="select-inner">
+                <select id="year" name="year" [(ngModel)]="year" required class="form-control">
+                  <option value="" disabled>Select year</option>
+                  <option *ngFor="let option of yearOptions" [value]="option">{{ option }}</option>
+                </select>
+                <svg class="select-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- <div class="form-group">
+            <label for="status">Status</label>
+            <select id="status" name="status" [(ngModel)]="status" class="form-control">
+              <option *ngFor="let option of statusOptions" [value]="option">{{ option }}</option>
+            </select>
+          </div> -->
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary" [disabled]="addForm.invalid">Submit</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

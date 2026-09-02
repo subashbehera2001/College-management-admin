@@ -1,6 +1,7 @@
-﻿import { Component, HostListener, OnInit } from "@angular/core";
+import { Component, HostListener, inject, OnInit } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
+import { Router } from "@angular/router";
 import { NgIcon } from "@ng-icons/core";
 import { Student, STUDENTS } from "./data";
 
@@ -15,6 +16,7 @@ type PaginationItem = number | "...";
   styleUrl: "./student-list.scss",
 })
 export class StudentList implements OnInit {
+  router = inject(Router);
   students: Student[] = [];
   filteredStudents: Student[] = [];
   displayedStudents: Student[] = [];
@@ -337,7 +339,7 @@ export class StudentList implements OnInit {
   }
 
   addStudent(): void {
-    console.log("Add new student");
+    this.router.navigate(['/student-list/add-student-list']);
   }
 
   editStudent(student: Student): void {

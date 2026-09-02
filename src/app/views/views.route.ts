@@ -20,8 +20,8 @@ export const VIEWS_ROUTES: Routes = [
   },
   {
     path: 'student-list',
-    loadComponent: () =>
-      import('@/app/adminconsole/student-list-master/student-list/student-list').then((mod) => mod.StudentList),
+    loadChildren: () =>
+      import('@/app/adminconsole/student-list-master/student-list-master-module').then((mod) => mod.StudentListMasterModule),
     data: { title: 'Student List' },
   },
   {
