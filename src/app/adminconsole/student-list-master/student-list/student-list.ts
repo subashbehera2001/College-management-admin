@@ -346,14 +346,16 @@ export class StudentList implements OnInit {
     console.log("Edit student:", student);
   }
 
-  openDeleteModal(studentId: string): void {
-    this.selectedStudentId = studentId;
+  openDeleteModal(student: Student): void {
+    this.selectedStudent = student;
+    this.selectedStudentId = student.id;
     this.showDeleteModal = true;
   }
 
   closeDeleteModal(): void {
     this.showDeleteModal = false;
     this.selectedStudentId = null;
+    this.selectedStudent = null;
   }
 
   deleteStudent(): void {

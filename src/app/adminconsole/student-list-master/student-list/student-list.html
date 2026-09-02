@@ -251,7 +251,7 @@
                   <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
                 </svg>
               </button>
-              <button class="action-btn delete-btn" title="Delete Student" (click)="openDeleteModal(student.id)">
+              <button class="action-btn delete-btn" title="Delete Student" (click)="openDeleteModal(student)">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <polyline points="3 6 5 6 21 6"></polyline>
                   <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
@@ -310,16 +310,10 @@
     <div class="view-modal-header">
       <div class="view-avatar">{{ selectedStudent?.name?.charAt(0) }}</div>
       <div class="view-heading" *ngIf="selectedStudent as student">
-        <div class="view-kicker">Student Details</div>
         <h2>{{ student.name }}</h2>
         <p>{{ student.course }}</p>
       </div>
       <button class="close-btn" (click)="closeViewModal()">X</button>
-    </div>
-
-    <div class="view-meta" *ngIf="selectedStudent as student">
-      <span class="meta-chip">{{ student.id }}</span>
-      <span class="meta-chip status-chip" [ngClass]="getStatusClass(student.status)">{{ student.status }}</span>
     </div>
 
     <div class="view-modal-body" *ngIf="selectedStudent as student">
@@ -350,21 +344,13 @@
 </div>
 
 <div class="modal-overlay" *ngIf="showDeleteModal" (click)="closeDeleteModal()">
-  <div class="modal-content simple-delete" (click)="$event.stopPropagation()">
-    <div class="delete-icon">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M3 6h18"></path>
-          <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path>
-          <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-          <line x1="10" y1="11" x2="10" y2="17"></line>
-          <line x1="14" y1="11" x2="14" y2="17"></line>
-        </svg>
-      </div>
-      <h3 class="delete-title">Delete Student</h3>
-      <p class="delete-message">Are you sure you want to delete this student record?</p>
-    <div class="modal-footer simple-actions">
-      <button class="btn btn-secondary" (click)="closeDeleteModal()">Cancel</button>
-      <button class="btn btn-danger" (click)="deleteStudent()">Delete</button>
+  <div class="modal-content simple-delete" (click)="$event.stopPropagation()" *ngIf="selectedStudent as student">
+    <h3 class="delete-title">Delete Student?</h3>
+    <p class="delete-message">Are you sure you want to delete {{ student.name }}?</p>
+
+    <div class="simple-actions">
+      <button class="btn btn-cancel" type="button" (click)="closeDeleteModal()">Cancel</button>
+      <button class="btn btn-confirm-delete" type="button" (click)="deleteStudent()">Delete</button>
     </div>
   </div>
 </div>
