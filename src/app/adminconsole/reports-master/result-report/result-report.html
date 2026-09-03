@@ -1,0 +1,88 @@
+<div class="cms-container">
+  <div class="breadcrumb-section">
+    <nav class="breadcrumb">
+      <a routerLink="/dashboard" class="breadcrumb-item">Home</a>
+      <span class="breadcrumb-separator">/</span>
+      <span class="breadcrumb-item">Reports</span>
+      <span class="breadcrumb-separator">/</span>
+      <span class="breadcrumb-item active">Result Report</span>
+    </nav>
+  </div>
+
+  <div class="p-4 bg-white border-bottom">
+    <div class="row g-3">
+      <div class="col-md-3">
+        <div class="p-3 bg-light border rounded">
+          <div class="text-muted fs-12">Total Students Appeared</div>
+          <div class="fs-22 fw-bold text-dark mt-1">372 Candidates</div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="p-3 bg-success-subtle border border-success-subtle rounded">
+          <div class="text-muted fs-12">Total Passed</div>
+          <div class="fs-22 fw-bold text-success mt-1">349 (93.8%)</div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="p-3 bg-danger-subtle border border-danger-subtle rounded">
+          <div class="text-muted fs-12">Backlog / Failures</div>
+          <div class="fs-22 fw-bold text-danger mt-1">23 (6.2%)</div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="p-3 bg-primary-subtle border border-primary-subtle rounded">
+          <div class="text-muted fs-12">Distinctions / 'O' Grades</div>
+          <div class="fs-22 fw-bold text-primary mt-1">113 (30.4%)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toolbar-section">
+    <div class="toolbar-left">
+      <button class="toolbar-btn" (click)="exportCSV()">Export CSV</button>
+      <select class="form-select form-select-sm" style="width: 220px;" [(ngModel)]="selectedCourse" (change)="applyFilter()">
+        <option value="">All Courses</option>
+        <option *ngFor="let c of courses" [value]="c">{{ c }}</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="table-section">
+    <table class="cms-table">
+      <thead>
+        <tr>
+          <th>Course</th>
+          <th>Semester</th>
+          <th>Appeared</th>
+          <th>Passed</th>
+          <th>Failed</th>
+          <th>Pass Percentage</th>
+          <th>'O' Grades</th>
+          <th>Performance</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of filteredStats">
+          <td class="fw-semibold text-dark">{{ item.course }}</td>
+          <td>{{ item.semester }}</td>
+          <td>{{ item.appeared }}</td>
+          <td><strong class="text-success">{{ item.passed }}</strong></td>
+          <td><strong class="text-danger">{{ item.failed }}</strong></td>
+          <td>
+            <div class="d-flex align-items-center gap-2">
+              <div class="progress flex-grow-1" style="height: 6px;">
+                <div class="progress-bar bg-success" [style.width.%]="item.passPercentage"></div>
+              </div>
+              <strong class="fs-12 text-success">{{ item.passPercentage }}%</strong>
+            </div>
+          </td>
+          <td><span class="badge bg-primary-subtle text-primary">{{ item.topGradeCount }}</span></td>
+          <td>
+            <span class="badge-status status-pass">Excellent</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

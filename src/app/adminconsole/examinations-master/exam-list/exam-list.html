@@ -1,0 +1,89 @@
+<div class="cms-container">
+  <div class="breadcrumb-section">
+    <nav class="breadcrumb">
+      <a routerLink="/dashboard" class="breadcrumb-item">Home</a>
+      <span class="breadcrumb-separator">/</span>
+      <span class="breadcrumb-item">Examinations</span>
+      <span class="breadcrumb-separator">/</span>
+      <span class="breadcrumb-item active">Exam List</span>
+    </nav>
+  </div>
+
+  <div class="toolbar-section">
+    <div class="toolbar-left">
+      <button class="toolbar-btn" (click)="exportCSV()">Export CSV</button>
+      <button class="toolbar-btn btn-primary" (click)="addExam()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+        Add Exam
+      </button>
+      <select class="form-select form-select-sm" style="width: 170px;" [(ngModel)]="selectedStatus" (change)="applyFilter()">
+        <option value="">All Statuses</option>
+        <option value="Upcoming">Upcoming</option>
+        <option value="Ongoing">Ongoing</option>
+        <option value="Completed">Completed</option>
+      </select>
+    </div>
+    <div class="toolbar-right">
+      <div class="search-box">
+        <input type="text" placeholder="Search exams..." class="search-input" [(ngModel)]="searchText" (input)="applyFilter()" />
+        <svg class="search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.35-4.35"></path></svg>
+      </div>
+    </div>
+  </div>
+
+  <div class="table-section">
+    <table class="cms-table">
+      <thead>
+        <tr>
+          <th>Exam Code</th>
+          <th>Exam Title</th>
+          <th>Course & Semester</th>
+          <th>Session</th>
+          <th>Date Range</th>
+          <th>Type</th>
+          <th>Status</th>
+          <th style="width: 80px; text-align: center;">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let e of filteredExams">
+          <td><strong class="text-primary">{{ e.code }}</strong></td>
+          <td class="fw-semibold text-dark">{{ e.name }}</td>
+          <td>{{ e.course }} ({{ e.semester }})</td>
+          <td>{{ e.session }}</td>
+          <td>{{ e.startDate }} to {{ e.endDate }}</td>
+          <td><span class="badge bg-light text-dark border">{{ e.examType }}</span></td>
+          <td>
+            <span class="badge-status" [ngClass]="{
+              'status-active': e.status === 'Ongoing',
+              'status-upcoming': e.status === 'Upcoming',
+              'status-published': e.status === 'Completed'
+            }">{{ e.status }}</span>
+          </td>
+          <td>
+            <div class="action-buttons justify-content-center">
+              <button type="button" class="btn-action btn-delete" (click)="openDeleteModal(e)" title="Delete">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Delete Modal -->
+  <div class="modal-overlay" *ngIf="showDeleteModal && selectedExam">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h4>Confirm Delete Exam</h4>
+        <button type="button" class="close-btn" (click)="closeDeleteModal()">✕</button>
+      </div>
+      <div class="modal-body">Are you sure you want to remove exam <strong>{{ selectedExam.name }}</strong>?</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeDeleteModal()">Cancel</button>
+        <button type="button" class="btn btn-danger" (click)="confirmDelete()">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>

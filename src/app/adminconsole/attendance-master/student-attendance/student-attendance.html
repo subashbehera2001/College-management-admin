@@ -1,0 +1,121 @@
+<div class="cms-container">
+  <div class="breadcrumb-section">
+    <nav class="breadcrumb">
+      <a routerLink="/dashboard" class="breadcrumb-item">Home</a>
+      <span class="breadcrumb-separator">/</span>
+      <span class="breadcrumb-item">Attendance</span>
+      <span class="breadcrumb-separator">/</span>
+      <span class="breadcrumb-item active">Student Attendance</span>
+    </nav>
+  </div>
+
+  <div class="p-4 bg-white border-bottom">
+    <div class="row g-3 align-items-end">
+      <div class="col-md-3">
+        <label class="form-label fs-13 fw-semibold">Attendance Date</label>
+        <input type="date" class="form-control form-control-sm" [(ngModel)]="selectedDate" />
+      </div>
+      <div class="col-md-3">
+        <label class="form-label fs-13 fw-semibold">Course</label>
+        <select class="form-select form-select-sm" [(ngModel)]="selectedCourse" (change)="loadAttendance()">
+          <option *ngFor="let c of courseOptions" [value]="c">{{ c }}</option>
+        </select>
+      </div>
+      <div class="col-md-2">
+        <label class="form-label fs-13 fw-semibold">Semester</label>
+        <select class="form-select form-select-sm" [(ngModel)]="selectedSemester" (change)="loadAttendance()">
+          <option *ngFor="let s of semesterOptions" [value]="s">{{ s }}</option>
+        </select>
+      </div>
+      <div class="col-md-4">
+        <label class="form-label fs-13 fw-semibold">Subject</label>
+        <select class="form-select form-select-sm" [(ngModel)]="selectedSubject">
+          <option *ngFor="let sub of subjectOptions" [value]="sub">{{ sub }}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats Bar -->
+  <div class="px-4 py-3 bg-light border-bottom d-flex justify-content-between align-items-center flex-wrap gap-2">
+    <div class="d-flex gap-4">
+      <div>Total: <strong>{{ students.length }}</strong></div>
+      <div class="text-success">Present: <strong>{{ presentCount }}</strong></div>
+      <div class="text-danger">Absent: <strong>{{ absentCount }}</strong></div>
+      <div class="text-warning">Late: <strong>{{ lateCount }}</strong></div>
+      <div class="text-primary">Attendance: <strong>{{ attendanceRate }}</strong></div>
+    </div>
+    <div class="d-flex gap-2">
+      <button type="button" class="btn btn-sm btn-outline-success" (click)="markAll('Present')">Mark All Present</button>
+      <button type="button" class="btn btn-sm btn-outline-danger" (click)="markAll('Absent')">Mark All Absent</button>
+    </div>
+  </div>
+
+  <!-- Alert -->
+  <div class="p-3 mx-4 my-2 alert alert-success d-flex justify-content-between align-items-center" *ngIf="savedSuccess">
+    <span>✓ Attendance saved successfully for {{ selectedCourse }} - {{ selectedSubject }} on {{ selectedDate }}!</span>
+    <button type="button" class="btn-close" (click)="savedSuccess = false"></button>
+  </div>
+
+  <!-- Student Attendance Roster -->
+  <div class="table-section">
+    <table class="cms-table">
+      <thead>
+        <tr>
+          <th>Roll No</th>
+          <th>Student Name</th>
+          <th style="width: 280px; text-align: center;">Attendance Status</th>
+          <th>Remarks / Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let student of students">
+          <td><strong class="text-primary">{{ student.rollNo }}</strong></td>
+          <td class="fw-semibold">{{ student.studentName }}</td>
+          <td class="text-center">
+            <div class="btn-group btn-group-sm" role="group">
+              <button
+                type="button"
+                class="btn"
+                [ngClass]="student.status === 'Present' ? 'btn-success' : 'btn-outline-secondary'"
+                (click)="setStatus(student, 'Present')"
+              >
+                Present
+              </button>
+              <button
+                type="button"
+                class="btn"
+                [ngClass]="student.status === 'Absent' ? 'btn-danger' : 'btn-outline-secondary'"
+                (click)="setStatus(student, 'Absent')"
+              >
+                Absent
+              </button>
+              <button
+                type="button"
+                class="btn"
+                [ngClass]="student.status === 'Late' ? 'btn-warning' : 'btn-outline-secondary'"
+                (click)="setStatus(student, 'Late')"
+              >
+                Late
+              </button>
+            </div>
+          </td>
+          <td>
+            <input
+              type="text"
+              class="form-control form-control-sm"
+              [(ngModel)]="student.remarks"
+              placeholder="Add optional note"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="p-4 bg-white border-top text-end">
+    <button type="button" class="btn btn-primary px-4 py-2" (click)="saveAttendance()">
+      Save Attendance
+    </button>
+  </div>
+</div>

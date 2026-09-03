@@ -1,0 +1,64 @@
+<div class="cms-container">
+  <div class="breadcrumb-section">
+    <nav class="breadcrumb">
+      <a routerLink="/dashboard" class="breadcrumb-item">Home</a>
+      <span class="breadcrumb-separator">/</span>
+      <span class="breadcrumb-item">Settings</span>
+      <span class="breadcrumb-separator">/</span>
+      <span class="breadcrumb-item active">Profile</span>
+    </nav>
+  </div>
+
+  <div class="form-wrapper">
+    <div class="p-3 mx-auto my-2 alert alert-success d-flex justify-content-between align-items-center" style="max-width: 820px;" *ngIf="savedSuccess">
+      <span>✓ Profile updated successfully!</span>
+      <button type="button" class="btn-close" (click)="savedSuccess = false"></button>
+    </div>
+
+    <form (ngSubmit)="saveProfile()">
+      <div class="form-card mx-auto" style="max-width: 820px;">
+        <h3 class="card-title">Admin Account Profile</h3>
+
+        <div class="d-flex align-items-center gap-4 mb-4 pb-4 border-bottom">
+          <img [src]="user.avatar" width="80" height="80" class="rounded-circle border" alt="Admin Avatar" />
+          <div>
+            <h5 class="mb-1 fw-bold text-dark">{{ user.name }}</h5>
+            <div class="badge bg-primary me-2">{{ user.role }}</div>
+            <span class="text-muted fs-13">{{ user.department }}</span>
+          </div>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="profName">Full Name</label>
+            <input id="profName" type="text" [(ngModel)]="user.name" name="name" class="form-control" required />
+          </div>
+
+          <div class="form-group">
+            <label for="profEmail">Email Address</label>
+            <input id="profEmail" type="email" [(ngModel)]="user.email" name="email" class="form-control" required />
+          </div>
+
+          <div class="form-group">
+            <label for="profPhone">Contact Phone</label>
+            <input id="profPhone" type="tel" [(ngModel)]="user.phone" name="phone" class="form-control" />
+          </div>
+
+          <div class="form-group">
+            <label for="profDept">Department</label>
+            <input id="profDept" type="text" [(ngModel)]="user.department" name="department" class="form-control" />
+          </div>
+
+          <div class="form-group" style="grid-column: 1 / -1;">
+            <label for="profBio">Professional Bio</label>
+            <textarea id="profBio" [(ngModel)]="bio" name="bio" rows="3" class="form-control"></textarea>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

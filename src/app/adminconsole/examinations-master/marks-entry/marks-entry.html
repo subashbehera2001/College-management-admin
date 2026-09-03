@@ -1,0 +1,102 @@
+<div class="cms-container">
+  <div class="breadcrumb-section">
+    <nav class="breadcrumb">
+      <a routerLink="/dashboard" class="breadcrumb-item">Home</a>
+      <span class="breadcrumb-separator">/</span>
+      <span class="breadcrumb-item">Examinations</span>
+      <span class="breadcrumb-separator">/</span>
+      <span class="breadcrumb-item active">Marks Entry</span>
+    </nav>
+  </div>
+
+  <div class="p-4 bg-white border-bottom">
+    <div class="row g-3">
+      <div class="col-md-3">
+        <label class="form-label fs-13 fw-semibold">Examination</label>
+        <select class="form-select form-select-sm" [(ngModel)]="selectedExam">
+          <option *ngFor="let opt of examOptions" [value]="opt.split(' ')[0]">{{ opt }}</option>
+        </select>
+      </div>
+      <div class="col-md-3">
+        <label class="form-label fs-13 fw-semibold">Course</label>
+        <select class="form-select form-select-sm" [(ngModel)]="selectedCourse">
+          <option *ngFor="let c of courseOptions" [value]="c">{{ c }}</option>
+        </select>
+      </div>
+      <div class="col-md-2">
+        <label class="form-label fs-13 fw-semibold">Semester</label>
+        <select class="form-select form-select-sm" [(ngModel)]="selectedSemester">
+          <option *ngFor="let s of semesterOptions" [value]="s">{{ s }}</option>
+        </select>
+      </div>
+      <div class="col-md-4">
+        <label class="form-label fs-13 fw-semibold">Subject</label>
+        <select class="form-select form-select-sm" [(ngModel)]="selectedSubject">
+          <option *ngFor="let sub of subjectOptions" [value]="sub">{{ sub }}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="p-3 mx-4 my-2 alert alert-success d-flex justify-content-between align-items-center" *ngIf="savedSuccess">
+    <span>✓ Examination marks updated and recorded successfully!</span>
+    <button type="button" class="btn-close" (click)="savedSuccess = false"></button>
+  </div>
+
+  <div class="table-section">
+    <table class="cms-table">
+      <thead>
+        <tr>
+          <th>Roll No</th>
+          <th>Student Name</th>
+          <th style="width: 150px;">Internal (Max 30)</th>
+          <th style="width: 150px;">External (Max 70)</th>
+          <th>Total (Max 100)</th>
+          <th>Grade</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of studentsMarks">
+          <td><strong class="text-primary">{{ item.rollNo }}</strong></td>
+          <td class="fw-semibold">{{ item.studentName }}</td>
+          <td>
+            <input
+              type="number"
+              class="form-control form-control-sm"
+              [(ngModel)]="item.internalMarks"
+              min="0"
+              [max]="item.maxInternal"
+            />
+          </td>
+          <td>
+            <input
+              type="number"
+              class="form-control form-control-sm"
+              [(ngModel)]="item.externalMarks"
+              min="0"
+              [max]="item.maxExternal"
+            />
+          </td>
+          <td>
+            <strong class="fs-14">{{ getTotal(item) }}</strong> / 100
+          </td>
+          <td>
+            <span class="badge bg-light text-dark border fs-12">{{ getGrade(item) }}</span>
+          </td>
+          <td>
+            <span class="badge-status" [ngClass]="getStatus(item) === 'Pass' ? 'status-active' : 'status-inactive'">
+              {{ getStatus(item) }}
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="p-4 bg-white border-top text-end">
+    <button type="button" class="btn btn-primary px-4 py-2" (click)="saveMarks()">
+      Save Marks
+    </button>
+  </div>
+</div>

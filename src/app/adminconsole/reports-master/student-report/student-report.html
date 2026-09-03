@@ -1,0 +1,85 @@
+<div class="cms-container">
+  <div class="breadcrumb-section">
+    <nav class="breadcrumb">
+      <a routerLink="/dashboard" class="breadcrumb-item">Home</a>
+      <span class="breadcrumb-separator">/</span>
+      <span class="breadcrumb-item">Reports</span>
+      <span class="breadcrumb-separator">/</span>
+      <span class="breadcrumb-item active">Student Report</span>
+    </nav>
+  </div>
+
+  <!-- KPI Metrics -->
+  <div class="p-4 bg-white border-bottom">
+    <div class="row g-3">
+      <div class="col-md-3">
+        <div class="p-3 bg-primary-subtle border border-primary-subtle rounded">
+          <div class="text-muted fs-12">Total Enrolled</div>
+          <div class="fs-22 fw-bold text-primary mt-1">388 Students</div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="p-3 bg-success-subtle border border-success-subtle rounded">
+          <div class="text-muted fs-12">Total Active</div>
+          <div class="fs-22 fw-bold text-success mt-1">372 (95.8%)</div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="p-3 bg-info-subtle border border-info-subtle rounded">
+          <div class="text-muted fs-12">Total Approved Intake</div>
+          <div class="fs-22 fw-bold text-info mt-1">410 Seats</div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="p-3 bg-light border rounded">
+          <div class="text-muted fs-12">Enrollment Ratio</div>
+          <div class="fs-22 fw-bold text-dark mt-1">94.6% Filled</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toolbar-section">
+    <div class="toolbar-left">
+      <button class="toolbar-btn" (click)="exportCSV()">Export CSV</button>
+      <select class="form-select form-select-sm" style="width: 200px;" [(ngModel)]="selectedDepartment" (change)="applyFilter()">
+        <option value="">All Departments</option>
+        <option *ngFor="let d of departments" [value]="d">{{ d }}</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="table-section">
+    <table class="cms-table">
+      <thead>
+        <tr>
+          <th>Course</th>
+          <th>Department</th>
+          <th>Intake Capacity</th>
+          <th>Total Enrolled</th>
+          <th>Active Students</th>
+          <th>Seat Utilization</th>
+          <th>Retention Rate</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of filteredStats">
+          <td class="fw-semibold text-dark">{{ item.course }}</td>
+          <td>{{ item.department }}</td>
+          <td>{{ item.capacity }} Seats</td>
+          <td>{{ item.enrolled }}</td>
+          <td><strong class="text-success">{{ item.active }}</strong></td>
+          <td>
+            <div class="d-flex align-items-center gap-2">
+              <div class="progress flex-grow-1" style="height: 6px;">
+                <div class="progress-bar bg-primary" [style.width.%]="(item.enrolled / item.capacity) * 100"></div>
+              </div>
+              <span class="fs-12">{{ ((item.enrolled / item.capacity) * 100).toFixed(0) }}%</span>
+            </div>
+          </td>
+          <td><span class="badge bg-light text-dark border">{{ item.retentionRate }}%</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

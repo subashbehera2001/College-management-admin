@@ -1,10 +1,11 @@
-import { Routes } from '@angular/router'
-import { SignIn } from '@/app/views/auth/sign-in'
-import { SignUp } from '@/app/views/auth/sign-up'
-import { ResetPassword } from '@/app/views/auth/reset-password'
-import { NewPassword } from '@/app/views/auth/new-password'
-import { TwoFactor } from '@/app/views/auth/two-factor'
-import { LockScreen } from '@/app/views/auth/lock-screen'
+import { Routes } from '@angular/router';
+import { SignIn } from '@/app/views/auth/sign-in';
+import { SignUp } from '@/app/views/auth/sign-up';
+import { ResetPassword } from '@/app/views/auth/reset-password';
+import { NewPassword } from '@/app/views/auth/new-password';
+import { TwoFactor } from '@/app/views/auth/two-factor';
+import { LockScreen } from '@/app/views/auth/lock-screen';
+import { LogoutComponent } from '@/app/views/auth/logout';
 
 export const Auth_ROUTES: Routes = [
   {
@@ -37,4 +38,9 @@ export const Auth_ROUTES: Routes = [
     component: LockScreen,
     data: { title: 'Lock Screen' },
   },
-]
+  {
+    path: 'logout',
+    component: LogoutComponent,
+    data: { title: 'Logout' },
+  },
+];

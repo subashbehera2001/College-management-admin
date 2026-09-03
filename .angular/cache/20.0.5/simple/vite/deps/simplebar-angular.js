@@ -1,8 +1,4 @@
 import {
-  debounce_default,
-  throttle_default
-} from "./chunk-ZTXW2CD5.js";
-import {
   Component,
   ElementRef,
   Input,
@@ -21,9 +17,13 @@ import {
   ɵɵelementStart,
   ɵɵprojection,
   ɵɵprojectionDef
-} from "./chunk-QCAQ3WVL.js";
+} from "./chunk-U6VRZ2TG.js";
 import "./chunk-3KKC7HMJ.js";
-import "./chunk-KWSTWQNB.js";
+import {
+  debounce_default,
+  throttle_default
+} from "./chunk-CN6D23PL.js";
+import "./chunk-GOMI4DH3.js";
 
 // node_modules/simplebar-core/dist/index.mjs
 var __assign = function() {

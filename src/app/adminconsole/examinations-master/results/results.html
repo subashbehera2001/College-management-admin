@@ -1,0 +1,126 @@
+<div class="cms-container">
+  <div class="breadcrumb-section">
+    <nav class="breadcrumb">
+      <a routerLink="/dashboard" class="breadcrumb-item">Home</a>
+      <span class="breadcrumb-separator">/</span>
+      <span class="breadcrumb-item">Examinations</span>
+      <span class="breadcrumb-separator">/</span>
+      <span class="breadcrumb-item active">Results</span>
+    </nav>
+  </div>
+
+  <div class="toolbar-section">
+    <div class="toolbar-left">
+      <button class="toolbar-btn" (click)="exportCSV()">Export CSV</button>
+      <select class="form-select form-select-sm" style="width: 220px;" [(ngModel)]="selectedCourse" (change)="applyFilter()">
+        <option value="">All Courses</option>
+        <option *ngFor="let c of courseOptions" [value]="c">{{ c }}</option>
+      </select>
+    </div>
+    <div class="toolbar-right">
+      <div class="search-box">
+        <input type="text" placeholder="Search roll / name..." class="search-input" [(ngModel)]="searchText" (input)="applyFilter()" />
+        <svg class="search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.35-4.35"></path></svg>
+      </div>
+    </div>
+  </div>
+
+  <div class="table-section">
+    <table class="cms-table">
+      <thead>
+        <tr>
+          <th>Roll No</th>
+          <th>Student Name</th>
+          <th>Course & Semester</th>
+          <th>Total Marks</th>
+          <th>Percentage</th>
+          <th>CGPA</th>
+          <th>Grade</th>
+          <th>Status</th>
+          <th style="width: 100px; text-align: center;">Marksheet</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of filteredResults">
+          <td><strong class="text-primary">{{ item.rollNo }}</strong></td>
+          <td class="fw-semibold text-dark">{{ item.studentName }}</td>
+          <td>{{ item.course }} ({{ item.semester }})</td>
+          <td>{{ item.totalMarks }} / {{ item.maxMarks }}</td>
+          <td>{{ item.percentage }}%</td>
+          <td><strong class="text-dark">{{ item.cgpa }}</strong></td>
+          <td><span class="badge bg-light text-dark border">{{ item.grade }}</span></td>
+          <td>
+            <span class="badge-status" [ngClass]="item.status === 'Passed' ? 'status-pass' : 'status-fail'">
+              {{ item.status }}
+            </span>
+          </td>
+          <td class="text-center">
+            <button type="button" class="btn btn-sm btn-outline-primary py-1 px-2" (click)="viewMarksheet(item)">
+              View Marksheet
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Marksheet Modal -->
+  <div class="modal-overlay" *ngIf="showMarksheetModal && selectedResult">
+    <div class="modal-container" style="max-width: 650px;">
+      <div class="modal-header">
+        <h4>Official Student Grade Sheet</h4>
+        <button type="button" class="close-btn" (click)="closeMarksheet()">✕</button>
+      </div>
+      <div class="modal-body p-4">
+        <div class="text-center pb-3 border-bottom mb-3">
+          <h4 class="mb-1 fw-bold text-primary">COLLEGE OF ENGINEERING & TECHNOLOGY</h4>
+          <div class="text-muted fs-12">Affiliated to State University | Accredited A+ Grade</div>
+          <div class="badge bg-secondary mt-2">SEMESTER GRADE REPORT</div>
+        </div>
+
+        <div class="row g-2 fs-13 mb-3">
+          <div class="col-6"><strong>Student Name:</strong> {{ selectedResult.studentName }}</div>
+          <div class="col-6"><strong>Roll No:</strong> {{ selectedResult.rollNo }}</div>
+          <div class="col-6"><strong>Course:</strong> {{ selectedResult.course }}</div>
+          <div class="col-6"><strong>Semester:</strong> {{ selectedResult.semester }}</div>
+        </div>
+
+        <table class="table table-bordered table-sm fs-13 text-center mb-3">
+          <thead class="table-light">
+            <tr>
+              <th>Marks Obtained</th>
+              <th>Max Marks</th>
+              <th>Percentage</th>
+              <th>CGPA / SGPA</th>
+              <th>Grade</th>
+              <th>Result</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{{ selectedResult.totalMarks }}</td>
+              <td>{{ selectedResult.maxMarks }}</td>
+              <td>{{ selectedResult.percentage }}%</td>
+              <td><strong>{{ selectedResult.cgpa }}</strong></td>
+              <td><span class="badge bg-primary">{{ selectedResult.grade }}</span></td>
+              <td>
+                <span class="badge" [ngClass]="selectedResult.status === 'Passed' ? 'bg-success' : 'bg-danger'">
+                  {{ selectedResult.status }}
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="d-flex justify-content-between pt-4 mt-4 border-top fs-12 text-muted">
+          <div>Date of Issuance: 2026-06-15</div>
+          <div>Controller of Examinations</div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeMarksheet()">Close</button>
+        <button type="button" class="btn btn-primary" (click)="printMarksheet()">Print Marksheet</button>
+      </div>
+    </div>
+  </div>
+</div>

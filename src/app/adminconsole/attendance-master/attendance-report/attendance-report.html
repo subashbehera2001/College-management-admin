@@ -1,0 +1,110 @@
+<div class="cms-container">
+  <div class="breadcrumb-section">
+    <nav class="breadcrumb">
+      <a routerLink="/dashboard" class="breadcrumb-item">Home</a>
+      <span class="breadcrumb-separator">/</span>
+      <span class="breadcrumb-item">Attendance</span>
+      <span class="breadcrumb-separator">/</span>
+      <span class="breadcrumb-item active">Attendance Report</span>
+    </nav>
+  </div>
+
+  <!-- Metric Cards -->
+  <div class="p-4 bg-white border-bottom">
+    <div class="row g-3">
+      <div class="col-md-3">
+        <div class="p-3 bg-primary-subtle border border-primary-subtle rounded">
+          <div class="text-muted fs-12">Average Attendance</div>
+          <div class="fs-22 fw-bold text-primary mt-1">{{ averageAttendance }}</div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="p-3 bg-success-subtle border border-success-subtle rounded">
+          <div class="text-muted fs-12">Eligible Students (≥75%)</div>
+          <div class="fs-22 fw-bold text-success mt-1">{{ eligibleCount }}</div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="p-3 bg-danger-subtle border border-danger-subtle rounded">
+          <div class="text-muted fs-12">Shortage Students (&lt;75%)</div>
+          <div class="fs-22 fw-bold text-danger mt-1">{{ shortageCount }}</div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="p-3 bg-light border rounded">
+          <div class="text-muted fs-12">Total Evaluated</div>
+          <div class="fs-22 fw-bold text-dark mt-1">{{ totalStudents }} Students</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toolbar -->
+  <div class="toolbar-section">
+    <div class="toolbar-left">
+      <button class="toolbar-btn" (click)="exportCSV()">Export CSV</button>
+      <select class="form-select form-select-sm" style="width: 200px;" [(ngModel)]="selectedCourse" (change)="applyFilter()">
+        <option value="">All Courses</option>
+        <option *ngFor="let c of courseOptions" [value]="c">{{ c }}</option>
+      </select>
+      <select class="form-select form-select-sm" style="width: 160px;" [(ngModel)]="selectedStatus" (change)="applyFilter()">
+        <option value="">All Statuses</option>
+        <option value="Eligible">Eligible (≥75%)</option>
+        <option value="Shortage">Shortage (&lt;75%)</option>
+      </select>
+    </div>
+    <div class="toolbar-right">
+      <div class="search-box">
+        <input type="text" placeholder="Search student name / roll..." class="search-input" [(ngModel)]="searchText" (input)="applyFilter()" />
+        <svg class="search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.35-4.35"></path></svg>
+      </div>
+    </div>
+  </div>
+
+  <div class="table-section">
+    <table class="cms-table">
+      <thead>
+        <tr>
+          <th>Roll No</th>
+          <th>Student Name</th>
+          <th>Course</th>
+          <th>Total Classes</th>
+          <th>Attended</th>
+          <th>Attendance Rate</th>
+          <th>Eligibility Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of filteredReports">
+          <td><strong class="text-primary">{{ item.rollNo }}</strong></td>
+          <td class="fw-semibold">{{ item.studentName }}</td>
+          <td>{{ item.course }}</td>
+          <td>{{ item.totalClasses }}</td>
+          <td>{{ item.attendedClasses }}</td>
+          <td>
+            <div class="d-flex align-items-center gap-2">
+              <div class="progress flex-grow-1" style="height: 6px;">
+                <div
+                  class="progress-bar"
+                  [ngClass]="item.percentage >= 75 ? 'bg-success' : 'bg-danger'"
+                  [style.width.%]="item.percentage"
+                ></div>
+              </div>
+              <span class="fs-12 fw-semibold" [ngClass]="item.percentage >= 75 ? 'text-success' : 'text-danger'">
+                {{ item.percentage }}%
+              </span>
+            </div>
+          </td>
+          <td>
+            <span class="badge-status" [ngClass]="item.status === 'Eligible' ? 'status-active' : 'status-inactive'">
+              {{ item.status === 'Eligible' ? '✓ Eligible' : '⚠ Shortage' }}
+            </span>
+          </td>
+        </tr>
+        <tr *ngIf="filteredReports.length === 0">
+          <td colspan="7" class="text-center py-4 text-muted">No attendance records found.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

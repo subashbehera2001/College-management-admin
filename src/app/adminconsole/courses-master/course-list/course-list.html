@@ -1,0 +1,271 @@
+<div class="cms-container">
+  <div class="breadcrumb-section">
+    <nav class="breadcrumb">
+      <a routerLink="/dashboard" class="breadcrumb-item">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+          <polyline points="9 22 9 12 15 12 15 22"></polyline>
+        </svg>
+        Home
+      </a>
+      <span class="breadcrumb-separator">/</span>
+      <span class="breadcrumb-item active">Course List</span>
+    </nav>
+  </div>
+
+  <div class="tabs-section">
+    <div class="tabs-nav">
+      <button class="tab-btn" [class.active]="activeTab === 'active'" (click)="setActiveTab('active')">Active Courses</button>
+      <button class="tab-btn" [class.active]="activeTab === 'archived'" (click)="setActiveTab('archived')">Archived Courses</button>
+    </div>
+  </div>
+
+  <div class="toolbar-section">
+    <div class="toolbar-left">
+      <button class="toolbar-btn" (click)="exportToCSV()" title="Export CSV">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+          <line x1="12" y1="18" x2="12" y2="12"></line>
+          <line x1="9" y1="15" x2="15" y2="15"></line>
+        </svg>
+        CSV Export
+      </button>
+      <button class="toolbar-btn" title="Excel Export">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+          <line x1="3" y1="9" x2="21" y2="9"></line>
+          <line x1="3" y1="15" x2="21" y2="15"></line>
+          <line x1="9" y1="3" x2="9" y2="21"></line>
+          <line x1="15" y1="3" x2="15" y2="21"></line>
+        </svg>
+        Excel Export
+      </button>
+      <button class="toolbar-btn" title="PDF Export">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+          <path d="M9 13l2 2 4-4"></path>
+        </svg>
+        PDF Export
+      </button>
+      <button class="toolbar-btn btn-primary" (click)="addCourse()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="12" y1="5" x2="12" y2="19"></line>
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+        </svg>
+        Add Course
+      </button>
+    </div>
+    <div class="toolbar-right">
+      <div class="search-box">
+        <input type="text" placeholder="Search courses..." class="search-input" [(ngModel)]="searchText" (input)="applyFiltersAndSort()" />
+        <svg class="search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <path d="m21 21-4.35-4.35"></path>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <div class="table-section">
+    <table class="cms-table">
+      <thead>
+        <tr>
+          <th (click)="onSort('code')" class="sortable">
+            <div class="th-content">
+              <span class="th-label">Course Code</span>
+              <div class="th-actions">
+                <span class="sort-icon" *ngIf="sortField === 'code'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
+                <button type="button" class="filter-icon" [class.active]="hasActiveFilter('code')" (click)="toggleFilter('code'); $event.stopPropagation()" aria-label="Filter Code">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div class="filter-dropdown" *ngIf="activeFilter === 'code'" (click)="$event.stopPropagation()">
+              <div class="filter-panel">
+                <div class="filter-title">Filter by Code</div>
+                <input #codeFilterInput type="text" class="filter-input" placeholder="Type course code" [value]="filterValues.code" (input)="setColumnFilter('code', codeFilterInput.value)" />
+                <div class="filter-actions-row">
+                  <button type="button" class="filter-action secondary" (click)="clearFilter('code')">Clear</button>
+                  <button type="button" class="filter-action primary" (click)="closeFilter()">Done</button>
+                </div>
+              </div>
+            </div>
+          </th>
+          <th (click)="onSort('name')" class="sortable">
+            <div class="th-content">
+              <span class="th-label">Course Name</span>
+              <div class="th-actions">
+                <span class="sort-icon" *ngIf="sortField === 'name'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
+                <button type="button" class="filter-icon" [class.active]="hasActiveFilter('name')" (click)="toggleFilter('name'); $event.stopPropagation()" aria-label="Filter Name">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div class="filter-dropdown" *ngIf="activeFilter === 'name'" (click)="$event.stopPropagation()">
+              <div class="filter-panel">
+                <div class="filter-title">Filter by Name</div>
+                <input #nameFilterInput type="text" class="filter-input" placeholder="Type course name" [value]="filterValues.name" (input)="setColumnFilter('name', nameFilterInput.value)" />
+                <div class="filter-actions-row">
+                  <button type="button" class="filter-action secondary" (click)="clearFilter('name')">Clear</button>
+                  <button type="button" class="filter-action primary" (click)="closeFilter()">Done</button>
+                </div>
+              </div>
+            </div>
+          </th>
+          <th (click)="onSort('department')" class="sortable">
+            <div class="th-content">
+              <span class="th-label">Department</span>
+              <div class="th-actions">
+                <span class="sort-icon" *ngIf="sortField === 'department'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
+                <button type="button" class="filter-icon" [class.active]="hasActiveFilter('department')" (click)="toggleFilter('department'); $event.stopPropagation()" aria-label="Filter Department">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div class="filter-dropdown" *ngIf="activeFilter === 'department'" (click)="$event.stopPropagation()">
+              <div class="filter-panel">
+                <div class="filter-title">Filter by Department</div>
+                <div class="filter-option-list">
+                  <button type="button" class="filter-option" [class.selected]="filterValues.department === ''" (click)="setColumnFilter('department', '', true)">All Departments</button>
+                  <button type="button" class="filter-option" *ngFor="let d of departmentOptions" [class.selected]="filterValues.department === d" (click)="setColumnFilter('department', d, true)">{{ d }}</button>
+                </div>
+              </div>
+            </div>
+          </th>
+          <th>
+            <div class="th-content">
+              <span class="th-label">Level</span>
+              <div class="th-actions">
+                <button type="button" class="filter-icon" [class.active]="hasActiveFilter('level')" (click)="toggleFilter('level'); $event.stopPropagation()" aria-label="Filter Level">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div class="filter-dropdown" *ngIf="activeFilter === 'level'" (click)="$event.stopPropagation()">
+              <div class="filter-panel">
+                <div class="filter-title">Filter by Level</div>
+                <div class="filter-option-list">
+                  <button type="button" class="filter-option" [class.selected]="filterValues.level === ''" (click)="setColumnFilter('level', '', true)">All Levels</button>
+                  <button type="button" class="filter-option" *ngFor="let l of levelOptions" [class.selected]="filterValues.level === l" (click)="setColumnFilter('level', l, true)">{{ l }}</button>
+                </div>
+              </div>
+            </div>
+          </th>
+          <th><span class="th-label">Duration</span></th>
+          <th>
+            <div class="th-content">
+              <span class="th-label">Status</span>
+              <div class="th-actions">
+                <button type="button" class="filter-icon" [class.active]="hasActiveFilter('status')" (click)="toggleFilter('status'); $event.stopPropagation()" aria-label="Filter Status">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div class="filter-dropdown" *ngIf="activeFilter === 'status'" (click)="$event.stopPropagation()">
+              <div class="filter-panel">
+                <div class="filter-title">Filter by Status</div>
+                <div class="filter-option-list">
+                  <button type="button" class="filter-option" [class.selected]="filterValues.status === ''" (click)="setColumnFilter('status', '', true)">All Status</button>
+                  <button type="button" class="filter-option" [class.selected]="filterValues.status === 'Active'" (click)="setColumnFilter('status', 'Active', true)">Active</button>
+                  <button type="button" class="filter-option" [class.selected]="filterValues.status === 'Inactive'" (click)="setColumnFilter('status', 'Inactive', true)">Inactive</button>
+                </div>
+              </div>
+            </div>
+          </th>
+          <th class="text-center">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of displayedCourses">
+          <td><span class="badge-id">{{ item.code }}</span></td>
+          <td class="fw-semibold">{{ item.name }}</td>
+          <td>{{ item.department }}</td>
+          <td><span class="badge-level">{{ item.level }}</span></td>
+          <td>{{ item.duration }}</td>
+          <td>
+            <span class="badge-status" [ngClass]="{'status-active': item.status === 'Active', 'status-inactive': item.status === 'Inactive'}">
+              {{ item.status }}
+            </span>
+          </td>
+          <td class="cell-actions">
+            <div class="action-buttons">
+              <button type="button" class="action-btn view-btn" (click)="openViewModal(item)" title="View">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+              </button>
+              <button type="button" class="action-btn edit-btn" title="Edit">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+              </button>
+              <button type="button" class="action-btn delete-btn" (click)="openDeleteModal(item)" title="Delete">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+              </button>
+            </div>
+          </td>
+        </tr>
+        <tr *ngIf="displayedCourses.length === 0">
+          <td colspan="7" class="empty-row">No courses found matching criteria.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="pagination-section" *ngIf="totalPages > 1">
+    <div class="pagination-info">Showing {{ startRecord }}-{{ endRecord }} of {{ filteredCourses.length }}</div>
+    <div class="pagination-controls">
+      <button type="button" class="pagination-btn" [disabled]="currentPage === 1" (click)="setPage(currentPage - 1)">Previous</button>
+      <button type="button" class="pagination-btn" [class.active]="currentPage === p" *ngFor="let p of getPageNumbers()" (click)="setPage(p)">{{ p }}</button>
+      <button type="button" class="pagination-btn" [disabled]="currentPage === totalPages" (click)="setPage(currentPage + 1)">Next</button>
+    </div>
+  </div>
+
+  <!-- View Modal -->
+  <div class="modal-overlay" *ngIf="showViewModal && selectedCourse" (click)="closeViewModal()">
+    <div class="modal-container" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h4>Course: {{ selectedCourse.name }}</h4>
+        <button type="button" class="close-btn" (click)="closeViewModal()">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="row g-3">
+          <div class="col-6"><strong>Code:</strong> {{ selectedCourse.code }}</div>
+          <div class="col-6"><strong>Department:</strong> {{ selectedCourse.department }}</div>
+          <div class="col-6"><strong>Level:</strong> {{ selectedCourse.level }}</div>
+          <div class="col-6"><strong>Duration:</strong> {{ selectedCourse.duration }}</div>
+          <div class="col-6"><strong>Semesters:</strong> {{ selectedCourse.totalSemesters }}</div>
+          <div class="col-6"><strong>Credits:</strong> {{ selectedCourse.totalCredits }}</div>
+          <div class="col-6"><strong>Intake Seats:</strong> {{ selectedCourse.intake }}</div>
+          <div class="col-6"><strong>Status:</strong> {{ selectedCourse.status }}</div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeViewModal()">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete Modal -->
+  <div class="modal-overlay" *ngIf="showDeleteModal && selectedCourse" (click)="closeDeleteModal()">
+    <div class="modal-container" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h4>Delete Course?</h4>
+        <button type="button" class="close-btn" (click)="closeDeleteModal()">✕</button>
+      </div>
+      <div class="modal-body">Are you sure you want to remove course <strong>{{ selectedCourse.name }}</strong> ({{ selectedCourse.code }})?</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeDeleteModal()">Cancel</button>
+        <button type="button" class="btn btn-danger" (click)="confirmDelete()">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>

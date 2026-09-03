@@ -1,0 +1,167 @@
+<div class="cms-container">
+  <div class="breadcrumb-section">
+    <nav class="breadcrumb">
+      <a routerLink="/dashboard" class="breadcrumb-item">Home</a>
+      <span class="breadcrumb-separator">/</span>
+      <span class="breadcrumb-item">Fees</span>
+      <span class="breadcrumb-separator">/</span>
+      <span class="breadcrumb-item active">Fee Collection</span>
+    </nav>
+  </div>
+
+  <div class="p-4 bg-white border-bottom">
+    <h4 class="fw-bold mb-3 text-dark">Collect Student Tuition & Institutional Fees</h4>
+    <div class="row g-3">
+      <div class="col-md-6">
+        <label class="form-label fs-13 fw-semibold">Select Student</label>
+        <select class="form-select" [(ngModel)]="selectedRollNo" (change)="onStudentSelect()">
+          <option *ngFor="let s of studentsFee" [value]="s.rollNo">
+            {{ s.rollNo }} - {{ s.studentName }} ({{ s.course }})
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="p-4" *ngIf="selectedStudent">
+    <div class="row g-4">
+      <!-- Fee Summary Card -->
+      <div class="col-md-5">
+        <div class="card border">
+          <div class="card-header bg-light">
+            <h5 class="card-title mb-0 fs-15">Fee Breakdown & Dues</h5>
+          </div>
+          <div class="card-body">
+            <div class="mb-3 pb-3 border-bottom">
+              <h6 class="fw-bold">{{ selectedStudent.studentName }}</h6>
+              <div class="text-muted fs-13">{{ selectedStudent.rollNo }} | {{ selectedStudent.course }}</div>
+              <div class="text-muted fs-13">{{ selectedStudent.semester }}</div>
+            </div>
+
+            <div class="d-flex justify-content-between py-2 border-bottom fs-14">
+              <span>Total Course Fee:</span>
+              <strong class="text-dark">₹{{ selectedStudent.totalFee.toLocaleString() }}</strong>
+            </div>
+            <div class="d-flex justify-content-between py-2 border-bottom fs-14 text-success">
+              <span>Paid Amount:</span>
+              <strong>₹{{ selectedStudent.paidFee.toLocaleString() }}</strong>
+            </div>
+            <div class="d-flex justify-content-between py-2 border-bottom fs-15 text-danger">
+              <span class="fw-bold">Outstanding Dues:</span>
+              <strong class="fs-16">₹{{ selectedStudent.pendingFee.toLocaleString() }}</strong>
+            </div>
+            <div class="d-flex justify-content-between pt-2 fs-13 text-muted">
+              <span>Payment Due Date:</span>
+              <span>{{ selectedStudent.dueDate }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Payment Form Card -->
+      <div class="col-md-7">
+        <div class="card border">
+          <div class="card-header bg-light">
+            <h5 class="card-title mb-0 fs-15">Record Payment</h5>
+          </div>
+          <div class="card-body">
+            <form (ngSubmit)="processPayment()">
+              <div class="mb-3">
+                <label class="form-label fs-13 fw-semibold">Amount to Pay (₹) <span class="text-danger">*</span></label>
+                <input
+                  type="number"
+                  class="form-control"
+                  [(ngModel)]="collectAmount"
+                  name="collectAmount"
+                  min="1"
+                  [max]="selectedStudent.pendingFee || 100000"
+                  required
+                />
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label fs-13 fw-semibold">Payment Mode <span class="text-danger">*</span></label>
+                <div class="d-flex gap-3 mt-1">
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="paymentMode" id="modeUpi" value="UPI" [(ngModel)]="paymentMode" />
+                    <label class="form-check-label" for="modeUpi">UPI / QR</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="paymentMode" id="modeCard" value="Card" [(ngModel)]="paymentMode" />
+                    <label class="form-check-label" for="modeCard">Debit/Credit Card</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="paymentMode" id="modeCash" value="Cash" [(ngModel)]="paymentMode" />
+                    <label class="form-check-label" for="modeCash">Cash</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="paymentMode" id="modeNet" value="Net Banking" [(ngModel)]="paymentMode" />
+                    <label class="form-check-label" for="modeNet">Net Banking</label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label fs-13 fw-semibold">Transaction / Reference ID</label>
+                <input type="text" class="form-control" [(ngModel)]="referenceId" name="referenceId" />
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label fs-13 fw-semibold">Remarks / Note</label>
+                <input type="text" class="form-control" [(ngModel)]="remarks" name="remarks" />
+              </div>
+
+              <button
+                type="submit"
+                class="btn btn-primary px-4 py-2"
+                [disabled]="collectAmount <= 0"
+              >
+                Confirm & Generate Receipt
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Receipt Modal -->
+  <div class="modal-overlay" *ngIf="showReceiptModal && currentReceipt">
+    <div class="modal-container" style="max-width: 550px;">
+      <div class="modal-header">
+        <h4>Fee Payment Receipt</h4>
+        <button type="button" class="close-btn" (click)="closeReceipt()">✕</button>
+      </div>
+      <div class="modal-body p-4">
+        <div class="text-center pb-3 border-bottom mb-3">
+          <h5 class="fw-bold text-primary mb-1">COLLEGE MANAGEMENT SYSTEM</h5>
+          <div class="fs-12 text-muted">Official Accounts & Cashier Office</div>
+          <div class="badge bg-success-subtle text-success mt-2">PAYMENT CONFIRMED</div>
+        </div>
+
+        <div class="row g-2 fs-13 mb-3">
+          <div class="col-6"><strong>Receipt No:</strong> {{ currentReceipt.receiptNo }}</div>
+          <div class="col-6"><strong>Date:</strong> {{ currentReceipt.paymentDate }}</div>
+          <div class="col-6"><strong>Student:</strong> {{ currentReceipt.studentName }}</div>
+          <div class="col-6"><strong>Roll No:</strong> {{ currentReceipt.rollNo }}</div>
+          <div class="col-12"><strong>Course:</strong> {{ currentReceipt.course }}</div>
+          <div class="col-6"><strong>Payment Mode:</strong> {{ currentReceipt.paymentMode }}</div>
+          <div class="col-6"><strong>Transaction ID:</strong> {{ currentReceipt.transactionId }}</div>
+        </div>
+
+        <div class="p-3 bg-light rounded text-center my-3 border">
+          <div class="text-muted fs-12">Amount Paid</div>
+          <div class="fs-24 fw-bold text-success">₹{{ currentReceipt.amount.toLocaleString() }}</div>
+        </div>
+
+        <div class="fs-11 text-muted text-center">
+          * This is a computer-generated institutional payment receipt and does not require a physical signature.
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeReceipt()">Close</button>
+        <button type="button" class="btn btn-primary" (click)="printReceipt()">Print Receipt</button>
+      </div>
+    </div>
+  </div>
+</div>
