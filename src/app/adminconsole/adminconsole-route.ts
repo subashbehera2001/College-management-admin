@@ -13,4 +13,10 @@ export const ADMINCONSOLE_ROUTES: Routes = [
       import('@/app/adminconsole/student-list-master/student-list-master-module').then((mod) => mod.StudentListMasterModule),
     data: { title: 'Student List' },
   },
+  {
+    path: 'faculty-list',
+    loadChildren: () =>
+      import('@/app/adminconsole/faculty-list-master/faculty-list-master-module').then((mod) => mod.FacultyListMasterModule),
+    data: { title: 'Faculty List' },
+  },
 ];
