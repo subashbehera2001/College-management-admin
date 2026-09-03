@@ -27,6 +27,12 @@
   padding: 10px;
 
   .side-nav-item {
+    margin-bottom: 4px;
+    display: block;
+
+    & + .side-nav-item {
+      margin-top: 2px;
+    }
 
     .side-nav-link {
       display: flex;
@@ -38,11 +44,12 @@
       border: transparent;
       width: 100%;
       color: $sidenav-item-color;
-      transition: color .25s ease-in-out;
+      transition: color .25s ease-in-out, background-color .2s ease-in-out;
       font-size: $sidenav-item-font-size;
       font-weight: $sidenav-item-font-weight;
       padding: $sidenav-item-padding-y $sidenav-item-padding-x;
       border-radius: 50em;
+      overflow: hidden;
 
       &:hover,
       &:focus,

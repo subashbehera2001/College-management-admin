@@ -25,27 +25,19 @@ export const userDropdownItems: UserDropdownItemType[] = [
 ]
 
 export const menuItems: MenuItemType[] = [
-  
   {
     label: 'Dashboard',
     icon: 'tablerGauge',
     url: '/dashboard',
   },
-
   {
-    isDivider: true,
+    label: 'Students',
+    icon: 'tablerUsers',
+    url: '/student-list',
   },
-
   {
-  label: 'Students',
-  children: [
-
-    {
-      label: 'Student List',
-      icon: 'tablerUsers',
-      url: '/student-list',
-    },
-    
-  ],
+  label: 'Faculty',
+  icon: 'tablerPresentation',
+  url: '/faculty',
 },
 ]
