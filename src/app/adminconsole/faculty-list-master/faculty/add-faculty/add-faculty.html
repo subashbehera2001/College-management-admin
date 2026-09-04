@@ -1,11 +1,17 @@
-<div class="cms-container">
+<div class="add-faculty-container">
   <div class="breadcrumb-section">
     <nav class="breadcrumb">
-      <a routerLink="/dashboard" class="breadcrumb-item">Home</a>
+      <a href="#" class="breadcrumb-item">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+          <polyline points="9 22 9 12 15 12 15 22"></polyline>
+        </svg>
+        Home
+      </a>
       <span class="breadcrumb-separator">/</span>
       <span class="breadcrumb-item">Faculty</span>
       <span class="breadcrumb-separator">/</span>
-      <a routerLink="/faculty" class="breadcrumb-item">Faculty List</a>
+      <a href="#" class="breadcrumb-item">Faculty List</a>
       <span class="breadcrumb-separator">/</span>
       <span class="breadcrumb-item active">Add Faculty</span>
     </nav>
@@ -22,23 +28,8 @@
 
         <div class="form-grid">
           <div class="form-group">
-            <label for="facultyId">Faculty ID</label>
-            <input id="facultyId" type="text" name="facultyId" [(ngModel)]="facultyId" readonly class="form-control bg-light" />
-          </div>
-
-          <div class="form-group">
-            <label for="name">Full Name <span class="req">*</span></label>
-            <input id="name" type="text" name="name" [(ngModel)]="name" required placeholder="e.g. Dr. Ramesh Chandra" class="form-control" />
-          </div>
-
-          <div class="form-group">
-            <label for="email">Email Address <span class="req">*</span></label>
-            <input id="email" type="email" name="email" [(ngModel)]="email" required placeholder="faculty@college.edu" class="form-control" />
-          </div>
-
-          <div class="form-group">
-            <label for="phone">Phone Number</label>
-            <input id="phone" type="tel" name="phone" [(ngModel)]="phone" placeholder="+91 98765 43210" class="form-control" />
+            <label for="name">Name <span class="req">*</span></label>
+            <input id="name" type="text" name="name" [(ngModel)]="name" required placeholder="Enter faculty name" class="form-control" />
           </div>
 
           <div class="form-group">
@@ -68,24 +59,9 @@
           </div>
 
           <div class="form-group">
-            <label for="qualification">Highest Qualification</label>
-            <input id="qualification" type="text" name="qualification" [(ngModel)]="qualification" placeholder="e.g. Ph.D in Computer Science" class="form-control" />
-          </div>
-
-          <div class="form-group">
-            <label for="experience">Total Experience</label>
-            <input id="experience" type="text" name="experience" [(ngModel)]="experience" placeholder="e.g. 8 Years" class="form-control" />
-          </div>
-
-          <div class="form-group">
-            <label for="joiningDate">Joining Date</label>
-            <input id="joiningDate" type="date" name="joiningDate" [(ngModel)]="joiningDate" class="form-control" />
-          </div>
-
-          <div class="form-group">
-            <label for="status">Employment Status</label>
+            <label for="status">Status <span class="req">*</span></label>
             <div class="select-wrapper">
-              <select id="status" name="status" [(ngModel)]="status" class="form-control">
+              <select id="status" name="status" [(ngModel)]="status" required class="form-control">
                 <option *ngFor="let opt of statusOptions" [value]="opt">{{ opt }}</option>
               </select>
               <svg class="select-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -97,7 +73,6 @@
 
         <div class="form-actions">
           <button type="submit" class="btn btn-primary" [disabled]="form.invalid">Submit</button>
-          <button type="button" class="btn btn-secondary" (click)="viewList()">Cancel</button>
         </div>
       </div>
     </form>

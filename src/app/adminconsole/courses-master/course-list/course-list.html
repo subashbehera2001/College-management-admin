@@ -72,11 +72,10 @@
     <table class="cms-table">
       <thead>
         <tr>
-          <th (click)="onSort('code')" class="sortable">
+          <th>
             <div class="th-content">
               <span class="th-label">Course Code</span>
               <div class="th-actions">
-                <span class="sort-icon" *ngIf="sortField === 'code'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
                 <button type="button" class="filter-icon" [class.active]="hasActiveFilter('code')" (click)="toggleFilter('code'); $event.stopPropagation()" aria-label="Filter Code">
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
@@ -95,11 +94,10 @@
               </div>
             </div>
           </th>
-          <th (click)="onSort('name')" class="sortable">
+          <th>
             <div class="th-content">
               <span class="th-label">Course Name</span>
               <div class="th-actions">
-                <span class="sort-icon" *ngIf="sortField === 'name'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
                 <button type="button" class="filter-icon" [class.active]="hasActiveFilter('name')" (click)="toggleFilter('name'); $event.stopPropagation()" aria-label="Filter Name">
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
@@ -118,11 +116,10 @@
               </div>
             </div>
           </th>
-          <th (click)="onSort('department')" class="sortable">
+          <th>
             <div class="th-content">
               <span class="th-label">Department</span>
               <div class="th-actions">
-                <span class="sort-icon" *ngIf="sortField === 'department'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
                 <button type="button" class="filter-icon" [class.active]="hasActiveFilter('department')" (click)="toggleFilter('department'); $event.stopPropagation()" aria-label="Filter Department">
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>

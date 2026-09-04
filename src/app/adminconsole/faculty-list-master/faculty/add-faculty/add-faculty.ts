@@ -8,20 +8,15 @@ import { Router } from '@angular/router';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './add-faculty.html',
-  styleUrl: './add-faculty.scss',
+  styleUrl: './add-faculty.scss'
 })
 export class AddFaculty {
   private router = inject(Router);
 
   facultyId = 'FAC' + Math.floor(100 + Math.random() * 900);
   name = '';
-  email = '';
-  phone = '';
   department = '';
   designation = '';
-  qualification = '';
-  experience = '';
-  joiningDate = new Date().toISOString().split('T')[0];
   status: 'Active' | 'On Leave' | 'Inactive' = 'Active';
 
   departmentOptions: string[] = [
@@ -46,10 +41,16 @@ export class AddFaculty {
   statusOptions: string[] = ['Active', 'On Leave', 'Inactive'];
 
   onSubmit(): void {
-    if (!this.name.trim() || !this.email.trim() || !this.department || !this.designation) {
+    if (!this.name.trim() || !this.department || !this.designation) {
       return;
     }
-    // Navigate back to faculty list
+    console.log('Adding faculty:', {
+      id: this.facultyId,
+      name: this.name,
+      department: this.department,
+      designation: this.designation,
+      status: this.status
+    });
     this.router.navigate(['/faculty']);
   }
 
