@@ -5,7 +5,7 @@ import { Router } from "@angular/router";
 import { NgIcon } from "@ng-icons/core";
 import { Student, STUDENTS } from "./data";
 
-type ColumnFilterField = "id" | "name" | "email" | "course" | "year" | "status";
+type ColumnFilterField = "name" | "email" | "course" | "year" | "status";
 type PaginationItem = number | "...";
 
 @Component({
@@ -26,7 +26,6 @@ export class StudentList implements OnInit {
   activeTab: "active" | "archived" = "active";
 
   filterValues: Record<ColumnFilterField, string> = {
-    id: "",
     name: "",
     email: "",
     course: "",
@@ -47,9 +46,9 @@ export class StudentList implements OnInit {
   selectedStudent: Student | null = null;
   isLoading = false;
 
-  statusOptions: string[] = ["Active", "Inactive", "Pending"];
   yearOptions: string[] = [];
   courseOptions: string[] = [];
+  statusOptions: string[] = ["Active", "Inactive", "Pending"];
 
   ngOnInit(): void {
     this.loadStudents();
@@ -73,14 +72,12 @@ export class StudentList implements OnInit {
       this.filteredStudents = this.students.filter((student) => {
         const matchesSearch =
           search === "" ||
-          student.id.toLowerCase().includes(search) ||
           student.name.toLowerCase().includes(search) ||
           student.email.toLowerCase().includes(search) ||
           student.course.toLowerCase().includes(search) ||
           student.year.toLowerCase().includes(search) ||
           student.status.toLowerCase().includes(search);
 
-        const matchesId = this.matchesContains(student.id, this.filterValues.id);
         const matchesName = this.matchesContains(student.name, this.filterValues.name);
         const matchesEmail = this.matchesContains(student.email, this.filterValues.email);
         const matchesCourse = this.matchesContains(student.course, this.filterValues.course);
@@ -93,7 +90,6 @@ export class StudentList implements OnInit {
 
         return (
           matchesSearch &&
-          matchesId &&
           matchesName &&
           matchesEmail &&
           matchesCourse &&
@@ -145,8 +141,6 @@ export class StudentList implements OnInit {
 
   getSortValue(student: Student): string {
     switch (this.sortField) {
-      case "id":
-        return student.id;
       case "name":
         return student.name;
       case "email":
@@ -159,6 +153,19 @@ export class StudentList implements OnInit {
         return student.status;
       default:
         return student.name;
+    }
+  }
+
+  getStatusClass(status: string): string {
+    switch (status) {
+      case "Active":
+        return "badge-success";
+      case "Inactive":
+        return "badge-danger";
+      case "Pending":
+        return "badge-warning";
+      default:
+        return "badge-secondary";
     }
   }
 
@@ -298,23 +305,10 @@ export class StudentList implements OnInit {
     return items;
   }
 
-  getStatusClass(status: string): string {
-    switch (status) {
-      case "Active":
-        return "badge-success";
-      case "Inactive":
-        return "badge-danger";
-      case "Pending":
-        return "badge-warning";
-      default:
-        return "badge-secondary";
-    }
-  }
 
   clearFilters(): void {
     this.searchText = "";
     this.filterValues = {
-      id: "",
       name: "",
       email: "",
       course: "",
@@ -367,14 +361,12 @@ export class StudentList implements OnInit {
   }
 
   exportToCSV(): void {
-    const headers = ["ID", "Name", "Email", "Course", "Year", "Status"];
+    const headers = ["Name", "Email", "Course", "Year"];
     const rows = this.filteredStudents.map((student) => [
-      student.id,
       student.name,
       student.email,
       student.course,
       student.year,
-      student.status,
     ]);
 
     const csvContent = [

@@ -67,7 +67,7 @@
       <div class="search-box">
         <input
           type="text"
-          placeholder="Search faculty..."
+          placeholder="Search"
           class="search-input"
           [(ngModel)]="searchText"
           (input)="onSearchChange(searchText)"
@@ -84,7 +84,7 @@
     <table class="faculty-table">
       <thead>
         <tr class="table-header">
-          <th>
+          <th (click)="onSort('name')" class="sortable">
             <div class="th-content">
               <span class="th-label">Name</span>
               <div class="th-actions">
@@ -106,7 +106,7 @@
               </div>
             </div>
           </th>
-          <th>
+          <th (click)="onSort('department')" class="sortable">
             <div class="th-content">
               <span class="th-label">Department</span>
               <div class="th-actions">
@@ -127,7 +127,7 @@
               </div>
             </div>
           </th>
-          <th>
+          <th (click)="onSort('designation')" class="sortable">
             <div class="th-content">
               <span class="th-label">Designation</span>
               <div class="th-actions">
@@ -148,7 +148,7 @@
               </div>
             </div>
           </th>
-          <th>
+          <th (click)="onSort('status')" class="sortable">
             <div class="th-content">
               <span class="th-label">Status</span>
               <div class="th-actions">

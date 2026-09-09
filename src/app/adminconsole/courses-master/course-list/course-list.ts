@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Course, COURSES_DATA } from './data';
 
-type ColumnFilterField = 'code' | 'name' | 'department' | 'level' | 'status';
+type ColumnFilterField = 'name' | 'department' | 'level' | 'duration' | 'status';
 
 @Component({
   selector: 'app-course-list',
@@ -25,10 +25,10 @@ export class CourseListComponent implements OnInit {
   activeFilter: ColumnFilterField | null = null;
 
   filterValues: Record<ColumnFilterField, string> = {
-    code: '',
     name: '',
     department: '',
     level: '',
+    duration: '',
     status: '',
   };
 
@@ -45,10 +45,12 @@ export class CourseListComponent implements OnInit {
 
   departmentOptions: string[] = [];
   levelOptions: string[] = ['Undergraduate', 'Postgraduate', 'Diploma'];
+  durationOptions: string[] = [];
 
   ngOnInit(): void {
     this.courseList = [...COURSES_DATA];
     this.departmentOptions = Array.from(new Set(COURSES_DATA.map((c) => c.department))).sort();
+    this.durationOptions = Array.from(new Set(COURSES_DATA.map((c) => c.duration))).sort();
     this.applyFiltersAndSort();
   }
 
@@ -58,20 +60,19 @@ export class CourseListComponent implements OnInit {
     this.filteredCourses = this.courseList.filter((c) => {
       const matchesSearch =
         search === '' ||
-        c.code.toLowerCase().includes(search) ||
         c.name.toLowerCase().includes(search) ||
         c.department.toLowerCase().includes(search) ||
         c.level.toLowerCase().includes(search);
 
-      const matchesCode = !this.filterValues.code || c.code.toLowerCase().includes(this.filterValues.code.toLowerCase());
       const matchesName = !this.filterValues.name || c.name.toLowerCase().includes(this.filterValues.name.toLowerCase());
       const matchesDept = !this.filterValues.department || c.department === this.filterValues.department;
       const matchesLevel = !this.filterValues.level || c.level === this.filterValues.level;
+      const matchesDuration = !this.filterValues.duration || c.duration === this.filterValues.duration;
       const matchesStatus = !this.filterValues.status || c.status === this.filterValues.status;
 
       const matchesTab = this.activeTab === 'active' ? c.status === 'Active' : c.status === 'Inactive';
 
-      return matchesSearch && matchesCode && matchesName && matchesDept && matchesLevel && matchesStatus && matchesTab;
+      return matchesSearch && matchesName && matchesDept && matchesLevel && matchesDuration && matchesStatus && matchesTab;
     });
 
     this.filteredCourses.sort((a, b) => {
@@ -177,15 +178,15 @@ export class CourseListComponent implements OnInit {
 
   confirmDelete(): void {
     if (this.selectedCourse) {
-      this.courseList = this.courseList.filter((c) => c.code !== this.selectedCourse!.code);
+      this.courseList = this.courseList.filter((c) => c.name !== this.selectedCourse!.name);
       this.applyFiltersAndSort();
       this.closeDeleteModal();
     }
   }
 
   exportToCSV(): void {
-    const headers = ['Course Code', 'Course Name', 'Department', 'Level', 'Duration', 'Total Semesters', 'Total Credits', 'Intake', 'Status'];
-    const rows = this.filteredCourses.map((c) => [c.code, c.name, c.department, c.level, c.duration, c.totalSemesters, c.totalCredits, c.intake, c.status]);
+    const headers = ['Course Name', 'Department', 'Level', 'Duration', 'Total Semesters', 'Total Credits', 'Intake', 'Status'];
+    const rows = this.filteredCourses.map((c) => [c.name, c.department, c.level, c.duration, c.totalSemesters, c.totalCredits, c.intake, c.status]);
     const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows.map((e) => e.join(','))].join('\n');
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement('a');

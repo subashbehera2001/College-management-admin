@@ -1,5 +1,4 @@
 export interface Course {
-  code: string;
   name: string;
   department: string;
   level: 'Undergraduate' | 'Postgraduate' | 'Diploma';
@@ -12,7 +11,6 @@ export interface Course {
 
 export const COURSES_DATA: Course[] = [
   {
-    code: 'BTECH-CSE',
     name: 'B.Tech in Computer Science & Engineering',
     department: 'Computer Science',
     level: 'Undergraduate',
@@ -23,7 +21,6 @@ export const COURSES_DATA: Course[] = [
     status: 'Active',
   },
   {
-    code: 'BTECH-ECE',
     name: 'B.Tech in Electronics & Communication',
     department: 'Electronics & Comm.',
     level: 'Undergraduate',
@@ -34,7 +31,6 @@ export const COURSES_DATA: Course[] = [
     status: 'Active',
   },
   {
-    code: 'BTECH-MECH',
     name: 'B.Tech in Mechanical Engineering',
     department: 'Mechanical Eng.',
     level: 'Undergraduate',
@@ -45,7 +41,6 @@ export const COURSES_DATA: Course[] = [
     status: 'Active',
   },
   {
-    code: 'BCA',
     name: 'Bachelor of Computer Applications',
     department: 'Computer Science',
     level: 'Undergraduate',
@@ -56,7 +51,6 @@ export const COURSES_DATA: Course[] = [
     status: 'Active',
   },
   {
-    code: 'BBA',
     name: 'Bachelor of Business Administration',
     department: 'Business Administration',
     level: 'Undergraduate',
@@ -67,7 +61,6 @@ export const COURSES_DATA: Course[] = [
     status: 'Active',
   },
   {
-    code: 'MTECH-AI',
     name: 'M.Tech in Artificial Intelligence',
     department: 'Computer Science',
     level: 'Postgraduate',
@@ -78,7 +71,6 @@ export const COURSES_DATA: Course[] = [
     status: 'Active',
   },
   {
-    code: 'DIP-AUTO',
     name: 'Diploma in Automobile Engineering',
     department: 'Mechanical Eng.',
     level: 'Diploma',

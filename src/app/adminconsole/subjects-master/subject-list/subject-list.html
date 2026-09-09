@@ -59,7 +59,7 @@
     </div>
     <div class="toolbar-right">
       <div class="search-box">
-        <input type="text" placeholder="Search subjects..." class="search-input" [(ngModel)]="searchText" (input)="applyFiltersAndSort()" />
+        <input type="text" placeholder="Search" class="search-input" [(ngModel)]="searchText" (input)="applyFiltersAndSort()" />
         <svg class="search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <circle cx="11" cy="11" r="8"></circle>
           <path d="m21 21-4.35-4.35"></path>
@@ -72,34 +72,25 @@
     <table class="cms-table">
       <thead>
         <tr>
-          <th (click)="onSort('code')" class="sortable">
+          <th (click)="onSort('name')" class="sortable">
             <div class="th-content">
-              <span class="th-label">Code</span>
+              <span class="th-label">Name</span>
               <div class="th-actions">
-                <span class="sort-icon" *ngIf="sortField === 'code'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
-                <button type="button" class="filter-icon" [class.active]="hasActiveFilter('code')" (click)="toggleFilter('code'); $event.stopPropagation()" aria-label="Filter Code">
+                <button type="button" class="filter-icon" [class.active]="hasActiveFilter('name')" (click)="toggleFilter('name'); $event.stopPropagation()" aria-label="Filter Subject Name">
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
                   </svg>
                 </button>
               </div>
             </div>
-            <div class="filter-dropdown" *ngIf="activeFilter === 'code'" (click)="$event.stopPropagation()">
+            <div class="filter-dropdown" *ngIf="activeFilter === 'name'" (click)="$event.stopPropagation()">
               <div class="filter-panel">
-                <div class="filter-title">Filter by Code</div>
-                <input #codeInput type="text" class="filter-input" placeholder="Type subject code" [value]="filterValues.code" (input)="setColumnFilter('code', codeInput.value)" />
+                <div class="filter-title">Filter by Subject Name</div>
+                <input #nameInput type="text" class="filter-input" placeholder="Type subject name" [value]="filterValues.name" (input)="setColumnFilter('name', nameInput.value)" />
                 <div class="filter-actions-row">
-                  <button type="button" class="filter-action secondary" (click)="clearFilter('code')">Clear</button>
+                  <button type="button" class="filter-action secondary" (click)="clearFilter('name')">Clear</button>
                   <button type="button" class="filter-action primary" (click)="closeFilter()">Done</button>
                 </div>
-              </div>
-            </div>
-          </th>
-          <th (click)="onSort('name')" class="sortable">
-            <div class="th-content">
-              <span class="th-label">Subject Name</span>
-              <div class="th-actions">
-                <span class="sort-icon" *ngIf="sortField === 'name'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
               </div>
             </div>
           </th>
@@ -107,7 +98,6 @@
             <div class="th-content">
               <span class="th-label">Course</span>
               <div class="th-actions">
-                <span class="sort-icon" *ngIf="sortField === 'course'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
                 <button type="button" class="filter-icon" [class.active]="hasActiveFilter('course')" (click)="toggleFilter('course'); $event.stopPropagation()" aria-label="Filter Course">
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
@@ -174,7 +164,6 @@
       </thead>
       <tbody>
         <tr *ngFor="let item of displayedSubjects">
-          <td><span class="badge-id">{{ item.code }}</span></td>
           <td class="fw-semibold">{{ item.name }}</td>
           <td>{{ item.course }}</td>
           <td>
@@ -205,7 +194,7 @@
           </td>
         </tr>
         <tr *ngIf="displayedSubjects.length === 0">
-          <td colspan="7" class="empty-row">No subjects found matching criteria.</td>
+          <td colspan="6" class="empty-row">No subjects found matching criteria.</td>
         </tr>
       </tbody>
     </table>

@@ -1,1 +1,191 @@
 @import '../../admin-module.scss';
+
+.metric-card {
+  border-radius: 8px;
+  padding: 20px;
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+
+  .metric-label {
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+
+  .metric-value {
+    font-size: 28px;
+    font-weight: 700;
+    margin-top: 4px;
+  }
+}
+
+.metric-card-primary {
+  background: linear-gradient(135deg, #7dd3fc 0%, #2563eb 100%);
+  border-color: #60a5fa;
+  color: #ffffff;
+
+  .metric-label {
+    color: #ffffff;
+    opacity: 0.9;
+  }
+
+  .metric-value {
+    color: #ffffff;
+  }
+}
+
+.metric-card-success {
+  background: linear-gradient(135deg, #6ee7b7 0%, #059669 100%);
+  border-color: #34d399;
+  color: #ffffff;
+
+  .metric-label {
+    color: #ffffff;
+    opacity: 0.9;
+  }
+
+  .metric-value {
+    color: #ffffff;
+  }
+}
+
+.metric-card-danger {
+  background: linear-gradient(135deg, #fca5a5 0%, #dc2626 100%);
+  border-color: #f87171;
+  color: #ffffff;
+
+  .metric-label {
+    color: #ffffff;
+    opacity: 0.9;
+  }
+
+  .metric-value {
+    color: #ffffff;
+  }
+}
+
+.metric-card-info {
+  background: linear-gradient(135deg, #a78bfa 0%, #7c3aed 100%);
+  border-color: #8b5cf6;
+  color: #ffffff;
+
+  .metric-label {
+    color: #ffffff;
+    opacity: 0.9;
+  }
+
+  .metric-value {
+    color: #ffffff;
+  }
+}
+
+.attendance-summary {
+  display: flex;
+  gap: 16px;
+  padding: 16px 20px;
+  flex-wrap: wrap;
+}
+
+.summary-card {
+  flex: 1 1 140px;
+  border-radius: 10px;
+  padding: 14px 18px;
+  border: 1px solid transparent;
+  background: #f9fafb;
+  color: #111827;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 120px;
+}
+
+.summary-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.summary-value {
+  font-size: 22px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.summary-total {
+  background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
+  border-color: #a5b4fc;
+  color: #1e1b4b;
+
+  .summary-label {
+    color: #312e81;
+  }
+
+  .summary-value {
+    color: #111827;
+  }
+}
+
+.summary-present {
+  background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+  border-color: #6ee7b7;
+  color: #064e3b;
+
+  .summary-label {
+    color: #065f46;
+  }
+
+  .summary-value {
+    color: #065f46;
+  }
+}
+
+.summary-absent {
+  background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+  border-color: #fca5a5;
+  color: #7f1d1d;
+
+  .summary-label {
+    color: #991b1b;
+  }
+
+  .summary-value {
+    color: #dc2626;
+  }
+}
+
+.summary-late {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  border-color: #fcd34d;
+  color: #78350f;
+
+  .summary-label {
+    color: #92400e;
+  }
+
+  .summary-value {
+    color: #b45309;
+  }
+}
+
+.summary-attendance {
+  background: linear-gradient(135deg, #7dd3fc 0%, #2563eb 100%);
+  border-color: #60a5fa;
+  color: #ffffff;
+
+  .summary-label {
+    color: #ffffff;
+    opacity: 0.9;
+  }
+
+  .summary-value {
+    color: #ffffff;
+  }
+}

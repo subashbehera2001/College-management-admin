@@ -38,22 +38,22 @@ export const menuItems: MenuItemType[] = [
     url: '/dashboard',
   },
   {
-    label: 'Student List',
+    label: 'Student',
     icon: 'tablerUsers',
     url: '/student-list',
   },
   {
-    label: 'Faculty List',
+    label: 'Faculty',
     icon: 'tablerUserCheck',
     url: '/faculty',
   },
   {
-    label: 'Course List',
+    label: 'Course',
     icon: 'tablerBook',
     url: '/courses',
   },
   {
-    label: 'Subject List',
+    label: 'Subject',
     icon: 'tablerBook2',
     url: '/subjects',
   },

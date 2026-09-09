@@ -13,27 +13,27 @@
   <div class="p-4 bg-white border-bottom">
     <div class="row g-3">
       <div class="col-md-3">
-        <div class="p-3 bg-primary-subtle border border-primary-subtle rounded">
-          <div class="text-muted fs-12">Average Attendance</div>
-          <div class="fs-22 fw-bold text-primary mt-1">{{ averageAttendance }}</div>
+        <div class="metric-card metric-card-primary">
+          <div class="metric-label">Average Attendance</div>
+          <div class="metric-value">{{ averageAttendance }}</div>
         </div>
       </div>
       <div class="col-md-3">
-        <div class="p-3 bg-success-subtle border border-success-subtle rounded">
-          <div class="text-muted fs-12">Eligible Students (≥75%)</div>
-          <div class="fs-22 fw-bold text-success mt-1">{{ eligibleCount }}</div>
+        <div class="metric-card metric-card-success">
+          <div class="metric-label">Eligible Students</div>
+          <div class="metric-value">{{ eligibleCount }}</div>
         </div>
       </div>
       <div class="col-md-3">
-        <div class="p-3 bg-danger-subtle border border-danger-subtle rounded">
-          <div class="text-muted fs-12">Shortage Students (&lt;75%)</div>
-          <div class="fs-22 fw-bold text-danger mt-1">{{ shortageCount }}</div>
+        <div class="metric-card metric-card-danger">
+          <div class="metric-label">Shortage Students</div>
+          <div class="metric-value">{{ shortageCount }}</div>
         </div>
       </div>
       <div class="col-md-3">
-        <div class="p-3 bg-light border rounded">
-          <div class="text-muted fs-12">Total Evaluated</div>
-          <div class="fs-22 fw-bold text-dark mt-1">{{ totalStudents }} Students</div>
+        <div class="metric-card metric-card-info">
+          <div class="metric-label">Total Evaluated</div>
+          <div class="metric-value">{{ totalStudents }} Students</div>
         </div>
       </div>
     </div>
@@ -49,13 +49,13 @@
       </select>
       <select class="form-select form-select-sm" style="width: 160px;" [(ngModel)]="selectedStatus" (change)="applyFilter()">
         <option value="">All Statuses</option>
-        <option value="Eligible">Eligible (≥75%)</option>
-        <option value="Shortage">Shortage (&lt;75%)</option>
+        <option value="Eligible">Eligible</option>
+        <option value="Shortage">Shortage</option>
       </select>
     </div>
     <div class="toolbar-right">
       <div class="search-box">
-        <input type="text" placeholder="Search student name / roll..." class="search-input" [(ngModel)]="searchText" (input)="applyFilter()" />
+        <input type="text" placeholder="Search" class="search-input" [(ngModel)]="searchText" (input)="applyFilter()" />
         <svg class="search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.35-4.35"></path></svg>
       </div>
     </div>

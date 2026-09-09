@@ -17,10 +17,10 @@ export class AddCourse {
   name = '';
   department = '';
   level: 'Undergraduate' | 'Postgraduate' | 'Diploma' = 'Undergraduate';
-  duration = '4 Years';
-  totalSemesters = 8;
-  totalCredits = 160;
-  intake = 60;
+  duration = '';
+  totalSemesters: number | null = null;
+  totalCredits: number | null = null;
+  intake: number | null = null;
   status: 'Active' | 'Inactive' = 'Active';
 
   departmentOptions: string[] = [

@@ -67,7 +67,7 @@
       <div class="search-box">
         <input
           type="text"
-          placeholder="Search students..."
+          placeholder="Search"
           class="search-input"
           [(ngModel)]="searchText"
           (input)="onSearchChange(searchText)"
@@ -84,34 +84,10 @@
     <table class="students-table">
       <thead>
         <tr class="table-header">
-          <th (click)="onSort('id')" class="sortable">
-            <div class="th-content">
-              <span class="th-label">ID</span>
-              <div class="th-actions">
-                <span class="sort-icon" *ngIf="sortField === 'id'">{{ sortDirection === 'asc' ? 'â–²' : 'â–¼' }}</span>
-                <button type="button" class="filter-icon" [class.active]="hasActiveFilter('id')" (click)="toggleFilter('id'); $event.stopPropagation()" aria-label="Filter ID">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
-                  </svg>
-                </button>
-              </div>
-            </div>
-            <div class="filter-dropdown" *ngIf="activeFilter === 'id'" (click)="$event.stopPropagation()">
-              <div class="filter-panel">
-                <div class="filter-title">Filter by ID</div>
-                <input #idFilterInput type="text" class="filter-input" placeholder="Type student ID" [value]="getFilterValue('id')" (input)="setColumnFilter('id', idFilterInput.value)" />
-                <div class="filter-actions-row">
-                  <button type="button" class="filter-action secondary" (click)="clearColumnFilter('id')">Clear</button>
-                  <button type="button" class="filter-action primary" (click)="closeFilter()">Done</button>
-                </div>
-              </div>
-            </div>
-          </th>
           <th (click)="onSort('name')" class="sortable">
             <div class="th-content">
               <span class="th-label">Name</span>
               <div class="th-actions">
-                <!-- <span class="sort-icon" *ngIf="sortField === 'name'">{{ sortDirection === 'asc' ? 'â–²' : 'â–¼' }}</span> -->
                 <button type="button" class="filter-icon" [class.active]="hasActiveFilter('name')" (click)="toggleFilter('name'); $event.stopPropagation()" aria-label="Filter Name">
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
@@ -134,7 +110,6 @@
             <div class="th-content">
               <span class="th-label">Email</span>
               <div class="th-actions">
-                <span class="sort-icon" *ngIf="sortField === 'email'">{{ sortDirection === 'asc' ? 'â–²' : 'â–¼' }}</span>
                 <button type="button" class="filter-icon" [class.active]="hasActiveFilter('email')" (click)="toggleFilter('email'); $event.stopPropagation()" aria-label="Filter Email">
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
@@ -157,7 +132,6 @@
             <div class="th-content">
               <span class="th-label">Course</span>
               <div class="th-actions">
-                <span class="sort-icon" *ngIf="sortField === 'course'">{{ sortDirection === 'asc' ? 'â–²' : 'â–¼' }}</span>
                 <button type="button" class="filter-icon" [class.active]="hasActiveFilter('course')" (click)="toggleFilter('course'); $event.stopPropagation()" aria-label="Filter Course">
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
@@ -180,7 +154,6 @@
             <div class="th-content">
               <span class="th-label">Year</span>
               <div class="th-actions">
-                <span class="sort-icon" *ngIf="sortField === 'year'">{{ sortDirection === 'asc' ? 'â–²' : 'â–¼' }}</span>
                 <button type="button" class="filter-icon" [class.active]="hasActiveFilter('year')" (click)="toggleFilter('year'); $event.stopPropagation()" aria-label="Filter Year">
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
@@ -198,7 +171,7 @@
               </div>
             </div>
           </th>
-          <th>
+          <th (click)="onSort('status')" class="sortable">
             <div class="th-content">
               <span class="th-label">Status</span>
               <div class="th-actions">
@@ -224,7 +197,6 @@
       </thead>
       <tbody>
         <tr *ngFor="let student of displayedStudents; trackBy: trackByStudentId" class="table-row">
-          <td class="cell-id"><span class="badge-id">{{ student.id }}</span></td>
           <td class="cell-name">
             <div class="student-info">
               <div class="avatar">{{ student.name.charAt(0) }}</div>
@@ -318,10 +290,6 @@
 
     <div class="view-modal-body" *ngIf="selectedStudent as student">
       <div class="detail-grid">
-        <div class="detail-item detail-wide">
-          <span class="detail-label">Student ID</span>
-          <span class="detail-value">{{ student.id }}</span>
-        </div>
         <div class="detail-item">
           <span class="detail-label">Email Address</span>
           <span class="detail-value">{{ student.email }}</span>
@@ -333,6 +301,10 @@
         <div class="detail-item">
           <span class="detail-label">Academic Year</span>
           <span class="detail-value">{{ student.year }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Status</span>
+          <span class="detail-value">{{ student.status }}</span>
         </div>
       </div>
     </div>

@@ -136,11 +136,11 @@
     .toolbar-right {
       .search-box {
         position: relative;
-        width: 260px;
+        width: 228px;
 
         .search-input {
           width: 100%;
-          padding: 8px 12px 8px 36px;
+          padding: 8px 0px 8px 36px;
           border: 1px solid #d1d5db;
           border-radius: 4px;
           font-size: 13px;
@@ -177,7 +177,7 @@
       text-align: left;
 
       th {
-        background: #f9fafb;
+        background: rgb(205 205 205 / 38%);
         padding: 12px 16px;
         color: #374151;
         font-weight: 600;

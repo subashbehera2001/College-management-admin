@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subject, SUBJECTS_DATA } from './data';
 
-type ColumnFilterField = 'code' | 'name' | 'course' | 'semester' | 'type' | 'status';
+type ColumnFilterField = 'name' | 'course' | 'semester' | 'type' | 'status';
 
 @Component({
   selector: 'app-subject-list',
@@ -25,7 +25,6 @@ export class SubjectListComponent implements OnInit {
   activeFilter: ColumnFilterField | null = null;
 
   filterValues: Record<ColumnFilterField, string> = {
-    code: '',
     name: '',
     course: '',
     semester: '',
@@ -66,7 +65,6 @@ export class SubjectListComponent implements OnInit {
         s.course.toLowerCase().includes(search) ||
         s.faculty.toLowerCase().includes(search);
 
-      const matchesCode = !this.filterValues.code || s.code.toLowerCase().includes(this.filterValues.code.toLowerCase());
       const matchesName = !this.filterValues.name || s.name.toLowerCase().includes(this.filterValues.name.toLowerCase());
       const matchesCourse = !this.filterValues.course || s.course === this.filterValues.course;
       const matchesSem = !this.filterValues.semester || s.semester === this.filterValues.semester;
@@ -75,7 +73,7 @@ export class SubjectListComponent implements OnInit {
 
       const matchesTab = this.activeTab === 'active' ? s.status === 'Active' : s.status === 'Inactive';
 
-      return matchesSearch && matchesCode && matchesName && matchesCourse && matchesSem && matchesType && matchesStatus && matchesTab;
+      return matchesSearch && matchesName && matchesCourse && matchesSem && matchesType && matchesStatus && matchesTab;
     });
 
     this.filteredSubjects.sort((a, b) => {
