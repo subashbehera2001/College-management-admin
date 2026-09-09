@@ -1,4 +1,4 @@
-<div class="cms-container">
+<div class="marks-entry-container">
   <div class="breadcrumb-section">
     <nav class="breadcrumb">
       <a routerLink="/dashboard" class="breadcrumb-item">Home</a>
@@ -9,57 +9,129 @@
     </nav>
   </div>
 
-  <div class="p-4 bg-white border-bottom">
-    <div class="row g-3">
-      <div class="col-md-3">
-        <label class="form-label fs-13 fw-semibold">Examination</label>
-        <select class="form-select form-select-sm" [(ngModel)]="selectedExam">
-          <option *ngFor="let opt of examOptions" [value]="opt.split(' ')[0]">{{ opt }}</option>
-        </select>
-      </div>
-      <div class="col-md-3">
-        <label class="form-label fs-13 fw-semibold">Course</label>
-        <select class="form-select form-select-sm" [(ngModel)]="selectedCourse">
-          <option *ngFor="let c of courseOptions" [value]="c">{{ c }}</option>
-        </select>
-      </div>
-      <div class="col-md-2">
-        <label class="form-label fs-13 fw-semibold">Semester</label>
-        <select class="form-select form-select-sm" [(ngModel)]="selectedSemester">
-          <option *ngFor="let s of semesterOptions" [value]="s">{{ s }}</option>
-        </select>
-      </div>
-      <div class="col-md-4">
-        <label class="form-label fs-13 fw-semibold">Subject</label>
-        <select class="form-select form-select-sm" [(ngModel)]="selectedSubject">
-          <option *ngFor="let sub of subjectOptions" [value]="sub">{{ sub }}</option>
-        </select>
+  <div class="toolbar-section">
+    <div class="toolbar-left">
+      <button class="toolbar-btn" (click)="exportCSV()">Export CSV</button>
+      <button class="toolbar-btn btn-primary" (click)="saveMarks()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+        Save
+      </button>
+    </div>
+    <div class="toolbar-right">
+      <div class="search-box">
+        <input type="text" placeholder="Search" class="search-input" [(ngModel)]="searchText" (input)="applyFilter()" />
+        <svg class="search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.35-4.35"></path></svg>
       </div>
     </div>
-  </div>
-
-  <div class="p-3 mx-4 my-2 alert alert-success d-flex justify-content-between align-items-center" *ngIf="savedSuccess">
-    <span>✓ Examination marks updated and recorded successfully!</span>
-    <button type="button" class="btn-close" (click)="savedSuccess = false"></button>
   </div>
 
   <div class="table-section">
     <table class="cms-table">
       <thead>
-        <tr>
-          <th>Roll No</th>
-          <th>Student Name</th>
+        <tr class="table-header">
+          <th (click)="onSort('rollNo')" class="sortable">
+            <div class="th-content">
+              <span class="th-label">Roll No</span>
+              <div class="th-actions">
+                <button type="button" class="filter-icon" [class.active]="hasActiveFilter('rollNo')" (click)="toggleFilter('rollNo'); $event.stopPropagation()" aria-label="Filter Roll No">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div class="filter-dropdown" *ngIf="activeFilter === 'rollNo'" (click)="$event.stopPropagation()">
+              <div class="filter-panel">
+                <div class="filter-title">Filter by Roll No</div>
+                <input #rollNoFilterInput type="text" class="filter-input" placeholder="Type roll number" [value]="getFilterValue('rollNo')" (input)="setColumnFilter('rollNo', rollNoFilterInput.value)" />
+                <div class="filter-actions-row">
+                  <button type="button" class="filter-action secondary" (click)="clearColumnFilter('rollNo')">Clear</button>
+                  <button type="button" class="filter-action primary" (click)="closeFilter()">Done</button>
+                </div>
+              </div>
+            </div>
+          </th>
+          <th (click)="onSort('studentName')" class="sortable">
+            <div class="th-content">
+              <span class="th-label">Student Name</span>
+              <div class="th-actions">
+                <button type="button" class="filter-icon" [class.active]="hasActiveFilter('studentName')" (click)="toggleFilter('studentName'); $event.stopPropagation()" aria-label="Filter Student Name">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div class="filter-dropdown" *ngIf="activeFilter === 'studentName'" (click)="$event.stopPropagation()">
+              <div class="filter-panel">
+                <div class="filter-title">Filter by Student Name</div>
+                <input #studentNameFilterInput type="text" class="filter-input" placeholder="Type student name" [value]="getFilterValue('studentName')" (input)="setColumnFilter('studentName', studentNameFilterInput.value)" />
+                <div class="filter-actions-row">
+                  <button type="button" class="filter-action secondary" (click)="clearColumnFilter('studentName')">Clear</button>
+                  <button type="button" class="filter-action primary" (click)="closeFilter()">Done</button>
+                </div>
+              </div>
+            </div>
+          </th>
+          <th (click)="onSort('grade')" class="sortable">
+            <div class="th-content">
+              <span class="th-label">Grade</span>
+              <div class="th-actions">
+                <button type="button" class="filter-icon" [class.active]="hasActiveFilter('grade')" (click)="toggleFilter('grade'); $event.stopPropagation()" aria-label="Filter Grade">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div class="filter-dropdown" *ngIf="activeFilter === 'grade'" (click)="$event.stopPropagation()">
+              <div class="filter-panel">
+                <div class="filter-title">Filter by Grade</div>
+                <div class="filter-option-list">
+                  <button type="button" class="filter-option" [class.selected]="getFilterValue('grade') === ''" (click)="setColumnFilter('grade', '', true)">All Grades</button>
+                  <button type="button" class="filter-option" *ngFor="let grade of gradeOptions" [class.selected]="getFilterValue('grade') === grade" (click)="setColumnFilter('grade', grade, true)">{{ grade }}</button>
+                </div>
+              </div>
+            </div>
+          </th>
+          <th (click)="onSort('status')" class="sortable">
+            <div class="th-content">
+              <span class="th-label">Status</span>
+              <div class="th-actions">
+                <button type="button" class="filter-icon" [class.active]="hasActiveFilter('status')" (click)="toggleFilter('status'); $event.stopPropagation()" aria-label="Filter Status">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div class="filter-dropdown" *ngIf="activeFilter === 'status'" (click)="$event.stopPropagation()">
+              <div class="filter-panel">
+                <div class="filter-title">Filter by Status</div>
+                <div class="filter-option-list">
+                  <button type="button" class="filter-option" [class.selected]="getFilterValue('status') === ''" (click)="setColumnFilter('status', '', true)">All Status</button>
+                  <button type="button" class="filter-option" *ngFor="let status of statusOptions" [class.selected]="getFilterValue('status') === status" (click)="setColumnFilter('status', status, true)">{{ status }}</button>
+                </div>
+              </div>
+            </div>
+          </th>
           <th style="width: 150px;">Internal (Max 30)</th>
           <th style="width: 150px;">External (Max 70)</th>
           <th>Total (Max 100)</th>
-          <th>Grade</th>
-          <th>Status</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of studentsMarks">
+        <tr *ngFor="let item of filteredStudentsMarks">
           <td><strong class="text-primary">{{ item.rollNo }}</strong></td>
           <td class="fw-semibold">{{ item.studentName }}</td>
+          <td>
+            <span class="badge bg-light text-dark border fs-12">{{ getGrade(item) }}</span>
+          </td>
+          <td>
+            <span class="badge-status" [ngClass]="getStatus(item) === 'Pass' ? 'status-active' : 'status-inactive'">
+              {{ getStatus(item) }}
+            </span>
+          </td>
           <td>
             <input
               type="number"
@@ -81,14 +153,6 @@
           <td>
             <strong class="fs-14">{{ getTotal(item) }}</strong> / 100
           </td>
-          <td>
-            <span class="badge bg-light text-dark border fs-12">{{ getGrade(item) }}</span>
-          </td>
-          <td>
-            <span class="badge-status" [ngClass]="getStatus(item) === 'Pass' ? 'status-active' : 'status-inactive'">
-              {{ getStatus(item) }}
-            </span>
-          </td>
         </tr>
       </tbody>
     </table>
@@ -96,7 +160,7 @@
 
   <div class="p-4 bg-white border-top text-end">
     <button type="button" class="btn btn-primary px-4 py-2" (click)="saveMarks()">
-      Save Marks
+      Save
     </button>
   </div>
 </div>

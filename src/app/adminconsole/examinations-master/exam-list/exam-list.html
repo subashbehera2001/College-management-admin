@@ -1,4 +1,4 @@
-<div class="cms-container">
+<div class="exam-list-container">
   <div class="breadcrumb-section">
     <nav class="breadcrumb">
       <a routerLink="/dashboard" class="breadcrumb-item">Home</a>
@@ -16,16 +16,10 @@
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
         Add Exam
       </button>
-      <select class="form-select form-select-sm" style="width: 170px;" [(ngModel)]="selectedStatus" (change)="applyFilter()">
-        <option value="">All Statuses</option>
-        <option value="Upcoming">Upcoming</option>
-        <option value="Ongoing">Ongoing</option>
-        <option value="Completed">Completed</option>
-      </select>
     </div>
     <div class="toolbar-right">
       <div class="search-box">
-        <input type="text" placeholder="Search exams..." class="search-input" [(ngModel)]="searchText" (input)="applyFilter()" />
+        <input type="text" placeholder="Search" class="search-input" [(ngModel)]="searchText" (input)="applyFilter()" />
         <svg class="search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.35-4.35"></path></svg>
       </div>
     </div>
@@ -34,20 +28,144 @@
   <div class="table-section">
     <table class="cms-table">
       <thead>
-        <tr>
-          <th>Exam Code</th>
-          <th>Exam Title</th>
-          <th>Course & Semester</th>
-          <th>Session</th>
-          <th>Date Range</th>
-          <th>Type</th>
-          <th>Status</th>
+        <tr class="table-header">
+          <th (click)="onSort('name')" class="sortable">
+            <div class="th-content">
+              <span class="th-label">Exam Title</span>
+              <div class="th-actions">
+                <button type="button" class="filter-icon" [class.active]="hasActiveFilter('name')" (click)="toggleFilter('name'); $event.stopPropagation()" aria-label="Filter Exam Title">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div class="filter-dropdown" *ngIf="activeFilter === 'name'" (click)="$event.stopPropagation()">
+              <div class="filter-panel">
+                <div class="filter-title">Filter by Exam Title</div>
+                <input #nameFilterInput type="text" class="filter-input" placeholder="Type exam title" [value]="getFilterValue('name')" (input)="setColumnFilter('name', nameFilterInput.value)" />
+                <div class="filter-actions-row">
+                  <button type="button" class="filter-action secondary" (click)="clearColumnFilter('name')">Clear</button>
+                  <button type="button" class="filter-action primary" (click)="closeFilter()">Done</button>
+                </div>
+              </div>
+            </div>
+          </th>
+          <th (click)="onSort('course')" class="sortable">
+            <div class="th-content">
+              <span class="th-label">Course & Semester</span>
+              <div class="th-actions">
+                <button type="button" class="filter-icon" [class.active]="hasActiveFilter('course')" (click)="toggleFilter('course'); $event.stopPropagation()" aria-label="Filter Course">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div class="filter-dropdown" *ngIf="activeFilter === 'course'" (click)="$event.stopPropagation()">
+              <div class="filter-panel">
+                <div class="filter-title">Filter by Course</div>
+                <input #courseFilterInput type="text" class="filter-input" placeholder="Type course name" [value]="getFilterValue('course')" (input)="setColumnFilter('course', courseFilterInput.value)" />
+                <div class="filter-actions-row">
+                  <button type="button" class="filter-action secondary" (click)="clearColumnFilter('course')">Clear</button>
+                  <button type="button" class="filter-action primary" (click)="closeFilter()">Done</button>
+                </div>
+              </div>
+            </div>
+          </th>
+          <th (click)="onSort('session')" class="sortable">
+            <div class="th-content">
+              <span class="th-label">Session</span>
+              <div class="th-actions">
+                <button type="button" class="filter-icon" [class.active]="hasActiveFilter('session')" (click)="toggleFilter('session'); $event.stopPropagation()" aria-label="Filter Session">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div class="filter-dropdown" *ngIf="activeFilter === 'session'" (click)="$event.stopPropagation()">
+              <div class="filter-panel">
+                <div class="filter-title">Filter by Session</div>
+                <div class="filter-option-list">
+                  <button type="button" class="filter-option" [class.selected]="getFilterValue('session') === ''" (click)="setColumnFilter('session', '', true)">All Sessions</button>
+                  <button type="button" class="filter-option" *ngFor="let session of sessionOptions" [class.selected]="getFilterValue('session') === session" (click)="setColumnFilter('session', session, true)">{{ session }}</button>
+                </div>
+              </div>
+            </div>
+          </th>
+          <th (click)="onSort('startDate')" class="sortable">
+            <div class="th-content">
+              <span class="th-label">Date Range</span>
+              <div class="th-actions">
+                <button type="button" class="filter-icon" [class.active]="hasActiveFilter('startDate') || hasActiveFilter('endDate')" (click)="toggleFilter('startDate'); $event.stopPropagation()" aria-label="Filter Date Range">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div class="filter-dropdown" *ngIf="activeFilter === 'startDate'" (click)="$event.stopPropagation()">
+              <div class="filter-panel">
+                <div class="filter-title">Filter by Date Range</div>
+                <div class="d-flex flex-column gap-2">
+                  <input #startDateFilterInput type="date" class="filter-input" [value]="getFilterValue('startDate')" (input)="setColumnFilter('startDate', startDateFilterInput.value)" />
+                  <input #endDateFilterInput type="date" class="filter-input" [value]="getFilterValue('endDate')" (input)="setColumnFilter('endDate', endDateFilterInput.value)" />
+                </div>
+                <div class="filter-actions-row">
+                  <button type="button" class="filter-action secondary" (click)="clearColumnFilter('startDate'); clearColumnFilter('endDate')">Clear</button>
+                  <button type="button" class="filter-action primary" (click)="closeFilter()">Done</button>
+                </div>
+              </div>
+            </div>
+          </th>
+          <th (click)="onSort('examType')" class="sortable">
+            <div class="th-content">
+              <span class="th-label">Type</span>
+              <div class="th-actions">
+                <button type="button" class="filter-icon" [class.active]="hasActiveFilter('examType')" (click)="toggleFilter('examType'); $event.stopPropagation()" aria-label="Filter Type">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div class="filter-dropdown" *ngIf="activeFilter === 'examType'" (click)="$event.stopPropagation()">
+              <div class="filter-panel">
+                <div class="filter-title">Filter by Type</div>
+                <div class="filter-option-list">
+                  <button type="button" class="filter-option" [class.selected]="getFilterValue('examType') === ''" (click)="setColumnFilter('examType', '', true)">All Types</button>
+                  <button type="button" class="filter-option" *ngFor="let type of typeOptions" [class.selected]="getFilterValue('examType') === type" (click)="setColumnFilter('examType', type, true)">{{ type }}</button>
+                </div>
+              </div>
+            </div>
+          </th>
+          <th (click)="onSort('status')" class="sortable">
+            <div class="th-content">
+              <span class="th-label">Status</span>
+              <div class="th-actions">
+                <button type="button" class="filter-icon" [class.active]="hasActiveFilter('status')" (click)="toggleFilter('status'); $event.stopPropagation()" aria-label="Filter Status">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div class="filter-dropdown" *ngIf="activeFilter === 'status'" (click)="$event.stopPropagation()">
+              <div class="filter-panel">
+                <div class="filter-title">Filter by Status</div>
+                <div class="filter-option-list">
+                  <button type="button" class="filter-option" [class.selected]="getFilterValue('status') === ''" (click)="setColumnFilter('status', '', true)">All Statuses</button>
+                  <button type="button" class="filter-option" *ngFor="let status of statusOptions" [class.selected]="getFilterValue('status') === status" (click)="setColumnFilter('status', status, true)">{{ status }}</button>
+                </div>
+              </div>
+            </div>
+          </th>
           <th style="width: 80px; text-align: center;">Actions</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let e of filteredExams">
-          <td><strong class="text-primary">{{ e.code }}</strong></td>
           <td class="fw-semibold text-dark">{{ e.name }}</td>
           <td>{{ e.course }} ({{ e.semester }})</td>
           <td>{{ e.session }}</td>
@@ -61,9 +179,24 @@
             }">{{ e.status }}</span>
           </td>
           <td>
-            <div class="action-buttons justify-content-center">
-              <button type="button" class="btn-action btn-delete" (click)="openDeleteModal(e)" title="Delete">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+            <div class="action-buttons">
+              <button class="action-btn btn-view" title="View Exam" (click)="viewExam(e)">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+              </button>
+              <button class="action-btn btn-edit" title="Edit Exam" (click)="editExam(e)">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                  <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                </svg>
+              </button>
+              <button class="action-btn btn-delete" title="Delete Exam" (click)="openDeleteModal(e)">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="3 6 5 6 21 6"></polyline>
+                  <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                </svg>
               </button>
             </div>
           </td>
@@ -81,8 +214,8 @@
       </div>
       <div class="modal-body">Are you sure you want to remove exam <strong>{{ selectedExam.name }}</strong>?</div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" (click)="closeDeleteModal()">Cancel</button>
-        <button type="button" class="btn btn-danger" (click)="confirmDelete()">Delete</button>
+        <button type="button" class="btn btn-cancel" (click)="closeDeleteModal()">Cancel</button>
+        <button type="button" class="btn btn-confirm-delete" (click)="confirmDelete()">Delete</button>
       </div>
     </div>
   </div>
