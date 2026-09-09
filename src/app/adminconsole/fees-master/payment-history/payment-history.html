@@ -1,4 +1,4 @@
-<div class="cms-container">
+<div class="payment-history-container">
   <div class="breadcrumb-section">
     <nav class="breadcrumb">
       <a routerLink="/dashboard" class="breadcrumb-item">Home</a>
@@ -11,15 +11,22 @@
 
   <div class="toolbar-section">
     <div class="toolbar-left">
-      <button class="toolbar-btn" (click)="exportCSV()">Export CSV</button>
-      <select class="form-select form-select-sm" style="width: 170px;" [(ngModel)]="selectedMode" (change)="applyFilter()">
-        <option value="">All Payment Modes</option>
-        <option *ngFor="let m of modes" [value]="m">{{ m }}</option>
-      </select>
+      <button class="toolbar-btn" (click)="exportCSV()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+        CSV Export
+      </button>
+      <button class="toolbar-btn" (click)="exportExcel()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+        Excel Export
+      </button>
+      <button class="toolbar-btn" (click)="exportPDF()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+        PDF Export
+      </button>
     </div>
     <div class="toolbar-right">
       <div class="search-box">
-        <input type="text" placeholder="Search receipt / student..." class="search-input" [(ngModel)]="searchText" (input)="applyFilter()" />
+        <input type="text" placeholder="Search" class="search-input" [(ngModel)]="searchText" (input)="applyFilter()" />
         <svg class="search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.35-4.35"></path></svg>
       </div>
     </div>
@@ -28,21 +35,142 @@
   <div class="table-section">
     <table class="cms-table">
       <thead>
-        <tr>
-          <th>Receipt No</th>
-          <th>Student Details</th>
-          <th>Course</th>
-          <th>Amount Paid</th>
-          <th>Payment Date</th>
-          <th>Mode</th>
+        <tr class="table-header">
+          <th (click)="onSort('studentName')" class="sortable">
+            <div class="th-content">
+              <span class="th-label">Student Details</span>
+              <div class="th-actions">
+                <button type="button" class="filter-icon" [class.active]="hasActiveFilter('studentName') || hasActiveFilter('rollNo')" (click)="toggleFilter('studentName'); $event.stopPropagation()" aria-label="Filter Student Details">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div class="filter-dropdown" *ngIf="activeFilter === 'studentName'" (click)="$event.stopPropagation()">
+              <div class="filter-panel">
+                <div class="filter-title">Filter by Student</div>
+                <input #studentNameFilterInput type="text" class="filter-input" placeholder="Type student name or roll no" [value]="getFilterValue('studentName')" (input)="setColumnFilter('studentName', studentNameFilterInput.value)" />
+                <div class="filter-actions-row">
+                  <button type="button" class="filter-action secondary" (click)="clearColumnFilter('studentName')">Clear</button>
+                  <button type="button" class="filter-action primary" (click)="closeFilter()">Done</button>
+                </div>
+              </div>
+            </div>
+          </th>
+          <th (click)="onSort('course')" class="sortable">
+            <div class="th-content">
+              <span class="th-label">Course</span>
+              <div class="th-actions">
+                <button type="button" class="filter-icon" [class.active]="hasActiveFilter('course')" (click)="toggleFilter('course'); $event.stopPropagation()" aria-label="Filter Course">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div class="filter-dropdown" *ngIf="activeFilter === 'course'" (click)="$event.stopPropagation()">
+              <div class="filter-panel">
+                <div class="filter-title">Filter by Course</div>
+                <div class="filter-option-list">
+                  <button type="button" class="filter-option" [class.selected]="getFilterValue('course') === ''" (click)="setColumnFilter('course', '', true)">All Courses</button>
+                  <button type="button" class="filter-option" *ngFor="let course of courseOptions" [class.selected]="getFilterValue('course') === course" (click)="setColumnFilter('course', course, true)">{{ course }}</button>
+                </div>
+              </div>
+            </div>
+          </th>
+          <th (click)="onSort('amount')" class="sortable">
+            <div class="th-content">
+              <span class="th-label">Amount Paid</span>
+              <div class="th-actions">
+                <button type="button" class="filter-icon" [class.active]="hasActiveFilter('amount')" (click)="toggleFilter('amount'); $event.stopPropagation()" aria-label="Filter Amount">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div class="filter-dropdown" *ngIf="activeFilter === 'amount'" (click)="$event.stopPropagation()">
+              <div class="filter-panel">
+                <div class="filter-title">Filter by Amount</div>
+                <input #amountFilterInput type="number" class="filter-input" placeholder="Enter amount" [value]="getFilterValue('amount')" (input)="setColumnFilter('amount', amountFilterInput.value)" />
+                <div class="filter-actions-row">
+                  <button type="button" class="filter-action secondary" (click)="clearColumnFilter('amount')">Clear</button>
+                  <button type="button" class="filter-action primary" (click)="closeFilter()">Done</button>
+                </div>
+              </div>
+            </div>
+          </th>
+          <th (click)="onSort('paymentDate')" class="sortable">
+            <div class="th-content">
+              <span class="th-label">Payment Date</span>
+              <div class="th-actions">
+                <button type="button" class="filter-icon" [class.active]="hasActiveFilter('paymentDate')" (click)="toggleFilter('paymentDate'); $event.stopPropagation()" aria-label="Filter Payment Date">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div class="filter-dropdown" *ngIf="activeFilter === 'paymentDate'" (click)="$event.stopPropagation()">
+              <div class="filter-panel">
+                <div class="filter-title">Filter by Payment Date</div>
+                <input #paymentDateFilterInput type="date" class="filter-input" [value]="getFilterValue('paymentDate')" (input)="setColumnFilter('paymentDate', paymentDateFilterInput.value)" />
+                <div class="filter-actions-row">
+                  <button type="button" class="filter-action secondary" (click)="clearColumnFilter('paymentDate')">Clear</button>
+                  <button type="button" class="filter-action primary" (click)="closeFilter()">Done</button>
+                </div>
+              </div>
+            </div>
+          </th>
+          <th (click)="onSort('paymentMode')" class="sortable">
+            <div class="th-content">
+              <span class="th-label">Mode</span>
+              <div class="th-actions">
+                <button type="button" class="filter-icon" [class.active]="hasActiveFilter('paymentMode')" (click)="toggleFilter('paymentMode'); $event.stopPropagation()" aria-label="Filter Mode">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div class="filter-dropdown" *ngIf="activeFilter === 'paymentMode'" (click)="$event.stopPropagation()">
+              <div class="filter-panel">
+                <div class="filter-title">Filter by Payment Mode</div>
+                <div class="filter-option-list">
+                  <button type="button" class="filter-option" [class.selected]="getFilterValue('paymentMode') === ''" (click)="setColumnFilter('paymentMode', '', true)">All Modes</button>
+                  <button type="button" class="filter-option" *ngFor="let mode of modes" [class.selected]="getFilterValue('paymentMode') === mode" (click)="setColumnFilter('paymentMode', mode, true)">{{ mode }}</button>
+                </div>
+              </div>
+            </div>
+          </th>
           <th>Transaction ID</th>
-          <th>Status</th>
+          <th (click)="onSort('status')" class="sortable">
+            <div class="th-content">
+              <span class="th-label">Status</span>
+              <div class="th-actions">
+                <button type="button" class="filter-icon" [class.active]="hasActiveFilter('status')" (click)="toggleFilter('status'); $event.stopPropagation()" aria-label="Filter Status">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div class="filter-dropdown" *ngIf="activeFilter === 'status'" (click)="$event.stopPropagation()">
+              <div class="filter-panel">
+                <div class="filter-title">Filter by Status</div>
+                <div class="filter-option-list">
+                  <button type="button" class="filter-option" [class.selected]="getFilterValue('status') === ''" (click)="setColumnFilter('status', '', true)">All Status</button>
+                  <button type="button" class="filter-option" *ngFor="let status of statusOptions" [class.selected]="getFilterValue('status') === status" (click)="setColumnFilter('status', status, true)">{{ status }}</button>
+                </div>
+              </div>
+            </div>
+          </th>
           <th style="width: 80px; text-align: center;">Receipt</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let item of filteredPayments">
-          <td><strong class="text-primary">{{ item.receiptNo }}</strong></td>
           <td>
             <div class="fw-semibold text-dark">{{ item.studentName }}</div>
             <div class="text-muted fs-12">{{ item.rollNo }}</div>
@@ -56,9 +184,7 @@
             <span class="badge-status status-paid">{{ item.status }}</span>
           </td>
           <td class="text-center">
-            <button type="button" class="btn btn-sm btn-outline-secondary py-1 px-2" (click)="viewReceipt(item)">
-              View
-            </button>
+            <button class="action-btn marksheet-btn" title="View Receipt" (click)="viewReceipt(item)">View</button>
           </td>
         </tr>
       </tbody>
@@ -88,7 +214,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
+        <button type="button" class="btn btn-cancel" (click)="closeModal()">Close</button>
         <button type="button" class="btn btn-primary" (click)="printReceipt()">Print</button>
       </div>
     </div>
