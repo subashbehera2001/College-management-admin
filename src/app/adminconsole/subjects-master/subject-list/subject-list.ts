@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subject, SUBJECTS_DATA } from './data';
 
-type ColumnFilterField = 'name' | 'course' | 'semester' | 'type' | 'status';
+type ColumnFilterField = 'name' | 'course' | 'semester' | 'type' | 'faculty' | 'status';
 
 @Component({
   selector: 'app-subject-list',
@@ -29,6 +29,7 @@ export class SubjectListComponent implements OnInit {
     course: '',
     semester: '',
     type: '',
+    faculty: '',
     status: '',
   };
 
@@ -46,11 +47,13 @@ export class SubjectListComponent implements OnInit {
   courseOptions: string[] = [];
   semesterOptions: string[] = [];
   typeOptions: string[] = ['Theory', 'Practical', 'Elective'];
+  facultyOptions: string[] = [];
 
   ngOnInit(): void {
     this.subjectList = [...SUBJECTS_DATA];
     this.courseOptions = Array.from(new Set(SUBJECTS_DATA.map((s) => s.course))).sort();
     this.semesterOptions = Array.from(new Set(SUBJECTS_DATA.map((s) => s.semester))).sort();
+    this.facultyOptions = Array.from(new Set(SUBJECTS_DATA.map((s) => s.faculty))).sort();
     this.applyFiltersAndSort();
   }
 
@@ -69,11 +72,12 @@ export class SubjectListComponent implements OnInit {
       const matchesCourse = !this.filterValues.course || s.course === this.filterValues.course;
       const matchesSem = !this.filterValues.semester || s.semester === this.filterValues.semester;
       const matchesType = !this.filterValues.type || s.type === this.filterValues.type;
+      const matchesFaculty = !this.filterValues.faculty || s.faculty === this.filterValues.faculty;
       const matchesStatus = !this.filterValues.status || s.status === this.filterValues.status;
 
       const matchesTab = this.activeTab === 'active' ? s.status === 'Active' : s.status === 'Inactive';
 
-      return matchesSearch && matchesName && matchesCourse && matchesSem && matchesType && matchesStatus && matchesTab;
+      return matchesSearch && matchesName && matchesCourse && matchesSem && matchesType && matchesFaculty && matchesStatus && matchesTab;
     });
 
     this.filteredSubjects.sort((a, b) => {

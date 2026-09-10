@@ -136,7 +136,27 @@
               </div>
             </div>
           </th>
-          <th><span class="th-label">Faculty</span></th>
+           <th (click)="onSort('faculty')" class="sortable">
+             <div class="th-content">
+               <span class="th-label">Faculty</span>
+               <div class="th-actions">
+                 <button type="button" class="filter-icon" [class.active]="hasActiveFilter('faculty')" (click)="toggleFilter('faculty'); $event.stopPropagation()" aria-label="Filter Faculty">
+                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                     <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+                   </svg>
+                 </button>
+               </div>
+             </div>
+             <div class="filter-dropdown" *ngIf="activeFilter === 'faculty'" (click)="$event.stopPropagation()">
+               <div class="filter-panel">
+                 <div class="filter-title">Filter by Faculty</div>
+                 <div class="filter-option-list">
+                   <button type="button" class="filter-option" [class.selected]="filterValues.faculty === ''" (click)="setColumnFilter('faculty', '', true)">All Faculty</button>
+                   <button type="button" class="filter-option" *ngFor="let f of facultyOptions" [class.selected]="filterValues.faculty === f" (click)="setColumnFilter('faculty', f, true)">{{ f }}</button>
+                 </div>
+               </div>
+             </div>
+           </th>
           <th>
             <div class="th-content">
               <span class="th-label">Status</span>

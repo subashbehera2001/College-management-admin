@@ -23,8 +23,8 @@ export class PaymentHistory implements OnInit {
   selectedReceipt: PaymentRecord | null = null;
   showModal = false;
 
-  modes = ['Cash', 'UPI', 'Card', 'Net Banking'];
-  statusOptions = ['Success', 'Failed', 'Pending'];
+  modes: string[] = [];
+  statusOptions: string[] = [];
 
   activeFilter: ColumnFilterField | null = null;
 
@@ -46,6 +46,8 @@ export class PaymentHistory implements OnInit {
   ngOnInit(): void {
     this.payments = [...PAYMENT_HISTORY_DATA];
     this.courseOptions = Array.from(new Set(this.payments.map((p) => p.course))).sort();
+    this.modes = Array.from(new Set(this.payments.map((p) => p.paymentMode))).sort();
+    this.statusOptions = Array.from(new Set(this.payments.map((p) => p.status))).sort();
     this.applyFilter();
   }
 
@@ -189,6 +191,19 @@ export class PaymentHistory implements OnInit {
     this.showModal = true;
   }
 
+  editPayment(item: PaymentRecord): void {
+    this.selectedReceipt = item;
+    this.showModal = true;
+  }
+
+  deletePayment(item: PaymentRecord): void {
+    const index = this.payments.findIndex((p) => p.receiptNo === item.receiptNo);
+    if (index !== -1) {
+      this.payments.splice(index, 1);
+      this.applyFilter();
+    }
+  }
+
   closeModal(): void {
     this.showModal = false;
     this.selectedReceipt = null;
@@ -199,8 +214,8 @@ export class PaymentHistory implements OnInit {
   }
 
   exportCSV(): void {
-    const headers = ['Roll No', 'Student Name', 'Course', 'Amount', 'Payment Date', 'Payment Mode', 'Transaction ID', 'Status'];
-    const rows = this.filteredPayments.map((p) => [p.rollNo, p.studentName, p.course, p.amount, p.paymentDate, p.paymentMode, p.transactionId, p.status]);
+    const headers = ['Roll No', 'Student Name', 'Course', 'Amount', 'Payment Date', 'Payment Mode', 'Status'];
+    const rows = this.filteredPayments.map((p) => [p.rollNo, p.studentName, p.course, p.amount, p.paymentDate, p.paymentMode, p.status]);
     const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows.map((e) => e.join(','))].join('\n');
     const a = document.createElement('a');
     a.href = encodeURI(csvContent);
@@ -209,8 +224,8 @@ export class PaymentHistory implements OnInit {
   }
 
   exportExcel(): void {
-    const headers = ['Roll No', 'Student Name', 'Course', 'Amount', 'Payment Date', 'Payment Mode', 'Transaction ID', 'Status'];
-    const rows = this.filteredPayments.map((p) => [p.rollNo, p.studentName, p.course, p.amount, p.paymentDate, p.paymentMode, p.transactionId, p.status]);
+    const headers = ['Roll No', 'Student Name', 'Course', 'Amount', 'Payment Date', 'Payment Mode', 'Status'];
+    const rows = this.filteredPayments.map((p) => [p.rollNo, p.studentName, p.course, p.amount, p.paymentDate, p.paymentMode, p.status]);
     const ws = XLSX.utils.aoa_to_sheet([headers, ...rows]);
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Payment History');
@@ -218,8 +233,8 @@ export class PaymentHistory implements OnInit {
   }
 
   exportPDF(): void {
-    const headers = ['Roll No', 'Student Name', 'Course', 'Amount', 'Payment Date', 'Payment Mode', 'Transaction ID', 'Status'];
-    const rows = this.filteredPayments.map((p) => [p.rollNo, p.studentName, p.course, p.amount, p.paymentDate, p.paymentMode, p.transactionId, p.status]);
+    const headers = ['Roll No', 'Student Name', 'Course', 'Amount', 'Payment Date', 'Payment Mode', 'Status'];
+    const rows = this.filteredPayments.map((p) => [p.rollNo, p.studentName, p.course, p.amount, p.paymentDate, p.paymentMode, p.status]);
     const doc = new jspdf.jsPDF();
     doc.text('Payment History', 14, 15);
     (doc as any).autoTable({ head: [headers], body: rows, startY: 20 });
