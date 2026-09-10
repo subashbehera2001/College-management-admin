@@ -1,1 +1,145 @@
-@import '../../admin-module.scss';
+.cms-container {
+  /* KPI Cards Section */
+  .kpi-section {
+    padding: 24px;
+    background: #f3f0f9;
+    border-bottom: 1px solid #e5e7eb;
+    .row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      @media (max-width: 768px) {
+        grid-template-columns: 1fr;
+      }
+      .col-md-3 {
+        margin: 0;
+      }
+    }
+  } /* Toolbar */
+  .toolbar-section {
+    .toolbar-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      background: #2563eb;
+      color: #ffffff;
+      border: 1px solid #2563eb;
+      transition: all 0.15s ease;
+      &:hover {
+        background: #1d4ed8;
+      }
+    }
+    .form-select {
+      padding: 8px 12px;
+      font-size: 13px;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      background: #ffffff;
+      color: #374151;
+      transition: all 0.15s ease;
+      &:focus {
+        outline: none;
+        border-color: #2563eb;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+      }
+    }
+    .form-select-sm {
+      padding: 6px 10px;
+      font-size: 12px;
+    }
+  } /* Progress Bar in Table */
+  .table-section {
+    .progress {
+      height: 6px;
+      border-radius: 9999px;
+      overflow: hidden;
+      background: #f3f4f6;
+      .progress-bar {
+        border-radius: 9999px;
+        transition: all 0.3s ease;
+      }
+    } /* Attendance percentage cell */
+    .attendance-cell {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      .progress {
+        flex: 1;
+        height: 6px;
+        border-radius: 9999px;
+      }
+      .attendance-pct {
+        font-size: 12px;
+        font-weight: 600;
+        min-width: 40px;
+        text-align: right;
+      }
+    } /* Badge styles for eligible/shortage counts */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 3px 9px;
+      border-radius: 9999px;
+      font-size: 11px;
+      font-weight: 500;
+      &.bg-success-subtle {
+        background-color: rgba(16, 124, 94, 0.1);
+        color: #065f46;
+      }
+      &.bg-danger-subtle {
+        background-color: rgba(153, 27, 27, 0.1);
+        color: #991b1b;
+      }
+    }
+    .text-danger {
+      color: #dc2626;
+    }
+    .text-success {
+      color: #15803d;
+    }
+    .text-primary {
+      color: #2563eb;
+    } /* Font size helpers */
+    .fs-12 {
+      font-size: 0.75rem;
+    }
+    .fs-13 {
+      font-size: 0.8125rem;
+    } /* Badge status overrides */
+    .badge-status {
+      &.status-active {
+        background: #ecfdf5;
+        color: #065f46;
+      }
+      &.status-pending {
+        background: #fffbeb;
+        color: #92400e;
+      }
+      &.status-inactive {
+        background: #fef2f2;
+        color: #991b1b;
+      }
+    } /* Empty state */
+    .empty-row {
+      text-align: center;
+      padding: 32px;
+      color: #9ca3af;
+    }
+  }
+}
+@media (max-width: 768px) {
+  .cms-container {
+    .kpi-section .row {
+      grid-template-columns: 1fr;
+    }
+    .toolbar-section {
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+  }
+}
