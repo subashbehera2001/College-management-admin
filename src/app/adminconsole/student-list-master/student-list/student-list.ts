@@ -2,7 +2,6 @@ import { Component, HostListener, inject, OnInit } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
 import { Router } from "@angular/router";
-import { NgIcon } from "@ng-icons/core";
 import { Student, STUDENTS } from "./data";
 
 type ColumnFilterField = "name" | "email" | "course" | "year" | "status";
@@ -11,7 +10,7 @@ type PaginationItem = number | "...";
 @Component({
   selector: "app-student-list",
   standalone: true,
-  imports: [CommonModule, FormsModule, NgIcon],
+  imports: [CommonModule, FormsModule],
   templateUrl: "./student-list.html",
   styleUrl: "./student-list.scss",
 })
@@ -37,8 +36,19 @@ export class StudentList implements OnInit {
   sortDirection: "asc" | "desc" = "asc";
 
   pageSize = 10;
+  pageSizeOptions: number[] = [10, 20, 50, 100];
   currentPage = 1;
   totalPages = 1;
+  jumpToPageInput: number | null = 1;
+
+  get paginationSummaryText(): string {
+    const total = this.filteredStudents.length;
+    if (total === 0) {
+      return "0 of 0 pages (0 item)";
+    }
+    const itemWord = total === 1 ? "item" : "items";
+    return `${this.currentPage} of ${this.totalPages} pages (${total} ${itemWord})`;
+  }
 
   showDeleteModal = false;
   showViewModal = false;
@@ -124,8 +134,14 @@ export class StudentList implements OnInit {
     });
 
     const safePageSize = Math.max(1, this.pageSize);
-    this.totalPages = Math.max(1, Math.ceil(this.filteredStudents.length / safePageSize));
-    this.currentPage = Math.min(Math.max(this.currentPage, 1), this.totalPages);
+    if (this.filteredStudents.length === 0) {
+      this.totalPages = 0;
+      this.currentPage = 0;
+    } else {
+      this.totalPages = Math.max(1, Math.ceil(this.filteredStudents.length / safePageSize));
+      this.currentPage = Math.min(Math.max(this.currentPage, 1), this.totalPages);
+    }
+    this.jumpToPageInput = this.currentPage;
     this.updateDisplayedStudents();
   }
 
@@ -170,6 +186,10 @@ export class StudentList implements OnInit {
   }
 
   updateDisplayedStudents(): void {
+    if (this.filteredStudents.length === 0 || this.currentPage === 0) {
+      this.displayedStudents = [];
+      return;
+    }
     const safePageSize = Math.max(1, this.pageSize);
     const startIndex = (this.currentPage - 1) * safePageSize;
     const endIndex = startIndex + safePageSize;
@@ -251,24 +271,55 @@ export class StudentList implements OnInit {
     this.applyFiltersAndSort();
   }
 
-  previousPage(): void {
-    this.goToPage(this.currentPage - 1);
-  }
-
-  nextPage(): void {
-    this.goToPage(this.currentPage + 1);
-  }
-
-  goToPage(page: number): void {
-    const targetPage = Math.min(Math.max(page, 1), this.totalPages);
-    if (targetPage !== this.currentPage) {
-      this.currentPage = targetPage;
-      this.updateDisplayedStudents();
+  firstPage(): void {
+    if (this.currentPage > 1) {
+      this.goToPage(1);
     }
   }
 
-  changePageSize(size: number): void {
-    this.pageSize = Math.max(1, Number(size) || 10);
+  lastPage(): void {
+    if (this.currentPage < this.totalPages) {
+      this.goToPage(this.totalPages);
+    }
+  }
+
+  previousPage(): void {
+    if (this.currentPage > 1) {
+      this.goToPage(this.currentPage - 1);
+    }
+  }
+
+  nextPage(): void {
+    if (this.currentPage < this.totalPages) {
+      this.goToPage(this.currentPage + 1);
+    }
+  }
+
+  goToPage(page: number): void {
+    if (this.totalPages === 0) {
+      this.currentPage = 0;
+      this.updateDisplayedStudents();
+      return;
+    }
+    const targetPage = Math.min(Math.max(page, 1), this.totalPages);
+    this.currentPage = targetPage;
+    this.jumpToPageInput = targetPage;
+    this.updateDisplayedStudents();
+  }
+
+  jumpToPage(): void {
+    if (this.jumpToPageInput !== null && this.jumpToPageInput !== undefined) {
+      const page = Math.floor(Number(this.jumpToPageInput));
+      if (!isNaN(page)) {
+        this.goToPage(page);
+      }
+    }
+  }
+
+  changePageSize(size: number | string): void {
+    const parsed = Number(size);
+    this.pageSize = Math.max(1, isNaN(parsed) ? 2 : parsed);
+    this.currentPage = 1;
     this.applyFiltersAndSort();
   }
 
@@ -285,24 +336,16 @@ export class StudentList implements OnInit {
       return Array.from({ length: total }, (_, index) => index + 1);
     }
 
-    const items: PaginationItem[] = [1];
-    const windowStart = Math.max(2, this.currentPage - 1);
-    const windowEnd = Math.min(total - 1, this.currentPage + 1);
+    const current = this.currentPage;
 
-    if (windowStart > 2) {
-      items.push("...");
+    if (current <= 4) {
+      return [1, 2, 3, 4, 5, "...", total];
     }
 
-    for (let page = windowStart; page <= windowEnd; page++) {
-      items.push(page);
-    }
+    if (current >= total - 3) {
+      return [1, "...", total - 4, total - 3, total - 2, total - 1, total];    }
 
-    if (windowEnd < total - 1) {
-      items.push("...");
-    }
-
-    items.push(total);
-    return items;
+    return [1, "...", current - 1, current, current + 1, "...", total];
   }
 
 
