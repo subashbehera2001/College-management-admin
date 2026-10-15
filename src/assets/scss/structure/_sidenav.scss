@@ -14,7 +14,7 @@
   transition: width .25s ease-in-out;
 
   [data-simplebar] {
-    height: calc(100% - 41px);
+    height: calc(100% - 48px);
   }
 }
 
@@ -212,14 +212,14 @@
   }
 }
 
-// Hover View Menu
+// Collapsed View Menu
 html[data-sidenav-size="collapse"] {
 
   .content-page {
     margin-left: $sidenav-width-sm;
   }
 
-  .sidenav-menu:not(:hover) {
+  .sidenav-menu {
     width: $sidenav-width-sm;
 
     .simplebar-scrollbar:before {
@@ -268,8 +268,7 @@ html[data-sidenav-size="collapse"] {
 
     .sidenav-user,
     .menu-text {
-      position: fixed;
-      right: -100%;
+      display: none;
     }
 
     .collapsing,
@@ -387,12 +386,13 @@ html[data-sidenav-size="offcanvas"] {
 }
 
 html[data-sidenav-size="collapse"] {
-  .sidenav-menu:not(:hover) {
+  .sidenav-menu {
     .button-collapse-toggle {
+      justify-content: center;
+
       span {
         display: none;
       }
     }
   }
-
 }

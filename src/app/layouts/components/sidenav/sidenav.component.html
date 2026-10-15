@@ -9,10 +9,16 @@
     <app-menu />
   </ngx-simplebar>
   <div class="menu-collapse-box d-none d-xl-block">
-    <button class="button-collapse-toggle" (click)="toggleCollapseMenu()">
+    <button
+      type="button"
+      class="button-collapse-toggle"
+      (click)="toggleCollapseMenu()"
+      title="Toggle Sidebar"
+      aria-label="Toggle Sidebar"
+    >
       <ng-icon
         name="tablerLayoutDashboard"
-        class=".align-middle flex-shrink-0"
+        class="align-middle flex-shrink-0"
       />
       <span>Admin Panel</span>
     </button>

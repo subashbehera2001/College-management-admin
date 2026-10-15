@@ -19,8 +19,10 @@ export class SidenavComponent {
   constructor(public layout: LayoutStoreService) {}
 
   toggleCollapseMenu() {
-    this.layout.setSidenavSize(
-      this.layout.sidenavSize === 'default' ? 'collapse' : 'default'
-    )
+    const html = document.documentElement
+    const currentSize =
+      html.getAttribute('data-sidenav-size') || this.layout.sidenavSize
+    const newSize = currentSize === 'collapse' ? 'default' : 'collapse'
+    this.layout.setSidenavSize(newSize)
   }
 }

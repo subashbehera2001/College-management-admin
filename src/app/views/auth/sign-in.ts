@@ -1,19 +1,15 @@
 import { Component, inject } from '@angular/core'
 import { AppLogo } from '@app/components/app-logo'
-import { credits, currentYear } from '@/app/constants'
 import { ActivatedRoute, Router, RouterLink } from '@angular/router'
 import { FormsModule } from '@angular/forms'
 import { CommonModule } from '@angular/common'
 import { AuthService } from '@core/services/auth.service'
 import { NgIcon, provideIcons } from '@ng-icons/core'
 import {
-  tablerBrandGoogle,
   tablerEye,
   tablerEyeOff,
   tablerLock,
   tablerMail,
-  tablerSchool,
-  tablerShield,
 } from '@ng-icons/tabler-icons'
 
 @Component({
@@ -22,57 +18,38 @@ import {
   imports: [AppLogo, NgIcon, RouterLink, FormsModule, CommonModule],
   viewProviders: [
     provideIcons({
-      tablerBrandGoogle,
       tablerEye,
       tablerEyeOff,
       tablerLock,
       tablerMail,
-      tablerSchool,
-      tablerShield,
     }),
   ],
   template: `
     <div class="auth-box overflow-hidden align-items-center d-flex">
       <div class="container">
         <div class="row justify-content-center">
-          <div class="col-12" style="max-width: 820px;">
+          <div class="col-12" style="max-width: 780px;">
             <div class="card border-0 shadow-lg auth-split-card h-100">
               <div class="row g-0 h-100">
                 <div class="col-lg-5 auth-hero-side">
                   <div
                     class="auth-hero-content h-100 d-flex flex-column justify-content-center align-items-center text-center text-white px-3 px-sm-4"
                   >
-                    <div class="logo-frame mb-4">
+                    <div class="logo-frame mb-3">
                       <app-app-logo />
                     </div>
-                    <h1 class="display-6 fw-bold mb-3">Welcome Back</h1>
-                    <p class="lead opacity-90 mb-4">
-                      Sign in to the College Admin Portal to manage faculty,
-                      students, courses, attendance, and examinations &mdash;
-                      all in one place.
+                    <h2 class="h3 fw-bold mb-2">Welcome Back</h2>
+                    <p class="opacity-90 fs-14 mb-0">
+                      Manage faculty, students, and academics all in one place.
                     </p>
-                    <div class="hero-features d-flex flex-column gap-3">
-                      <div
-                        class="hero-feature d-inline-flex align-items-center gap-2"
-                      >
-                        <ng-icon name="tablerShield" size="20"></ng-icon>
-                        <span>Secure &amp; Encrypted Access</span>
-                      </div>
-                      <div
-                        class="hero-feature d-inline-flex align-items-center gap-2"
-                      >
-                        <ng-icon name="tablerSchool" size="20"></ng-icon>
-                        <span>Real-time Academic Data</span>
-                      </div>
-                    </div>
                   </div>
                 </div>
 
                 <div class="col-lg-7 d-flex align-items-center bg-body">
                   <div class="card-body p-3 p-md-4 w-100">
-                    <div class="text-center mb-4">
-                      <h2 class="fw-bold text-dark mb-1">Sign In</h2>
-                      <p class="text-muted mb-0">
+                    <div class="text-center mb-3">
+                      <h2 class="h4 fw-bold text-dark mb-1">Sign In</h2>
+                      <p class="text-muted fs-13 mb-0">
                         Enter your credentials to continue
                       </p>
                     </div>
@@ -113,7 +90,7 @@ import {
 
                     <form #loginForm="ngForm" (ngSubmit)="onLogin()">
                       <div class="mb-3">
-                        <label for="userEmail" class="form-label"
+                        <label for="userEmail" class="form-label fs-13"
                           >Email address
                           <span class="text-danger">*</span></label
                         >
@@ -138,7 +115,7 @@ import {
                       </div>
 
                       <div class="mb-3">
-                        <label for="userPassword" class="form-label"
+                        <label for="userPassword" class="form-label fs-13"
                           >Password <span class="text-danger">*</span></label
                         >
                         <div class="input-group">
@@ -181,19 +158,19 @@ import {
                       >
                         <div class="form-check">
                           <input
-                            class="form-check-input form-check-input-light fs-14 mt-0"
+                            class="form-check-input form-check-input-light fs-13 mt-0"
                             type="checkbox"
                             id="rememberMe"
                             name="rememberMe"
                             [(ngModel)]="rememberMe"
                           />
-                          <label class="form-check-label" for="rememberMe"
+                          <label class="form-check-label fs-13" for="rememberMe"
                             >Keep me signed in</label
                           >
                         </div>
                         <a
                           routerLink="/auth/reset-password"
-                          class="text-decoration-underline link-offset-3 fw-medium"
+                          class="text-decoration-underline link-offset-3 fw-medium fs-13"
                           >Forgot Password?</a
                         >
                       </div>
@@ -208,41 +185,6 @@ import {
                         </button>
                       </div>
                     </form>
-
-                    <div class="position-relative my-4">
-                      <div class="divider-line"></div>
-                      <span
-                        class="position-absolute top-50 translate-middle-x bg-body px-3 text-muted small fw-medium"
-                        >OR</span
-                      >
-                    </div>
-
-                    <button
-                      type="button"
-                      class="btn btn-outline-secondary d-flex align-items-center justify-content-center w-100 mb-3"
-                    >
-                      <ng-icon
-                        name="tablerBrandGoogle"
-                        size="18"
-                        class="me-2"
-                      ></ng-icon>
-                      Sign in with Google
-                    </button>
-
-                    <p class="text-center text-muted mt-4 mb-0">
-                      New here?
-                      <a
-                        routerLink="/auth/sign-up"
-                        class="text-decoration-underline link-offset-3 fw-semibold"
-                        >Create an account</a
-                      >
-                    </p>
-
-                    <p class="text-center text-muted mt-4 mb-0">
-                      &copy; {{ currentYear }} College Management System &mdash;
-                      by
-                      <span class="fw-semibold">{{ credits.name }}</span>
-                    </p>
                   </div>
                 </div>
               </div>
@@ -254,6 +196,10 @@ import {
   `,
   styles: `
     :host {
+      .auth-box {
+        padding: 30px 15px;
+      }
+
       .auth-split-card {
         border-radius: 1rem;
         overflow: hidden;
@@ -266,23 +212,15 @@ import {
           #2563eb 40%,
           #7c3aed 100%
         );
-        padding: 2rem 1.25rem;
+        padding: 2.25rem 1.75rem;
       }
 
       .logo-frame {
         background: #ffffff;
         border-radius: 0.75rem;
-        padding: 0.6rem 0.9rem;
+        padding: 0.5rem 0.8rem;
         display: inline-flex;
         box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
-      }
-
-      .hero-features {
-        margin-top: 1rem;
-      }
-
-      .hero-feature {
-        font-size: 0.9rem;
       }
 
       .input-group-text {
@@ -293,15 +231,6 @@ import {
 
       .form-control:focus {
         box-shadow: none;
-      }
-
-      .divider-line {
-        position: absolute;
-        inset-block-start: 50%;
-        inset-inline-start: 0;
-        width: 100%;
-        border: 0;
-        border-top: 1px solid #e5e7eb;
       }
 
       .btn-primary {
@@ -316,16 +245,13 @@ import {
 
       @media (max-width: 991.98px) {
         .auth-hero-side {
-          padding: 1.75rem 1rem;
+          padding: 1.75rem 1.25rem;
         }
       }
     }
   `,
 })
 export class SignIn {
-  protected readonly currentYear = currentYear
-  protected readonly credits = credits
-
   private authService = inject(AuthService)
   private router = inject(Router)
   private route = inject(ActivatedRoute)
