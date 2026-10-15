@@ -10,3 +10,165 @@
 @use 'datatables.net-select-bs5/css/select.bootstrap5.min.css';
 @use 'datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css';
 @use "./assets/scss/app.scss";
+
+/* Global Pagination Section matching Student List */
+.pagination-section {
+  background: #ffffff;
+  border-top: 1px solid #eef2f6;
+  padding: 12px 20px;
+  margin-top: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+
+  .pagination-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+
+    /* 4-button joined segmented control: « < > » */
+    .pagination-nav-group {
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid #dcdfe6;
+      border-radius: 4px;
+      background: #ffffff;
+      overflow: hidden;
+      height: 28px;
+
+      .nav-btn {
+        width: 27px;
+        height: 28px;
+        padding: 0;
+        margin: 0;
+        border: none;
+        background: #ffffff;
+        color: #475569;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: background-color 0.15s ease, color 0.15s ease;
+
+        &:not(:last-child) {
+          border-right: 1px solid #dcdfe6;
+        }
+
+        svg {
+          display: block;
+          flex-shrink: 0;
+          stroke: currentColor;
+        }
+
+        &:hover:not(:disabled) {
+          background: #f1f5f9;
+          color: #0f172a;
+        }
+
+        &:disabled {
+          color: #94a3b8;
+          cursor: not-allowed;
+          background: #f8fafc;
+          opacity: 0.85;
+        }
+      }
+    }
+
+    /* Items per page dropdown box with soft blue glow */
+    .page-size-container {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+
+      .page-size-select-box {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        justify-content: space-between;
+        border: 1px solid #93c5fd;
+        box-shadow: 0 0 0 2px rgba(147, 197, 253, 0.45);
+        border-radius: 4px;
+        background: #ffffff;
+        height: 28px;
+        min-width: 50px;
+        width: 54px;
+        padding: 0 7px;
+        cursor: pointer;
+        transition: border-color 0.15s ease, box-shadow 0.15s ease;
+
+        .selected-size-text {
+          font-size: 12px;
+          font-weight: 400;
+          color: #334155;
+          user-select: none;
+          line-height: 26px;
+        }
+
+        .select-chevron {
+          color: #64748b;
+          flex-shrink: 0;
+          margin-left: 5px;
+          display: block;
+        }
+
+        .page-size-select-overlay {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          width: 100%;
+          height: 100%;
+          opacity: 0;
+          cursor: pointer;
+          z-index: 5;
+          margin: 0;
+          padding: 0;
+          border: none;
+          outline: none;
+        }
+
+        &:hover {
+          border-color: #60a5fa;
+          box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.55);
+        }
+      }
+
+      .page-size-text {
+        font-size: 13px;
+        color: #8c9ba5;
+        font-weight: 400;
+        user-select: none;
+      }
+    }
+  }
+
+  /* Right info text: X of Y pages (Z items) */
+  .pagination-right {
+    display: flex;
+    align-items: center;
+
+    .pagination-info-text {
+      font-size: 13px;
+      color: #8c9ba5;
+      font-weight: 400;
+      white-space: nowrap;
+      user-select: none;
+    }
+  }
+
+  @media (max-width: 640px) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+
+    .pagination-right {
+      width: 100%;
+      justify-content: flex-end;
+    }
+  }
+}
+

@@ -36,8 +36,18 @@ export class FacultyComponent implements OnInit {
   sortDirection: 'asc' | 'desc' = 'asc';
 
   pageSize = 10;
+  pageSizeOptions: number[] = [10, 20, 50, 100];
   currentPage = 1;
   totalPages = 1;
+
+  get paginationSummaryText(): string {
+    const total = this.filteredFaculty.length;
+    if (total === 0) {
+      return '0 of 0 pages (0 item)';
+    }
+    const itemWord = total === 1 ? 'item' : 'items';
+    return `${this.currentPage} of ${this.totalPages} pages (${total} ${itemWord})`;
+  }
 
   showDeleteModal = false;
   showViewModal = false;
@@ -231,12 +241,28 @@ export class FacultyComponent implements OnInit {
     this.applyFiltersAndSort();
   }
 
+  firstPage(): void {
+    if (this.currentPage > 1) {
+      this.goToPage(1);
+    }
+  }
+
+  lastPage(): void {
+    if (this.currentPage < this.totalPages) {
+      this.goToPage(this.totalPages);
+    }
+  }
+
   previousPage(): void {
-    this.goToPage(this.currentPage - 1);
+    if (this.currentPage > 1) {
+      this.goToPage(this.currentPage - 1);
+    }
   }
 
   nextPage(): void {
-    this.goToPage(this.currentPage + 1);
+    if (this.currentPage < this.totalPages) {
+      this.goToPage(this.currentPage + 1);
+    }
   }
 
   goToPage(page: number): void {
@@ -247,8 +273,10 @@ export class FacultyComponent implements OnInit {
     }
   }
 
-  changePageSize(size: number): void {
-    this.pageSize = Math.max(1, Number(size) || 10);
+  changePageSize(size: number | string): void {
+    const parsed = Number(size);
+    this.pageSize = Math.max(1, isNaN(parsed) ? 10 : parsed);
+    this.currentPage = 1;
     this.applyFiltersAndSort();
   }
 

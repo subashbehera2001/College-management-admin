@@ -21,6 +21,22 @@ export class StudentAttendance implements OnInit {
   subjectOptions = ['Data Structures & Algorithms', 'Operating Systems', 'Database Management', 'Computer Networks'];
 
   students: AttendanceRecord[] = [];
+  displayedStudents: AttendanceRecord[] = [];
+
+  pageSize = 10;
+  pageSizeOptions: number[] = [10, 20, 50, 100];
+  currentPage = 1;
+  totalPages = 1;
+
+  get paginationSummaryText(): string {
+    const total = this.students.length;
+    if (total === 0) {
+      return '0 of 0 pages (0 item)';
+    }
+    const itemWord = total === 1 ? 'item' : 'items';
+    return `${this.currentPage} of ${this.totalPages} pages (${total} ${itemWord})`;
+  }
+
   savedSuccess = false;
 
   ngOnInit(): void {
@@ -30,6 +46,61 @@ export class StudentAttendance implements OnInit {
   loadAttendance(): void {
     this.students = JSON.parse(JSON.stringify(INITIAL_STUDENTS_ATTENDANCE));
     this.savedSuccess = false;
+    this.totalPages = Math.max(1, Math.ceil(this.students.length / this.pageSize));
+    this.currentPage = Math.min(Math.max(this.currentPage, 1), this.totalPages);
+    this.updatePagination();
+  }
+
+  updatePagination(): void {
+    const start = (this.currentPage - 1) * this.pageSize;
+    this.displayedStudents = this.students.slice(start, start + this.pageSize);
+  }
+
+  firstPage(): void {
+    if (this.currentPage > 1) {
+      this.goToPage(1);
+    }
+  }
+
+  lastPage(): void {
+    if (this.currentPage < this.totalPages) {
+      this.goToPage(this.totalPages);
+    }
+  }
+
+  previousPage(): void {
+    if (this.currentPage > 1) {
+      this.goToPage(this.currentPage - 1);
+    }
+  }
+
+  nextPage(): void {
+    if (this.currentPage < this.totalPages) {
+      this.goToPage(this.currentPage + 1);
+    }
+  }
+
+  goToPage(page: number): void {
+    if (this.totalPages === 0) {
+      this.currentPage = 0;
+      this.updatePagination();
+      return;
+    }
+    const targetPage = Math.min(Math.max(page, 1), this.totalPages);
+    this.currentPage = targetPage;
+    this.updatePagination();
+  }
+
+  setPage(page: number): void {
+    this.goToPage(page);
+  }
+
+  changePageSize(size: number | string): void {
+    const parsed = Number(size);
+    this.pageSize = Math.max(1, isNaN(parsed) ? 10 : parsed);
+    this.currentPage = 1;
+    this.totalPages = Math.max(1, Math.ceil(this.students.length / this.pageSize));
+    this.updatePagination();
   }
 
   setStatus(student: AttendanceRecord, status: 'Present' | 'Absent' | 'Late'): void {
@@ -60,6 +131,7 @@ export class StudentAttendance implements OnInit {
 
   saveAttendance(): void {
     this.savedSuccess = true;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     setTimeout(() => {
       this.savedSuccess = false;
     }, 4000);

@@ -531,7 +531,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let n of filteredNotices">
+        <tr *ngFor="let n of displayedNotices">
           <td>
             <div class="fw-semibold text-dark fs-13">{{ n.title }}</div>
           </td>
@@ -600,12 +600,97 @@
             </div>
           </td>
         </tr>
-        <tr *ngIf="filteredNotices.length === 0">
+        <tr *ngIf="displayedNotices.length === 0">
           <td colspan="7" class="text-center py-4 text-muted">
             No notices found.
           </td>
         </tr>
       </tbody>
     </table>
+  </div>
+
+  <div class="pagination-section">
+    <div class="pagination-left">
+      <!-- 4-button group: « < > » -->
+      <div class="pagination-nav-group">
+        <button
+          type="button"
+          class="nav-btn"
+          [disabled]="currentPage <= 1 || filteredNotices.length === 0"
+          (click)="firstPage()"
+          title="First page"
+          aria-label="First page"
+        >
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="11 17 6 12 11 7"></polyline>
+            <polyline points="18 17 13 12 18 7"></polyline>
+          </svg>
+        </button>
+
+        <button
+          type="button"
+          class="nav-btn"
+          [disabled]="currentPage <= 1 || filteredNotices.length === 0"
+          (click)="previousPage()"
+          title="Previous page"
+          aria-label="Previous page"
+        >
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+
+        <button
+          type="button"
+          class="nav-btn"
+          [disabled]="currentPage >= totalPages || filteredNotices.length === 0"
+          (click)="nextPage()"
+          title="Next page"
+          aria-label="Next page"
+        >
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+
+        <button
+          type="button"
+          class="nav-btn"
+          [disabled]="currentPage >= totalPages || filteredNotices.length === 0"
+          (click)="lastPage()"
+          title="Last page"
+          aria-label="Last page"
+        >
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="13 17 18 12 13 7"></polyline>
+            <polyline points="6 17 11 12 6 7"></polyline>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Items per page dropdown box -->
+      <div class="page-size-container">
+        <div class="page-size-select-box">
+          <span class="selected-size-text">{{ pageSize }}</span>
+          <svg class="select-chevron" width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+          <select
+            class="page-size-select-overlay"
+            [ngModel]="pageSize"
+            (ngModelChange)="changePageSize($event)"
+            aria-label="Items per page"
+          >
+            <option *ngFor="let size of pageSizeOptions" [value]="size">{{ size }}</option>
+          </select>
+        </div>
+        <span class="page-size-text">Items per page</span>
+      </div>
+    </div>
+
+    <!-- Right info text: X of Y pages (Z items) -->
+    <div class="pagination-right">
+      <span class="pagination-info-text">{{ paginationSummaryText }}</span>
+    </div>
   </div>
 </div>

@@ -17,6 +17,21 @@ type ColumnFilterField = 'studentName' | 'rollNo' | 'course' | 'amount' | 'payme
 export class PaymentHistory implements OnInit {
   payments: PaymentRecord[] = [];
   filteredPayments: PaymentRecord[] = [];
+  displayedPayments: PaymentRecord[] = [];
+
+  pageSize = 10;
+  pageSizeOptions: number[] = [10, 20, 50, 100];
+  currentPage = 1;
+  totalPages = 1;
+
+  get paginationSummaryText(): string {
+    const total = this.filteredPayments.length;
+    if (total === 0) {
+      return '0 of 0 pages (0 item)';
+    }
+    const itemWord = total === 1 ? 'item' : 'items';
+    return `${this.currentPage} of ${this.totalPages} pages (${total} ${itemWord})`;
+  }
 
   searchText = '';
   selectedMode = '';
@@ -69,6 +84,60 @@ export class PaymentHistory implements OnInit {
     });
 
     this.applySort();
+    this.totalPages = Math.max(1, Math.ceil(this.filteredPayments.length / this.pageSize));
+    this.currentPage = Math.min(Math.max(this.currentPage, 1), this.totalPages);
+    this.updatePagination();
+  }
+
+  updatePagination(): void {
+    const start = (this.currentPage - 1) * this.pageSize;
+    this.displayedPayments = this.filteredPayments.slice(start, start + this.pageSize);
+  }
+
+  firstPage(): void {
+    if (this.currentPage > 1) {
+      this.goToPage(1);
+    }
+  }
+
+  lastPage(): void {
+    if (this.currentPage < this.totalPages) {
+      this.goToPage(this.totalPages);
+    }
+  }
+
+  previousPage(): void {
+    if (this.currentPage > 1) {
+      this.goToPage(this.currentPage - 1);
+    }
+  }
+
+  nextPage(): void {
+    if (this.currentPage < this.totalPages) {
+      this.goToPage(this.currentPage + 1);
+    }
+  }
+
+  goToPage(page: number): void {
+    if (this.totalPages === 0) {
+      this.currentPage = 0;
+      this.updatePagination();
+      return;
+    }
+    const targetPage = Math.min(Math.max(page, 1), this.totalPages);
+    this.currentPage = targetPage;
+    this.updatePagination();
+  }
+
+  setPage(page: number): void {
+    this.goToPage(page);
+  }
+
+  changePageSize(size: number | string): void {
+    const parsed = Number(size);
+    this.pageSize = Math.max(1, isNaN(parsed) ? 10 : parsed);
+    this.currentPage = 1;
+    this.applyFilter();
   }
 
   matchesContains(value: string, filterValue: string): boolean {
