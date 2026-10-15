@@ -47,11 +47,6 @@
         <option value="">All Courses</option>
         <option *ngFor="let c of courseOptions" [value]="c">{{ c }}</option>
       </select>
-      <select class="form-select form-select-sm" style="width: 160px;" [(ngModel)]="selectedStatus" (change)="applyFilter()">
-        <option value="">All Statuses</option>
-        <option value="Eligible">Eligible</option>
-        <option value="Shortage">Shortage</option>
-      </select>
     </div>
     <div class="toolbar-right">
       <div class="search-box">
@@ -71,7 +66,6 @@
           <th>Total Classes</th>
           <th>Attended</th>
           <th>Attendance Rate</th>
-          <th>Eligibility Status</th>
         </tr>
       </thead>
       <tbody>
@@ -95,14 +89,9 @@
               </span>
             </div>
           </td>
-          <td>
-            <span class="badge-status" [ngClass]="item.status === 'Eligible' ? 'status-active' : 'status-inactive'">
-              {{ item.status === 'Eligible' ? '✓ Eligible' : '⚠ Shortage' }}
-            </span>
-          </td>
         </tr>
         <tr *ngIf="displayedReports.length === 0">
-          <td colspan="7" class="text-center py-4 text-muted">No attendance records found.</td>
+          <td colspan="6" class="text-center py-4 text-muted">No attendance records found.</td>
         </tr>
       </tbody>
     </table>

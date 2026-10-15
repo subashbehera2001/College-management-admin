@@ -4,7 +4,7 @@ import { FormsModule } from "@angular/forms";
 import { Router } from "@angular/router";
 import { Student, STUDENTS } from "./data";
 
-type ColumnFilterField = "name" | "email" | "course" | "year" | "status";
+type ColumnFilterField = "name" | "email" | "course" | "year";
 type PaginationItem = number | "...";
 
 @Component({
@@ -29,7 +29,6 @@ export class StudentList implements OnInit {
     email: "",
     course: "",
     year: "",
-    status: "",
   };
 
   sortField = "name";
@@ -58,7 +57,6 @@ export class StudentList implements OnInit {
 
   yearOptions: string[] = [];
   courseOptions: string[] = [];
-  statusOptions: string[] = ["Active", "Inactive", "Pending"];
 
   ngOnInit(): void {
     this.loadStudents();
@@ -85,18 +83,13 @@ export class StudentList implements OnInit {
           student.name.toLowerCase().includes(search) ||
           student.email.toLowerCase().includes(search) ||
           student.course.toLowerCase().includes(search) ||
-          student.year.toLowerCase().includes(search) ||
-          student.status.toLowerCase().includes(search);
+          student.year.toLowerCase().includes(search);
 
         const matchesName = this.matchesContains(student.name, this.filterValues.name);
         const matchesEmail = this.matchesContains(student.email, this.filterValues.email);
         const matchesCourse = this.matchesContains(student.course, this.filterValues.course);
         const matchesYear = this.matchesExact(student.year, this.filterValues.year);
-        const matchesStatus = this.matchesExact(student.status, this.filterValues.status);
-        const matchesTab =
-          this.activeTab === "active"
-            ? student.status === "Active" || student.status === "Pending"
-            : student.status === "Inactive";
+        const matchesTab = this.activeTab === "active" ? true : false;
 
         return (
           matchesSearch &&
@@ -104,7 +97,6 @@ export class StudentList implements OnInit {
           matchesEmail &&
           matchesCourse &&
           matchesYear &&
-          matchesStatus &&
           matchesTab
         );
       });
@@ -165,23 +157,8 @@ export class StudentList implements OnInit {
         return student.course;
       case "year":
         return student.year;
-      case "status":
-        return student.status;
       default:
         return student.name;
-    }
-  }
-
-  getStatusClass(status: string): string {
-    switch (status) {
-      case "Active":
-        return "badge-success";
-      case "Inactive":
-        return "badge-danger";
-      case "Pending":
-        return "badge-warning";
-      default:
-        return "badge-secondary";
     }
   }
 
@@ -356,7 +333,6 @@ export class StudentList implements OnInit {
       email: "",
       course: "",
       year: "",
-      status: "",
     };
     this.activeFilter = null;
     this.currentPage = 1;

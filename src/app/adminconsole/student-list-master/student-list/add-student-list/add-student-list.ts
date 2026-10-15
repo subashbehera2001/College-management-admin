@@ -18,7 +18,6 @@ export class AddStudentList {
   email = '';
   course = '';
   year = '';
-  status = 'Active';
 
   courseOptions: string[] = [
     'B.Tech Computer Science',
@@ -28,7 +27,6 @@ export class AddStudentList {
     'BBA'
   ];
   yearOptions: string[] = ['1st Year', '2nd Year', '3rd Year', '4th Year'];
-  statusOptions: string[] = ['Active', 'Inactive', 'Pending'];
 
   onSubmit(): void {
     if (!this.studentId.trim() || !this.name.trim() || !this.email.trim() || !this.course || !this.year) {
@@ -40,7 +38,6 @@ export class AddStudentList {
       email: this.email,
       course: this.course,
       year: this.year,
-      status: this.status
     });
     this.router.navigate(['/student-list']);
   }

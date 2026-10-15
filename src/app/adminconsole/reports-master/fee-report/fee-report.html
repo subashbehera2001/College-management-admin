@@ -57,7 +57,6 @@
           <th>Total Collected</th>
           <th>Outstanding Dues</th>
           <th>Collection Progress</th>
-          <th>Status</th>
         </tr>
       </thead>
       <tbody>
@@ -74,14 +73,9 @@
               <span class="fs-12">{{ item.collectionRate }}%</span>
             </div>
           </td>
-          <td>
-            <span class="badge-status" [ngClass]="item.collectionRate >= 90 ? 'status-active' : 'status-pending'">
-              {{ item.collectionRate >= 90 ? 'Healthy' : 'Follow-up' }}
-            </span>
-          </td>
         </tr>
         <tr *ngIf="displayedStats.length === 0">
-          <td colspan="6" class="empty-row">No records found.</td>
+          <td colspan="5" class="empty-row">No records found.</td>
         </tr>
       </tbody>
     </table>

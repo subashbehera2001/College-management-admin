@@ -26,14 +26,14 @@ export interface PaymentRecord {
   paymentDate: string;
   paymentMode: 'Cash' | 'UPI' | 'Card' | 'Net Banking';
   transactionId: string;
-  status: 'Success' | 'Pending' | 'Failed';
+  status?: 'Success' | 'Pending' | 'Failed';
 }
 
 export const PAYMENT_HISTORY_DATA: PaymentRecord[] = [
-  { receiptNo: 'RCP-2026-0081', rollNo: 'STU001', studentName: 'Rahul Sharma', course: 'B.Tech Computer Science', amount: 45000, paymentDate: '2026-01-10', paymentMode: 'UPI', transactionId: 'UPI98421054', status: 'Success' },
-  { receiptNo: 'RCP-2026-0082', rollNo: 'STU001', studentName: 'Rahul Sharma', course: 'B.Tech Computer Science', amount: 40000, paymentDate: '2026-02-15', paymentMode: 'Net Banking', transactionId: 'TXN77890123', status: 'Success' },
-  { receiptNo: 'RCP-2026-0083', rollNo: 'STU002', studentName: 'Priya Verma', course: 'BBA', amount: 35000, paymentDate: '2026-02-01', paymentMode: 'Card', transactionId: 'CRD44129876', status: 'Success' },
-  { receiptNo: 'RCP-2026-0084', rollNo: 'STU003', studentName: 'Aman Kumar', course: 'B.Tech Electrical', amount: 40000, paymentDate: '2026-02-18', paymentMode: 'Cash', transactionId: 'CSH-REF-109', status: 'Success' },
-  { receiptNo: 'RCP-2026-0085', rollNo: 'STU004', studentName: 'Sneha Patel', course: 'BCA', amount: 50000, paymentDate: '2026-01-22', paymentMode: 'UPI', transactionId: 'UPI77123908', status: 'Success' },
-  { receiptNo: 'RCP-2026-0086', rollNo: 'STU005', studentName: 'Vikram Singh', course: 'B.Tech Mechanical', amount: 20000, paymentDate: '2026-03-01', paymentMode: 'UPI', transactionId: 'UPI55610022', status: 'Success' },
+  { receiptNo: 'RCP-2026-0081', rollNo: 'STU001', studentName: 'Rahul Sharma', course: 'B.Tech Computer Science', amount: 45000, paymentDate: '2026-01-10', paymentMode: 'UPI', transactionId: 'UPI98421054' },
+  { receiptNo: 'RCP-2026-0082', rollNo: 'STU001', studentName: 'Rahul Sharma', course: 'B.Tech Computer Science', amount: 40000, paymentDate: '2026-02-15', paymentMode: 'Net Banking', transactionId: 'TXN77890123' },
+  { receiptNo: 'RCP-2026-0083', rollNo: 'STU002', studentName: 'Priya Verma', course: 'BBA', amount: 35000, paymentDate: '2026-02-01', paymentMode: 'Card', transactionId: 'CRD44129876' },
+  { receiptNo: 'RCP-2026-0084', rollNo: 'STU003', studentName: 'Aman Kumar', course: 'B.Tech Electrical', amount: 40000, paymentDate: '2026-02-18', paymentMode: 'Cash', transactionId: 'CSH-REF-109' },
+  { receiptNo: 'RCP-2026-0085', rollNo: 'STU004', studentName: 'Sneha Patel', course: 'BCA', amount: 50000, paymentDate: '2026-01-22', paymentMode: 'UPI', transactionId: 'UPI77123908' },
+  { receiptNo: 'RCP-2026-0086', rollNo: 'STU005', studentName: 'Vikram Singh', course: 'B.Tech Mechanical', amount: 20000, paymentDate: '2026-03-01', paymentMode: 'UPI', transactionId: 'UPI55610022' },
 ];

@@ -58,7 +58,6 @@
           <th>Class Average %</th>
           <th>Eligible Count (≥75%)</th>
           <th>Shortage Count (&lt;75%)</th>
-          <th>Compliance Status</th>
         </tr>
       </thead>
       <tbody>
@@ -76,14 +75,9 @@
           </td>
           <td><span class="badge bg-success-subtle text-success fs-12">{{ m.studentsEligible }}</span></td>
           <td><span class="badge bg-danger-subtle text-danger fs-12">{{ m.studentsShortage }}</span></td>
-          <td>
-            <span class="badge-status" [ngClass]="m.avgAttendancePct >= 80 ? 'status-active' : 'status-pending'">
-              {{ m.avgAttendancePct >= 80 ? 'Optimal' : 'Needs Review' }}
-            </span>
-          </td>
         </tr>
         <tr *ngIf="displayedMetrics.length === 0">
-          <td colspan="7" class="empty-row">No records found.</td>
+          <td colspan="6" class="empty-row">No records found.</td>
         </tr>
       </tbody>
     </table>

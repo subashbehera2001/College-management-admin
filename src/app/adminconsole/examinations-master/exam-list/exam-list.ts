@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Exam, EXAMS_DATA } from './data';
 
-type ColumnFilterField = 'name' | 'course' | 'session' | 'startDate' | 'endDate' | 'examType' | 'status';
+type ColumnFilterField = 'name' | 'course' | 'session' | 'startDate' | 'endDate' | 'examType';
 
 @Component({
   selector: 'app-exam-list',
@@ -35,7 +35,6 @@ export class ExamListComponent implements OnInit {
   }
 
   searchText = '';
-  selectedStatus = '';
   showDeleteModal = false;
   selectedExam: Exam | null = null;
 
@@ -48,7 +47,6 @@ export class ExamListComponent implements OnInit {
     startDate: '',
     endDate: '',
     examType: '',
-    status: '',
   };
 
   sortField = 'name';
@@ -57,7 +55,6 @@ export class ExamListComponent implements OnInit {
   courseOptions: string[] = [];
   typeOptions: string[] = ['Mid-Term', 'End-Term', 'Practical'];
   sessionOptions: string[] = [];
-  statusOptions: string[] = ['Upcoming', 'Ongoing', 'Completed'];
 
   ngOnInit(): void {
     this.exams = [...EXAMS_DATA];
@@ -73,24 +70,20 @@ export class ExamListComponent implements OnInit {
         !s ||
         e.name.toLowerCase().includes(s) ||
         e.course.toLowerCase().includes(s);
-      const matchStatus = !this.selectedStatus || e.status === this.selectedStatus;
       const matchName = this.matchesContains(e.name, this.filterValues.name);
       const matchCourse = this.matchesContains(e.course, this.filterValues.course);
       const matchSession = this.matchesExact(e.session, this.filterValues.session);
       const matchStartDate = !this.filterValues.startDate || e.startDate >= this.filterValues.startDate;
       const matchEndDate = !this.filterValues.endDate || e.endDate <= this.filterValues.endDate;
       const matchType = this.matchesExact(e.examType, this.filterValues.examType);
-      const matchStatusFilter = this.matchesExact(e.status, this.filterValues.status);
       return (
         matchSearch &&
-        matchStatus &&
         matchName &&
         matchCourse &&
         matchSession &&
         matchStartDate &&
         matchEndDate &&
-        matchType &&
-        matchStatusFilter
+        matchType
       );
     });
 
@@ -195,8 +188,6 @@ export class ExamListComponent implements OnInit {
         return exam.startDate;
       case 'examType':
         return exam.examType;
-      case 'status':
-        return exam.status;
       default:
         return exam.name;
     }
@@ -233,8 +224,8 @@ export class ExamListComponent implements OnInit {
   }
 
   exportCSV(): void {
-    const headers = ['Exam Code', 'Exam Name', 'Course', 'Semester', 'Session', 'Start Date', 'End Date', 'Type', 'Status'];
-    const rows = this.filteredExams.map((e) => [e.code, e.name, e.course, e.semester, e.session, e.startDate, e.endDate, e.examType, e.status]);
+    const headers = ['Exam Code', 'Exam Name', 'Course', 'Semester', 'Session', 'Start Date', 'End Date', 'Type'];
+    const rows = this.filteredExams.map((e) => [e.code, e.name, e.course, e.semester, e.session, e.startDate, e.endDate, e.examType]);
     const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows.map((e) => e.join(','))].join('\n');
     const a = document.createElement('a');
     a.href = encodeURI(csvContent);

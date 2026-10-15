@@ -5,7 +5,7 @@ import * as XLSX from 'xlsx';
 import * as jspdf from 'jspdf';
 import { PAYMENT_HISTORY_DATA, PaymentRecord } from '../fee-collection/data';
 
-type ColumnFilterField = 'studentName' | 'rollNo' | 'course' | 'amount' | 'paymentDate' | 'paymentMode' | 'status';
+type ColumnFilterField = 'studentName' | 'rollNo' | 'course' | 'amount' | 'paymentDate' | 'paymentMode';
 
 @Component({
   selector: 'app-payment-history',
@@ -39,7 +39,6 @@ export class PaymentHistory implements OnInit {
   showModal = false;
 
   modes: string[] = [];
-  statusOptions: string[] = [];
 
   activeFilter: ColumnFilterField | null = null;
 
@@ -50,7 +49,6 @@ export class PaymentHistory implements OnInit {
     amount: '',
     paymentDate: '',
     paymentMode: '',
-    status: '',
   };
 
   sortField = 'paymentDate';
@@ -62,7 +60,6 @@ export class PaymentHistory implements OnInit {
     this.payments = [...PAYMENT_HISTORY_DATA];
     this.courseOptions = Array.from(new Set(this.payments.map((p) => p.course))).sort();
     this.modes = Array.from(new Set(this.payments.map((p) => p.paymentMode))).sort();
-    this.statusOptions = Array.from(new Set(this.payments.map((p) => p.status))).sort();
     this.applyFilter();
   }
 
@@ -79,8 +76,7 @@ export class PaymentHistory implements OnInit {
       const matchAmount = this.matchesAmount(p.amount, this.filterValues.amount);
       const matchPaymentDate = this.matchesExact(p.paymentDate, this.filterValues.paymentDate);
       const matchPaymentMode = this.matchesExact(p.paymentMode, this.filterValues.paymentMode);
-      const matchStatus = this.matchesExact(p.status, this.filterValues.status);
-      return matchSearch && matchMode && matchStudentName && matchCourse && matchAmount && matchPaymentDate && matchPaymentMode && matchStatus;
+      return matchSearch && matchMode && matchStudentName && matchCourse && matchAmount && matchPaymentDate && matchPaymentMode;
     });
 
     this.applySort();
@@ -189,8 +185,6 @@ export class PaymentHistory implements OnInit {
         return item.paymentDate;
       case 'paymentMode':
         return item.paymentMode;
-      case 'status':
-        return item.status;
       default:
         return item.paymentDate;
     }
@@ -283,8 +277,8 @@ export class PaymentHistory implements OnInit {
   }
 
   exportCSV(): void {
-    const headers = ['Roll No', 'Student Name', 'Course', 'Amount', 'Payment Date', 'Payment Mode', 'Status'];
-    const rows = this.filteredPayments.map((p) => [p.rollNo, p.studentName, p.course, p.amount, p.paymentDate, p.paymentMode, p.status]);
+    const headers = ['Roll No', 'Student Name', 'Course', 'Amount', 'Payment Date', 'Payment Mode'];
+    const rows = this.filteredPayments.map((p) => [p.rollNo, p.studentName, p.course, p.amount, p.paymentDate, p.paymentMode]);
     const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows.map((e) => e.join(','))].join('\n');
     const a = document.createElement('a');
     a.href = encodeURI(csvContent);
@@ -293,8 +287,8 @@ export class PaymentHistory implements OnInit {
   }
 
   exportExcel(): void {
-    const headers = ['Roll No', 'Student Name', 'Course', 'Amount', 'Payment Date', 'Payment Mode', 'Status'];
-    const rows = this.filteredPayments.map((p) => [p.rollNo, p.studentName, p.course, p.amount, p.paymentDate, p.paymentMode, p.status]);
+    const headers = ['Roll No', 'Student Name', 'Course', 'Amount', 'Payment Date', 'Payment Mode'];
+    const rows = this.filteredPayments.map((p) => [p.rollNo, p.studentName, p.course, p.amount, p.paymentDate, p.paymentMode]);
     const ws = XLSX.utils.aoa_to_sheet([headers, ...rows]);
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Payment History');
@@ -302,8 +296,8 @@ export class PaymentHistory implements OnInit {
   }
 
   exportPDF(): void {
-    const headers = ['Roll No', 'Student Name', 'Course', 'Amount', 'Payment Date', 'Payment Mode', 'Status'];
-    const rows = this.filteredPayments.map((p) => [p.rollNo, p.studentName, p.course, p.amount, p.paymentDate, p.paymentMode, p.status]);
+    const headers = ['Roll No', 'Student Name', 'Course', 'Amount', 'Payment Date', 'Payment Mode'];
+    const rows = this.filteredPayments.map((p) => [p.rollNo, p.studentName, p.course, p.amount, p.paymentDate, p.paymentMode]);
     const doc = new jspdf.jsPDF();
     doc.text('Payment History', 14, 15);
     (doc as any).autoTable({ head: [headers], body: rows, startY: 20 });

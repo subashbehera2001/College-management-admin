@@ -31,7 +31,6 @@ export class AttendanceReport implements OnInit {
 
   searchText = '';
   selectedCourse = '';
-  selectedStatus = '';
 
   courseOptions: string[] = [];
 
@@ -46,8 +45,7 @@ export class AttendanceReport implements OnInit {
     this.filteredReports = this.reports.filter((r) => {
       const matchSearch = !s || r.rollNo.toLowerCase().includes(s) || r.studentName.toLowerCase().includes(s);
       const matchCourse = !this.selectedCourse || r.course === this.selectedCourse;
-      const matchStatus = !this.selectedStatus || r.status === this.selectedStatus;
-      return matchSearch && matchCourse && matchStatus;
+      return matchSearch && matchCourse;
     });
 
     this.totalPages = Math.max(1, Math.ceil(this.filteredReports.length / this.pageSize));
@@ -111,11 +109,11 @@ export class AttendanceReport implements OnInit {
   }
 
   get eligibleCount(): number {
-    return this.filteredReports.filter((r) => r.status === 'Eligible').length;
+    return this.filteredReports.filter((r) => r.percentage >= 75).length;
   }
 
   get shortageCount(): number {
-    return this.filteredReports.filter((r) => r.status === 'Shortage').length;
+    return this.filteredReports.filter((r) => r.percentage < 75).length;
   }
 
   get averageAttendance(): string {
@@ -125,8 +123,8 @@ export class AttendanceReport implements OnInit {
   }
 
   exportCSV(): void {
-    const headers = ['Roll No', 'Student Name', 'Course', 'Total Classes', 'Attended', 'Percentage', 'Status'];
-    const rows = this.filteredReports.map((r) => [r.rollNo, r.studentName, r.course, r.totalClasses, r.attendedClasses, r.percentage + '%', r.status]);
+    const headers = ['Roll No', 'Student Name', 'Course', 'Total Classes', 'Attended', 'Percentage'];
+    const rows = this.filteredReports.map((r) => [r.rollNo, r.studentName, r.course, r.totalClasses, r.attendedClasses, r.percentage + '%']);
     const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows.map((e) => e.join(','))].join('\n');
     const encoded = encodeURI(csvContent);
     const a = document.createElement('a');

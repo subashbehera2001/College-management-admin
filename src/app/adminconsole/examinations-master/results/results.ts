@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ResultItem, RESULTS_DATA } from '../exam-list/data';
 
-type ColumnFilterField = 'rollNo' | 'studentName' | 'course' | 'semester' | 'grade' | 'status';
+type ColumnFilterField = 'rollNo' | 'studentName' | 'course' | 'semester' | 'grade';
 
 @Component({
   selector: 'app-results',
@@ -45,7 +45,6 @@ export class Results implements OnInit {
     course: '',
     semester: '',
     grade: '',
-    status: '',
   };
 
   sortField = 'rollNo';
@@ -54,7 +53,6 @@ export class Results implements OnInit {
   courseOptions: string[] = ['B.Tech Computer Science', 'BBA', 'B.Tech Electrical', 'BCA', 'B.Tech Mechanical'];
   semesterOptions: string[] = ['Semester 1', 'Semester 2', 'Semester 3', 'Semester 4', 'Semester 5', 'Semester 6'];
   gradeOptions: string[] = ['O', 'E', 'A', 'B', 'C', 'D', 'F'];
-  statusOptions: string[] = ['Passed', 'Failed'];
 
   ngOnInit(): void {
     this.results = [...RESULTS_DATA];
@@ -70,8 +68,7 @@ export class Results implements OnInit {
       const matchCourse = this.matchesContains(r.course, this.filterValues.course);
       const matchSemester = this.matchesExact(r.semester, this.filterValues.semester);
       const matchGrade = this.matchesExact(r.grade, this.filterValues.grade);
-      const matchStatus = this.matchesExact(r.status, this.filterValues.status);
-      return matchSearch && matchRollNo && matchStudentName && matchCourse && matchSemester && matchGrade && matchStatus;
+      return matchSearch && matchRollNo && matchStudentName && matchCourse && matchSemester && matchGrade;
     });
 
     this.applySort();
@@ -173,8 +170,6 @@ export class Results implements OnInit {
         return item.course;
       case 'grade':
         return item.grade;
-      case 'status':
-        return item.status;
       default:
         return item.rollNo;
     }
@@ -254,8 +249,8 @@ export class Results implements OnInit {
   }
 
   exportCSV(): void {
-    const headers = ['Roll No', 'Student Name', 'Course', 'Semester', 'Total Marks', 'Percentage', 'CGPA', 'Grade', 'Status'];
-    const rows = this.filteredResults.map((r) => [r.rollNo, r.studentName, r.course, r.semester, r.totalMarks, r.percentage + '%', r.cgpa, r.grade, r.status]);
+    const headers = ['Roll No', 'Student Name', 'Course', 'Semester', 'Total Marks', 'Percentage', 'CGPA', 'Grade'];
+    const rows = this.filteredResults.map((r) => [r.rollNo, r.studentName, r.course, r.semester, r.totalMarks, r.percentage + '%', r.cgpa, r.grade]);
     const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows.map((e) => e.join(','))].join('\n');
     const a = document.createElement('a');
     a.href = encodeURI(csvContent);

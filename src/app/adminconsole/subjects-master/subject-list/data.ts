@@ -6,7 +6,7 @@ export interface Subject {
   type: 'Theory' | 'Practical' | 'Elective';
   credits: number;
   faculty: string;
-  status: 'Active' | 'Inactive';
+  status?: 'Active' | 'Inactive';
 }
 
 export const SUBJECTS_DATA: Subject[] = [
@@ -18,7 +18,6 @@ export const SUBJECTS_DATA: Subject[] = [
     type: 'Theory',
     credits: 4,
     faculty: 'Dr. Ramesh Chandra',
-    status: 'Active',
   },
   {
     code: 'CS302',
@@ -28,7 +27,6 @@ export const SUBJECTS_DATA: Subject[] = [
     type: 'Practical',
     credits: 2,
     faculty: 'Dr. Ramesh Chandra',
-    status: 'Active',
   },
   {
     code: 'CS401',
@@ -38,7 +36,6 @@ export const SUBJECTS_DATA: Subject[] = [
     type: 'Theory',
     credits: 4,
     faculty: 'Dr. Meenakshi Sahoo',
-    status: 'Active',
   },
   {
     code: 'EC301',
@@ -48,7 +45,6 @@ export const SUBJECTS_DATA: Subject[] = [
     type: 'Theory',
     credits: 3,
     faculty: 'Dr. Anita Roy',
-    status: 'Active',
   },
   {
     code: 'ME402',
@@ -58,7 +54,6 @@ export const SUBJECTS_DATA: Subject[] = [
     type: 'Theory',
     credits: 4,
     faculty: 'Prof. Rajesh Mishra',
-    status: 'Active',
   },
   {
     code: 'BCA201',
@@ -68,7 +63,6 @@ export const SUBJECTS_DATA: Subject[] = [
     type: 'Practical',
     credits: 3,
     faculty: 'Prof. Alok Dash',
-    status: 'Active',
   },
   {
     code: 'CS505',
@@ -78,6 +72,5 @@ export const SUBJECTS_DATA: Subject[] = [
     type: 'Elective',
     credits: 3,
     faculty: 'Dr. Ramesh Chandra',
-    status: 'Active',
   },
 ];

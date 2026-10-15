@@ -7,7 +7,7 @@ export interface Exam {
   startDate: string;
   endDate: string;
   examType: 'Mid-Term' | 'End-Term' | 'Practical';
-  status: 'Upcoming' | 'Ongoing' | 'Completed';
+  status?: 'Upcoming' | 'Ongoing' | 'Completed';
 }
 
 export const EXAMS_DATA: Exam[] = [
@@ -20,7 +20,6 @@ export const EXAMS_DATA: Exam[] = [
     startDate: '2026-05-10',
     endDate: '2026-05-25',
     examType: 'End-Term',
-    status: 'Upcoming',
   },
   {
     code: 'EXM-2026-S4-MID',
@@ -31,7 +30,6 @@ export const EXAMS_DATA: Exam[] = [
     startDate: '2026-03-15',
     endDate: '2026-03-22',
     examType: 'Mid-Term',
-    status: 'Ongoing',
   },
   {
     code: 'EXM-2025-S3-END',
@@ -42,7 +40,6 @@ export const EXAMS_DATA: Exam[] = [
     startDate: '2025-11-20',
     endDate: '2025-12-05',
     examType: 'End-Term',
-    status: 'Completed',
   },
   {
     code: 'EXM-2026-BBA-S2',
@@ -53,7 +50,6 @@ export const EXAMS_DATA: Exam[] = [
     startDate: '2026-04-05',
     endDate: '2026-04-12',
     examType: 'Mid-Term',
-    status: 'Upcoming',
   },
   {
     code: 'EXM-2026-BCA-S4',
@@ -64,7 +60,6 @@ export const EXAMS_DATA: Exam[] = [
     startDate: '2026-03-18',
     endDate: '2026-03-20',
     examType: 'Practical',
-    status: 'Ongoing',
   },
 ];
 
@@ -96,14 +91,14 @@ export interface ResultItem {
   percentage: number;
   cgpa: number;
   grade: string;
-  status: 'Passed' | 'Failed';
+  status?: 'Passed' | 'Failed';
 }
 
 export const RESULTS_DATA: ResultItem[] = [
-  { rollNo: 'STU001', studentName: 'Rahul Sharma', course: 'B.Tech Computer Science', semester: 'Semester 3', totalMarks: 465, maxMarks: 500, percentage: 93.0, cgpa: 9.3, grade: 'O (Outstanding)', status: 'Passed' },
-  { rollNo: 'STU002', studentName: 'Priya Verma', course: 'BBA', semester: 'Semester 1', totalMarks: 450, maxMarks: 500, percentage: 90.0, cgpa: 9.0, grade: 'E (Excellent)', status: 'Passed' },
-  { rollNo: 'STU003', studentName: 'Aman Kumar', course: 'B.Tech Electrical', semester: 'Semester 3', totalMarks: 290, maxMarks: 500, percentage: 58.0, cgpa: 5.8, grade: 'C (Average)', status: 'Passed' },
-  { rollNo: 'STU004', studentName: 'Sneha Patel', course: 'BCA', semester: 'Semester 2', totalMarks: 420, maxMarks: 500, percentage: 84.0, cgpa: 8.4, grade: 'A (Very Good)', status: 'Passed' },
-  { rollNo: 'STU005', studentName: 'Vikram Singh', course: 'B.Tech Mechanical', semester: 'Semester 3', totalMarks: 185, maxMarks: 500, percentage: 37.0, cgpa: 3.7, grade: 'F (Fail)', status: 'Failed' },
-  { rollNo: 'STU006', studentName: 'Ananya Dash', course: 'B.Tech Computer Science', semester: 'Semester 3', totalMarks: 472, maxMarks: 500, percentage: 94.4, cgpa: 9.4, grade: 'O (Outstanding)', status: 'Passed' },
+  { rollNo: 'STU001', studentName: 'Rahul Sharma', course: 'B.Tech Computer Science', semester: 'Semester 3', totalMarks: 465, maxMarks: 500, percentage: 93.0, cgpa: 9.3, grade: 'O (Outstanding)' },
+  { rollNo: 'STU002', studentName: 'Priya Verma', course: 'BBA', semester: 'Semester 1', totalMarks: 450, maxMarks: 500, percentage: 90.0, cgpa: 9.0, grade: 'E (Excellent)' },
+  { rollNo: 'STU003', studentName: 'Aman Kumar', course: 'B.Tech Electrical', semester: 'Semester 3', totalMarks: 290, maxMarks: 500, percentage: 58.0, cgpa: 5.8, grade: 'C (Average)' },
+  { rollNo: 'STU004', studentName: 'Sneha Patel', course: 'BCA', semester: 'Semester 2', totalMarks: 420, maxMarks: 500, percentage: 84.0, cgpa: 8.4, grade: 'A (Very Good)' },
+  { rollNo: 'STU005', studentName: 'Vikram Singh', course: 'B.Tech Mechanical', semester: 'Semester 3', totalMarks: 185, maxMarks: 500, percentage: 37.0, cgpa: 3.7, grade: 'F (Fail)' },
+  { rollNo: 'STU006', studentName: 'Ananya Dash', course: 'B.Tech Computer Science', semester: 'Semester 3', totalMarks: 472, maxMarks: 500, percentage: 94.4, cgpa: 9.4, grade: 'O (Outstanding)' },
 ];

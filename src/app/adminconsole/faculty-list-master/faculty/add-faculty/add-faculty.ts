@@ -17,7 +17,6 @@ export class AddFaculty {
   name = '';
   department = '';
   designation = '';
-  status: 'Active' | 'On Leave' | 'Inactive' = 'Active';
 
   departmentOptions: string[] = [
     'Computer Science',
@@ -38,8 +37,6 @@ export class AddFaculty {
     'Lab Instructor',
   ];
 
-  statusOptions: string[] = ['Active', 'On Leave', 'Inactive'];
-
   onSubmit(): void {
     if (!this.name.trim() || !this.department || !this.designation) {
       return;
@@ -49,7 +46,6 @@ export class AddFaculty {
       name: this.name,
       department: this.department,
       designation: this.designation,
-      status: this.status
     });
     this.router.navigate(['/faculty']);
   }

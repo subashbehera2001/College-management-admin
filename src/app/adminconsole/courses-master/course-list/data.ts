@@ -6,7 +6,7 @@ export interface Course {
   totalSemesters: number;
   totalCredits: number;
   intake: number;
-  status: 'Active' | 'Inactive';
+  status?: 'Active' | 'Inactive';
 }
 
 export const COURSES_DATA: Course[] = [
@@ -18,7 +18,6 @@ export const COURSES_DATA: Course[] = [
     totalSemesters: 8,
     totalCredits: 160,
     intake: 120,
-    status: 'Active',
   },
   {
     name: 'B.Tech in Electronics & Communication',
@@ -28,7 +27,6 @@ export const COURSES_DATA: Course[] = [
     totalSemesters: 8,
     totalCredits: 160,
     intake: 90,
-    status: 'Active',
   },
   {
     name: 'B.Tech in Mechanical Engineering',
@@ -38,7 +36,6 @@ export const COURSES_DATA: Course[] = [
     totalSemesters: 8,
     totalCredits: 160,
     intake: 60,
-    status: 'Active',
   },
   {
     name: 'Bachelor of Computer Applications',
@@ -48,7 +45,6 @@ export const COURSES_DATA: Course[] = [
     totalSemesters: 6,
     totalCredits: 120,
     intake: 80,
-    status: 'Active',
   },
   {
     name: 'Bachelor of Business Administration',
@@ -58,7 +54,6 @@ export const COURSES_DATA: Course[] = [
     totalSemesters: 6,
     totalCredits: 120,
     intake: 60,
-    status: 'Active',
   },
   {
     name: 'M.Tech in Artificial Intelligence',
@@ -68,7 +63,6 @@ export const COURSES_DATA: Course[] = [
     totalSemesters: 4,
     totalCredits: 80,
     intake: 30,
-    status: 'Active',
   },
   {
     name: 'Diploma in Automobile Engineering',
@@ -78,6 +72,5 @@ export const COURSES_DATA: Course[] = [
     totalSemesters: 6,
     totalCredits: 100,
     intake: 45,
-    status: 'Inactive',
   },
 ];

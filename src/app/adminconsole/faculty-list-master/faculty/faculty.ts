@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Faculty, FACULTY_DATA } from './data';
 
-type ColumnFilterField = 'name' | 'department' | 'designation' | 'status';
+type ColumnFilterField = 'name' | 'department' | 'designation';
 type PaginationItem = number | '...';
 
 @Component({
@@ -29,7 +29,6 @@ export class FacultyComponent implements OnInit {
     name: '',
     department: '',
     designation: '',
-    status: '',
   };
 
   sortField: keyof Faculty = 'name';
@@ -55,7 +54,6 @@ export class FacultyComponent implements OnInit {
   selectedFaculty: Faculty | null = null;
   isLoading = false;
 
-  statusOptions: string[] = ['Active', 'On Leave', 'Inactive'];
   departmentOptions: string[] = [];
   designationOptions: string[] = [];
 
@@ -88,18 +86,13 @@ export class FacultyComponent implements OnInit {
         const matchesName = this.matchesContains(faculty.name, this.filterValues.name);
         const matchesDepartment = this.matchesContains(faculty.department, this.filterValues.department);
         const matchesDesignation = this.matchesContains(faculty.designation, this.filterValues.designation);
-        const matchesStatus = this.matchesExact(faculty.status, this.filterValues.status);
-        const matchesTab =
-          this.activeTab === 'active'
-            ? faculty.status === 'Active' || faculty.status === 'On Leave'
-            : faculty.status === 'Inactive';
+        const matchesTab = this.activeTab === 'active' ? true : false;
 
         return (
           matchesSearch &&
           matchesName &&
           matchesDepartment &&
           matchesDesignation &&
-          matchesStatus &&
           matchesTab
         );
       });
@@ -152,8 +145,6 @@ export class FacultyComponent implements OnInit {
         return faculty.department;
       case 'designation':
         return faculty.designation;
-      case 'status':
-        return faculty.status;
       default:
         return faculty.name;
     }
@@ -313,26 +304,12 @@ export class FacultyComponent implements OnInit {
     return items;
   }
 
-  getStatusClass(status: string): string {
-    switch (status) {
-      case 'Active':
-        return 'badge-success';
-      case 'Inactive':
-        return 'badge-danger';
-      case 'On Leave':
-        return 'badge-warning';
-      default:
-        return 'badge-secondary';
-    }
-  }
-
   clearFilters(): void {
     this.searchText = '';
     this.filterValues = {
       name: '',
       department: '',
       designation: '',
-      status: '',
     };
     this.activeFilter = null;
     this.currentPage = 1;
@@ -378,8 +355,8 @@ export class FacultyComponent implements OnInit {
   }
 
   exportToCSV(): void {
-    const headers = ['Name', 'Department', 'Designation', 'Status'];
-    const rows = this.filteredFaculty.map((f) => [f.name, f.department, f.designation, f.status]);
+    const headers = ['Name', 'Department', 'Designation'];
+    const rows = this.filteredFaculty.map((f) => [f.name, f.department, f.designation]);
 
     const csvContent = [
       headers.join(','),

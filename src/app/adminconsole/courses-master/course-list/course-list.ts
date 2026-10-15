@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Course, COURSES_DATA } from './data';
 
-type ColumnFilterField = 'name' | 'department' | 'level' | 'duration' | 'status';
+type ColumnFilterField = 'name' | 'department' | 'level' | 'duration';
 
 @Component({
   selector: 'app-course-list',
@@ -29,7 +29,6 @@ export class CourseListComponent implements OnInit {
     department: '',
     level: '',
     duration: '',
-    status: '',
   };
 
   sortField: keyof Course = 'name';
@@ -78,11 +77,10 @@ export class CourseListComponent implements OnInit {
       const matchesDept = !this.filterValues.department || c.department === this.filterValues.department;
       const matchesLevel = !this.filterValues.level || c.level === this.filterValues.level;
       const matchesDuration = !this.filterValues.duration || c.duration === this.filterValues.duration;
-      const matchesStatus = !this.filterValues.status || c.status === this.filterValues.status;
 
-      const matchesTab = this.activeTab === 'active' ? c.status === 'Active' : c.status === 'Inactive';
+      const matchesTab = this.activeTab === 'active' ? true : false;
 
-      return matchesSearch && matchesName && matchesDept && matchesLevel && matchesDuration && matchesStatus && matchesTab;
+      return matchesSearch && matchesName && matchesDept && matchesLevel && matchesDuration && matchesTab;
     });
 
     this.filteredCourses.sort((a, b) => {
@@ -230,8 +228,8 @@ export class CourseListComponent implements OnInit {
   }
 
   exportToCSV(): void {
-    const headers = ['Course Name', 'Department', 'Level', 'Duration', 'Total Semesters', 'Total Credits', 'Intake', 'Status'];
-    const rows = this.filteredCourses.map((c) => [c.name, c.department, c.level, c.duration, c.totalSemesters, c.totalCredits, c.intake, c.status]);
+    const headers = ['Course Name', 'Department', 'Level', 'Duration', 'Total Semesters', 'Total Credits', 'Intake'];
+    const rows = this.filteredCourses.map((c) => [c.name, c.department, c.level, c.duration, c.totalSemesters, c.totalCredits, c.intake]);
     const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows.map((e) => e.join(','))].join('\n');
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement('a');

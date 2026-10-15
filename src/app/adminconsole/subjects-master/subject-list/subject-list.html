@@ -157,28 +157,6 @@
                </div>
              </div>
            </th>
-          <th>
-            <div class="th-content">
-              <span class="th-label">Status</span>
-              <div class="th-actions">
-                <button type="button" class="filter-icon" [class.active]="hasActiveFilter('status')" (click)="toggleFilter('status'); $event.stopPropagation()" aria-label="Filter Status">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
-                  </svg>
-                </button>
-              </div>
-            </div>
-            <div class="filter-dropdown" *ngIf="activeFilter === 'status'" (click)="$event.stopPropagation()">
-              <div class="filter-panel">
-                <div class="filter-title">Filter by Status</div>
-                <div class="filter-option-list">
-                  <button type="button" class="filter-option" [class.selected]="filterValues.status === ''" (click)="setColumnFilter('status', '', true)">All Status</button>
-                  <button type="button" class="filter-option" [class.selected]="filterValues.status === 'Active'" (click)="setColumnFilter('status', 'Active', true)">Active</button>
-                  <button type="button" class="filter-option" [class.selected]="filterValues.status === 'Inactive'" (click)="setColumnFilter('status', 'Inactive', true)">Inactive</button>
-                </div>
-              </div>
-            </div>
-          </th>
           <th class="text-center">Actions</th>
         </tr>
       </thead>
@@ -194,11 +172,6 @@
             }">{{ item.type }}</span>
           </td>
           <td>{{ item.faculty }}</td>
-          <td>
-            <span class="badge-status" [ngClass]="{'status-active': item.status === 'Active', 'status-inactive': item.status === 'Inactive'}">
-              {{ item.status }}
-            </span>
-          </td>
           <td class="cell-actions">
             <div class="action-buttons">
               <button type="button" class="action-btn view-btn" (click)="openViewModal(item)" title="View">
@@ -320,7 +293,6 @@
           <div class="col-6"><strong>Type:</strong> {{ selectedSubject.type }}</div>
           <div class="col-6"><strong>Credits:</strong> {{ selectedSubject.credits }}</div>
           <div class="col-6"><strong>Assigned Faculty:</strong> {{ selectedSubject.faculty }}</div>
-          <div class="col-12"><strong>Status:</strong> {{ selectedSubject.status }}</div>
         </div>
       </div>
       <div class="modal-footer">

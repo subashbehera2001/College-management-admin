@@ -448,85 +448,6 @@
               </div>
             </div>
           </th>
-          <th (click)="onSort('status')" class="sortable">
-            <div class="th-content">
-              <span class="th-label">Status</span>
-              <span class="sort-icon" *ngIf="sortField === 'status'">
-                <svg
-                  *ngIf="sortDirection === 'asc'"
-                  width="12"
-                  height="12"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                >
-                  <polyline points="18 15 12 9 6 15"></polyline>
-                </svg>
-                <svg
-                  *ngIf="sortDirection === 'desc'"
-                  width="12"
-                  height="12"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                >
-                  <polyline points="6 9l6 6 6-6"></polyline>
-                </svg>
-              </span>
-              <div class="th-actions">
-                <button
-                  type="button"
-                  class="filter-icon"
-                  [class.active]="hasActiveFilter('status')"
-                  (click)="toggleFilter('status'); $event.stopPropagation()"
-                  aria-label="Filter Status"
-                >
-                  <svg
-                    width="12"
-                    height="12"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                  >
-                    <polygon
-                      points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"
-                    ></polygon>
-                  </svg>
-                </button>
-              </div>
-            </div>
-            <div
-              class="filter-dropdown"
-              *ngIf="activeFilter === 'status'"
-              (click)="$event.stopPropagation()"
-            >
-              <div class="filter-panel">
-                <div class="filter-title">Filter by Status</div>
-                <div class="filter-option-list">
-                  <button
-                    type="button"
-                    class="filter-option"
-                    [class.selected]="getFilterValue('status') === ''"
-                    (click)="setColumnFilter('status', '', true)"
-                  >
-                    All Status
-                  </button>
-                  <button
-                    type="button"
-                    class="filter-option"
-                    *ngFor="let status of statusOptions"
-                    [class.selected]="getFilterValue('status') === status"
-                    (click)="setColumnFilter('status', status, true)"
-                  >
-                    {{ status }}
-                  </button>
-                </div>
-              </div>
-            </div>
-          </th>
           <th style="width: 90px; text-align: center">Actions</th>
         </tr>
       </thead>
@@ -547,9 +468,6 @@
           </td>
           <td>{{ n.publishDate }}</td>
           <td>{{ n.expiryDate }}</td>
-          <td>
-            <span class="badge-status status-published">{{ n.status }}</span>
-          </td>
           <td>
             <div class="action-buttons justify-content-center">
               <button type="button" class="btn-action btn-view" title="View Notice">
@@ -601,7 +519,7 @@
           </td>
         </tr>
         <tr *ngIf="displayedNotices.length === 0">
-          <td colspan="7" class="text-center py-4 text-muted">
+          <td colspan="6" class="text-center py-4 text-muted">
             No notices found.
           </td>
         </tr>

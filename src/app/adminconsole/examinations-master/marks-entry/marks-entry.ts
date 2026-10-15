@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MARKS_DATA, StudentMarks } from '../exam-list/data';
 
-type ColumnFilterField = 'rollNo' | 'studentName' | 'grade' | 'status';
+type ColumnFilterField = 'rollNo' | 'studentName' | 'grade';
 
 @Component({
   selector: 'app-marks-entry',
@@ -50,14 +50,12 @@ export class MarksEntry implements OnInit {
     rollNo: '',
     studentName: '',
     grade: '',
-    status: '',
   };
 
   sortField = 'rollNo';
   sortDirection: 'asc' | 'desc' = 'asc';
 
   gradeOptions: string[] = ['O', 'E', 'A', 'B', 'C', 'D', 'F'];
-  statusOptions: string[] = ['Pass', 'Fail'];
 
   ngOnInit(): void {
     this.loadMarks();
@@ -79,8 +77,7 @@ export class MarksEntry implements OnInit {
       const matchRollNo = this.matchesContains(item.rollNo, this.filterValues.rollNo);
       const matchStudentName = this.matchesContains(item.studentName, this.filterValues.studentName);
       const matchGrade = this.matchesExact(this.getGrade(item), this.filterValues.grade);
-      const matchStatus = this.matchesExact(this.getStatus(item), this.filterValues.status);
-      return matchSearch && matchRollNo && matchStudentName && matchGrade && matchStatus;
+      return matchSearch && matchRollNo && matchStudentName && matchGrade;
     });
 
     this.applySort();
@@ -180,8 +177,6 @@ export class MarksEntry implements OnInit {
         return item.studentName;
       case 'grade':
         return this.getGrade(item);
-      case 'status':
-        return this.getStatus(item);
       default:
         return item.rollNo;
     }
@@ -202,10 +197,6 @@ export class MarksEntry implements OnInit {
     if (pct >= 50) return 'C';
     if (pct >= 40) return 'D';
     return 'F';
-  }
-
-  getStatus(item: StudentMarks): 'Pass' | 'Fail' {
-    return this.getTotal(item) >= 40 ? 'Pass' : 'Fail';
   }
 
   onSort(field: string): void {
@@ -268,7 +259,7 @@ export class MarksEntry implements OnInit {
   }
 
   exportCSV(): void {
-    const headers = ['Roll No', 'Student Name', 'Internal', 'External', 'Total', 'Grade', 'Status'];
+    const headers = ['Roll No', 'Student Name', 'Internal', 'External', 'Total', 'Grade'];
     const rows = this.filteredStudentsMarks.map((item) => [
       item.rollNo,
       item.studentName,
@@ -276,7 +267,6 @@ export class MarksEntry implements OnInit {
       item.externalMarks,
       this.getTotal(item),
       this.getGrade(item),
-      this.getStatus(item),
     ]);
     const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows.map((e) => e.join(','))].join('\n');
     const a = document.createElement('a');

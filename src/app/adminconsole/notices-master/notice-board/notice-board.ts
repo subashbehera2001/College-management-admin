@@ -10,7 +10,6 @@ type ColumnFilterField =
   | 'targetAudience'
   | 'publishDate'
   | 'expiryDate'
-  | 'status'
 
 @Component({
   selector: 'app-notice-board',
@@ -59,22 +58,17 @@ export class NoticeBoardComponent implements OnInit {
     targetAudience: '',
     publishDate: '',
     expiryDate: '',
-    status: '',
   }
 
   sortField = 'publishDate'
   sortDirection: 'asc' | 'desc' = 'desc'
 
   targetAudienceOptions: string[] = []
-  statusOptions: string[] = []
 
   ngOnInit(): void {
     this.notices = [...NOTICES_DATA]
     this.targetAudienceOptions = Array.from(
       new Set(this.notices.map((n) => n.targetAudience))
-    ).sort()
-    this.statusOptions = Array.from(
-      new Set(this.notices.map((n) => n.status))
     ).sort()
     this.applyFilter()
   }
@@ -105,7 +99,6 @@ export class NoticeBoardComponent implements OnInit {
         n.expiryDate,
         this.filterValues.expiryDate
       )
-      const matchStatus = this.matchesExact(n.status, this.filterValues.status)
       return (
         matchSearch &&
         matchCat &&
@@ -113,8 +106,7 @@ export class NoticeBoardComponent implements OnInit {
         matchCategory &&
         matchTargetAudience &&
         matchPublishDate &&
-        matchExpiryDate &&
-        matchStatus
+        matchExpiryDate
       )
     })
 
@@ -221,8 +213,6 @@ export class NoticeBoardComponent implements OnInit {
         return n.publishDate
       case 'expiryDate':
         return n.expiryDate
-      case 'status':
-        return n.status
       default:
         return n.publishDate
     }

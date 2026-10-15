@@ -8,7 +8,7 @@ export interface Faculty {
   qualification: string;
   experience: string;
   joiningDate: string;
-  status: 'Active' | 'On Leave' | 'Inactive';
+  status?: 'Active' | 'On Leave' | 'Inactive';
 }
 
 export const FACULTY_DATA: Faculty[] = [
@@ -22,7 +22,6 @@ export const FACULTY_DATA: Faculty[] = [
     qualification: 'Ph.D in AI & Robotics',
     experience: '15 Years',
     joiningDate: '2012-08-10',
-    status: 'Active',
   },
   {
     id: 'FAC002',
@@ -34,7 +33,6 @@ export const FACULTY_DATA: Faculty[] = [
     qualification: 'Ph.D in VLSI Design',
     experience: '11 Years',
     joiningDate: '2015-01-15',
-    status: 'Active',
   },
   {
     id: 'FAC003',
@@ -46,7 +44,6 @@ export const FACULTY_DATA: Faculty[] = [
     qualification: 'M.Tech in Thermodynamics',
     experience: '6 Years',
     joiningDate: '2018-07-20',
-    status: 'Active',
   },
   {
     id: 'FAC004',
@@ -58,7 +55,6 @@ export const FACULTY_DATA: Faculty[] = [
     qualification: 'Ph.D in Finance & Marketing',
     experience: '10 Years',
     joiningDate: '2016-09-01',
-    status: 'On Leave',
   },
   {
     id: 'FAC005',
@@ -70,7 +66,6 @@ export const FACULTY_DATA: Faculty[] = [
     qualification: 'M.Tech in Structural Eng.',
     experience: '4 Years',
     joiningDate: '2020-02-12',
-    status: 'Active',
   },
   {
     id: 'FAC006',
@@ -82,6 +77,5 @@ export const FACULTY_DATA: Faculty[] = [
     qualification: 'Ph.D in Cloud Computing',
     experience: '7 Years',
     joiningDate: '2019-11-05',
-    status: 'Inactive',
   },
 ];
