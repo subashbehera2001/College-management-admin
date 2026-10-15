@@ -1,12 +1,12 @@
 <div class="container-fluid dashboard-content">
   <div class="row mb-4">
     <div class="col-12 col-sm-6 col-lg-3 mb-3 mb-lg-0" *ngFor="let stat of stats">
-      <div class="stat-card" [style.background-color]="stat.bgColor">
+      <div class="stat-card h-100" [style.background-color]="stat.bgColor">
         <div class="stat-icon" [style.background-color]="stat.bgColor">
           <ng-icon [name]="stat.icon" [style.color]="stat.iconColor" />
         </div>
         <div class="stat-info">
-          <span class="stat-title">{{ stat.title }}</span>
+          <span class="stat-title" [title]="stat.title">{{ stat.title }}</span>
           <h3 class="stat-value">{{ stat.value }}</h3>
         </div>
       </div>
